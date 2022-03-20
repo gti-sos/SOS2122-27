@@ -1,9 +1,13 @@
-const cool = require("cool-ascii-faces");
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8080;
 
+const bodyParser = require("body-parser");
+
 const ROQUE_BASE_API_URL = "/api/v1";
+const FAMV_API = "/api/famv/v1";
+
+app.use(bodyParser.json());
 
 var PEStats = [
     {
@@ -16,12 +20,19 @@ var PEStats = [
     },   
 ];
 
-app.use("/", express.static('public'))
+var smi_stats = [
+    {
+        country: "espana",
+        year: 2022,
+        smi_local: 1166.70,
+        smi_euros: 1166.70,
+        smi_variation: 3.63
 
-app.get("/cool",(req,res)=>{
-    console.log("Requested / route");
-    res.send(`<html><body><h1>`+cool()+`</html></body></h1>`);
-});
+    },   
+];
+
+//app.use("/", express.static('public'))
+
 
 app.listen(port, () => {
     console.log(`Server TRULY ready`);
@@ -49,5 +60,17 @@ app.post(ROQUE_BASE_API_URL + "/public-expenditure-contacts", (req,res) => {
     PEStats.push(req.body);
     res.sendStatus(201,"CREATED");
 });
+
+// OPERACIONES ALEXIS
+
+app.post(FAMV_API+"/smi_stats",(req,res)=>{
+    smi_stats.push(req.body);
+    res.sendStatus(201, "CREATED");
+});
+
+app.get(FAMV_API+"/smi_stats",(req,res)=>{
+    res.send(JSON.stringify(smi_stats, null, 2));
+});
+
 
 console.log(`Server ready at port ${port}`);
