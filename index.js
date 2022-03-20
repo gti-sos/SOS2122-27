@@ -31,7 +31,7 @@ var smi_stats = [
     },   
 ];
 
-//app.use("/", express.static('public'))
+app.use("/", express.static('public'))
 
 
 app.listen(port, () => {
