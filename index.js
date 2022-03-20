@@ -5,7 +5,7 @@ const port = process.env.PORT || 8080;
 const bodyParser = require("body-parser");
 
 const ROQUE_BASE_API_URL = "/api/v1";
-const FAMV_API = "/api/famv/v1";
+const FAMV_API = "/api/v1";
 
 app.use(bodyParser.json());
 
