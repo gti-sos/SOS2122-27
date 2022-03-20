@@ -40,23 +40,11 @@ app.listen(port, () => {
 
 //OPERACIONES DE LA PARTE DE ROQUE
 
-app.get(ROQUE_BASE_API_URL + "/public-expenditure-contacts", (req,res) => {
-    
-    var countryName = req.params.country;
-
-    filteredPEStats = PEStats.filter((stat) =>{
-        return stat.country == countryName;
-    });
-
-    if(filteredPEStats == 0){
-        res.sendStatus(404,"NOT FOUND");
-    }else{
-        res.send(JSON.stringify(filteredContacts[0],null,2));
-    }
-
+app.get(ROQUE_BASE_API_URL + "/public-expenditure-stats", (req,res) => {
+    res.send(JSON.stringify(PEStats, null, 2));
 });
 
-app.post(ROQUE_BASE_API_URL + "/public-expenditure-contacts", (req,res) => {
+app.post(ROQUE_BASE_API_URL + "/public-expenditure-stats", (req,res) => {
     PEStats.push(req.body);
     res.sendStatus(201,"CREATED");
 });
