@@ -9,4 +9,4 @@
 -  **APIs**:
     - [https://sos2021-00.herokuapp.com/api/v1/my-awesome-resource-1/docs](https://sos2021-00.herokuapp.com/api/v1/my-awesome-resource-1/docs) (developed by [Roque Fernandez Iglesias](https://github.com/roque-fernandez))
     - [https://sos2021-27.herokuapp.com/api/v1/smi_stats](https://sos2021-27.herokuapp.com/api/v1/smi_stats) (developed by [Fco Alexis Morales Vallado](https://github.com/famvcucu))
-    - [https://sos2021-00.herokuapp.com/api/v1/my-awesome-resource-3/docs](https://sos2021-00.herokuapp.com/api/v1/my-awesome-resource-3/docs) (developed by [Jose Felipe Ramos](https://github.com/jfeliperamos))
+    - [https://sos2021-00.herokuapp.com/api/v1/public-debt-stats](https://sos2021-00.herokuapp.com/api/v1/public-debt-stats) (developed by [Jose Felipe Ramos](https://github.com/jfeliperamos))

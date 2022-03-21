@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 
 const ROQUE_BASE_API_URL = "/api/v1";
 const FAMV_API = "/api/v1";
+const JF_API = "api/v1";
 
 app.use(bodyParser.json());
 
@@ -28,6 +29,16 @@ var smi_stats = [
         smi_euros: 1166.70,
         smi_variation: 3.63
 
+    },   
+];
+
+var debt_stats = [
+    {
+        country: "espanya",
+        year: 2020,
+        total_debt: 1345784,
+        debt_gdp: 120,
+        per_capita_debt: 28393
     },   
 ];
 
@@ -58,6 +69,12 @@ app.post(FAMV_API+"/smi_stats",(req,res)=>{
 
 app.get(FAMV_API+"/smi_stats",(req,res)=>{
     res.send(JSON.stringify(smi_stats, null, 2));
+});
+
+// OPERACIONES JF
+
+app.get(JF_API + "/public-debt-stats", (req,res)=>{
+    res.send(JSON.stringify(debt_stats, null, 2));
 });
 
 
