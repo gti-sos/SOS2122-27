@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 
 const ROQUE_BASE_API_URL = "/api/v1";
 const FAMV_API = "/api/v1";
-const JF_API = "api/v1";
+const JF_API = "/api/v1";
 
 app.use(bodyParser.json());
 
@@ -32,13 +32,14 @@ var smi_stats = [
     },   
 ];
 
-var debt_stats = [
+var DebtStat = [
     {
-        country: "espanya",
+        country: "espana",
         year: 2020,
         total_debt: 1345784,
         debt_gdp: 120,
         per_capita_debt: 28393
+
     },   
 ];
 
@@ -74,8 +75,12 @@ app.get(FAMV_API+"/smi_stats",(req,res)=>{
 // OPERACIONES JF
 
 app.get(JF_API + "/public-debt-stats", (req,res)=>{
-    res.send(JSON.stringify(debt_stats, null, 2));
+    res.send(JSON.stringify(DebtStat, null, 2));
 });
 
+app.post(JF_API + "/public-debt-stats", (req,res)=>{
+    DebtStat.push(req.body);
+    res.sendStatus(201, "CREATED");
+});
 
 console.log(`Server ready at port ${port}`);
