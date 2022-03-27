@@ -10,8 +10,6 @@ const app = express();
 var Datastore = require("nedb");
 var PE_DB = new Datastore({filename: path.join(__dirname,"./src/back/public_expenditure_stats/publicExpenditureDB.db"), autoload: true});
 var SMI_DB = new Datastore({filename: path.join(__dirname,"./src/back/smi_stats/smiDB.db"), autoload: true});
-backend_roque(app,PE_DB);
-backend_alexis(app, SMI_DB);
 
 const port = process.env.PORT || 8080;
 
@@ -21,6 +19,9 @@ const bodyParser = require("body-parser");
 const JF_API = "/api/v1";
 
 app.use(bodyParser.json());
+
+backend_roque(app,PE_DB);
+backend_alexis(app, SMI_DB);
 
 var DebtStat = [
     {
