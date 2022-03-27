@@ -3,7 +3,9 @@ module.exports = (app,db) => {
     const ROQUE_BASE_API_URL = "/api/v1/public-expenditure-stats";
     const API_DOC_PORTAL = "";
 
-    var PEStats = [
+    var PEStats = [];
+
+    var InitialPEStats = [
         {
             country: "espana",
             year: 2020,
@@ -57,6 +59,15 @@ module.exports = (app,db) => {
     //LOAD INITIAL DATA
 
     app.get(ROQUE_BASE_API_URL + "/loadInitialData", (req,res) => {
+
+        //inicializamos el vector
+        if(PEStats.length===0){
+            InitialPEStats.forEach((a)=>{
+                PEStats.push(a);
+            });
+        }
+        res.send(JSON.stringify(landusage_stats,null,2));
+        
         
         //Obtenemos los elementos
         db.find({}, (error)=>{ 
@@ -117,11 +128,12 @@ module.exports = (app,db) => {
     app.post(ROQUE_BASE_API_URL, (req,res) => {
         //comprobamos que los parametros existan
         if(
-            !!req.body.country == false ||
-            !!req.body.year == false ||
-            !!req.body.public_expenditure == false ||
-            !!req.body.pe_to_gdp == false ||
-            !!req.body.pe_on_defence == false
+            //Object.keys(req).length != 5 ||
+            req.params.country == null ||
+            req.params.year == null ||
+            req.params.public_expenditure == null ||
+            req.params.pe_to_gdp == null ||
+            req.params.pe_on_defence == null
         ){
             res.sendStatus(400,"BAD REQUEST");  
         }
@@ -156,11 +168,12 @@ module.exports = (app,db) => {
 
         //comprobamos que los parametros existan
         if(
-            !!req.body.country == false ||
-            !!req.body.year == false ||
-            !!req.body.public_expenditure == false ||
-            !!req.body.pe_to_gdp == false ||
-            !!req.body.pe_on_defence == false
+            //Object.keys(req).length != 5 ||
+            req.params.country == null ||
+            req.params.year == null ||
+            req.params.public_expenditure == null ||
+            req.params.pe_to_gdp == null ||
+            req.params.pe_on_defence == null
         ){
             res.sendStatus(400,"BAD REQUEST");  
         }
@@ -182,10 +195,7 @@ module.exports = (app,db) => {
             PEStats[indice].pe_to_gdp = req.params.pe_to_gdp;
             PEStats[indice].public_expenditure = req.params.public_expenditure;
             res.sendStatus(200,"OK");
-        }
-
-        
-
+        } 
     });
 
     //PUT NO PERMITIDO
