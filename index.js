@@ -12,22 +12,11 @@ const port = process.env.PORT || 8080;
 
 const bodyParser = require("body-parser");
 
-
-const FAMV_API = "/api/v1";
 const JF_API = "/api/v1";
 
 app.use(bodyParser.json());
 
-var smi_stats = [
-    {
-        country: "espana",
-        year: 2022,
-        smi_local: 1166.70,
-        smi_euros: 1166.70,
-        smi_variation: 3.63
 
-    },   
-];
 
 var DebtStat = [
     {
