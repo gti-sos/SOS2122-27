@@ -1,4 +1,4 @@
-module.exports = (app) => {
+module.exports = (app,db) => {
 
     const ROQUE_BASE_API_URL = "/api/v1/public-expenditure-stats";
 
@@ -47,17 +47,6 @@ module.exports = (app) => {
         } 
     ];
 
-    //VARIABLES DE LA BD
-
-    var Datastore = require("nedb");
-
-    const dbFileName = path.join(__dirname,"public_expenditure_stats.db");
-
-    const db = new Datastore({
-        filename: dbFileName, 
-        autoload: true
-    });
-
     var statCountry = req.params.country;
     var statYear = req.params.year;
 
@@ -65,20 +54,20 @@ module.exports = (app) => {
     //LOAD INITIAL DATA
 
     app.get(ROQUE_BASE_API_URL + "/loadInitialData", (req,res) => {
-        db.find({}, (error, ee_db)=>{ // Comprobamos si los elementos están
+        
+        //Obtenemos los elementos
+        db.find({}, (error)=>{ 
 
             if(error){
-                console.log("Se ha producido un error de servdor al hacer petición Get all");
-                res.sendStatus(500); //Error de servidor
+                console.log("Error en Load Initial Data");
+                res.sendStatus(500); 
             }
             else{
                 dataBase.remove({}, {multi: true});
-                dataBase.insert(datos_EE);
-                res.sendStatus(200);                        
+                dataBase.insert(PEStats);
+                res.sendStatus(200,"Datos correctamente cargados a la BD");                        
             }
         }); 
-        dbFood.insert(PEStats);
-        res.send("Datos correctamente cargados");
     });
 
     //GET
@@ -89,7 +78,7 @@ module.exports = (app) => {
     
     app.get(BASE_API_URL+"/:country/:year",(req,res)=>{
         filteredPEStats = PEStats.filter((stat)=>{
-            return (stat.country.year == statCountryYear);
+            return (stat.country == statCountry && stat.year == statYear);
         })
         res.send(JSON.stringify(PEStats, null, 2));
     });
@@ -132,7 +121,7 @@ module.exports = (app) => {
     
     app.delete(BASE_API_URL + "/:country/:year",(req,res)=>{
         PEStats.filter((stat)=>{
-            return (stat.country.year != statCountryYear);
+            return (stat.country != statCountry || stat.year != statYear);
         })
         res.sendStatus(200,"OK");
     
