@@ -1,7 +1,7 @@
 module.exports = (app) => {
 
     const FAMV_API = "/api/v1/smi_stats";
-    const db = new Datastore({ filename: datafile, autoload: true });
+    //const db = new Datastore({ filename: datafile, autoload: true });
     var country = req.params.country;
     var year = req.params.year
     var smi_stats = [

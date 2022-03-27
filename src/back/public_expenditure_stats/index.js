@@ -1,7 +1,6 @@
 module.exports = (app,db) => {
 
     const ROQUE_BASE_API_URL = "/api/v1/public-expenditure-stats";
-
     const API_DOC_PORTAL = "";
 
     var PEStats = [
@@ -47,10 +46,6 @@ module.exports = (app,db) => {
         } 
     ];
 
-    var statCountry = req.params.country;
-    var statYear = req.params.year;
-
-
     //LOAD INITIAL DATA
 
     app.get(ROQUE_BASE_API_URL + "/loadInitialData", (req,res) => {
@@ -76,14 +71,14 @@ module.exports = (app,db) => {
         res.send(JSON.stringify(PEStats, null, 2));
     });
     
-    app.get(BASE_API_URL+"/:country/:year",(req,res)=>{
+    app.get(ROQUE_BASE_API_URL+"/:country/:year",(req,res)=>{
         filteredPEStats = PEStats.filter((stat)=>{
-            return (stat.country == statCountry && stat.year == statYear);
+            return (stat.country == req.params.country && stat.year == req.params.year);
         })
         res.send(JSON.stringify(PEStats, null, 2));
     });
     
-    app.get(BASE_API_URL+"/docs",(req,res)=>{
+    app.get(ROQUE_BASE_API_URL+"/docs",(req,res)=>{
         res.redirect(API_DOC_PORTAL);
     });
 
@@ -113,15 +108,15 @@ module.exports = (app,db) => {
 
     //DELETE
 
-    app.delete(BASE_API_URL,(req,res)=>{
+    app.delete(ROQUE_BASE_API_URL,(req,res)=>{
         PEStats = []
         res.sendStatus(200,"OK");
     
     });
     
-    app.delete(BASE_API_URL + "/:country/:year",(req,res)=>{
+    app.delete(ROQUE_BASE_API_URL + "/:country/:year",(req,res)=>{
         PEStats.filter((stat)=>{
-            return (stat.country != statCountry || stat.year != statYear);
+            return (stat.country != req.params.year || stat.year != req.params.year);
         })
         res.sendStatus(200,"OK");
     

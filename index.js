@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 
 const backend_roque = require("./src/back/public_expenditure_stats/index");
 const backend_alexis = require("./src/back/index_alexis");
@@ -7,7 +8,7 @@ const app = express();
 
 //BASE DE DATOS
 var Datastore = require("nedb");
-var PE_DB = new dataBase({filename: path.join(__dirname,"./src/back/public_expenditure_stats/publicExpenditureDB.db"), autoload: true});
+var PE_DB = new Datastore({filename: path.join(__dirname,"./src/back/public_expenditure_stats/publicExpenditureDB.db"), autoload: true});
 
 backend_roque(app,PE_DB);
 backend_alexis(app);
