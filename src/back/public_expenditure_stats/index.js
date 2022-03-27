@@ -167,7 +167,7 @@ module.exports = (app,db) => {
 
     app.put(ROQUE_BASE_API_URL +"/:country/:year", (req,res) => {
 
-        //comprobamos que los parametros existan
+        //comprobamos que los parametros del req existan
         if(
             req.body.country == null ||
             req.body.year == null ||
@@ -216,7 +216,7 @@ module.exports = (app,db) => {
     
     app.delete(ROQUE_BASE_API_URL + "/:country/:year",(req,res)=>{
         PEStats.filter((stat)=>{
-            return (stat.country != req.params.year && stat.year != req.params.year);
+            return (stat.country != req.params.country || stat.year != req.params.year);
         })
         res.sendStatus(200,"OK");
     
