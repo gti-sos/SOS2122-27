@@ -1,43 +1,22 @@
 const express = require("express");
 
 const backend_roque = require("./src/back/index_roque");
-
+const backend_alexis = require("./src/back/index_alexis");
 
 const app = express();
 
 backend_roque(app);
+backend_alexis(app);
 
 const port = process.env.PORT || 8080;
 
 const bodyParser = require("body-parser");
 
-const ROQUE_BASE_API_URL = "/api/v1";
-const FAMV_API = "/api/v1";
+
 const JF_API = "/api/v1";
 
 app.use(bodyParser.json());
 
-var PEStats = [
-    {
-        country: "espana",
-        year: 2020,
-        public_expenditure: 588279.0,
-        pe_to_gdp: 52.4,
-        pe_on_defence: 2.6
-
-    },   
-];
-
-var smi_stats = [
-    {
-        country: "espana",
-        year: 2022,
-        smi_local: 1166.70,
-        smi_euros: 1166.70,
-        smi_variation: 3.63
-
-    },   
-];
 
 var DebtStat = [
     {
@@ -57,20 +36,7 @@ app.listen(port, () => {
     console.log(`Server TRULY ready`);
 });
 
-//OPERACIONES DE LA PARTE DE ROQUE
 
-
-
-// OPERACIONES ALEXIS
-
-app.post(FAMV_API+"/smi_stats",(req,res)=>{
-    smi_stats.push(req.body);
-    res.sendStatus(201, "CREATED");
-});
-
-app.get(FAMV_API+"/smi_stats",(req,res)=>{
-    res.send(JSON.stringify(smi_stats, null, 2));
-});
 
 // OPERACIONES JF
 
