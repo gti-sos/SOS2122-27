@@ -61,7 +61,7 @@ module.exports = (app,db) => {
     app.get(ROQUE_BASE_API_URL + "/loadInitialData", (req,res) => {
 
         //inicializamos el vector
-        if(PEStats.length===0){
+        if(PEStats.length === 0){
             InitialPEStats.forEach((a)=>{
                 PEStats.push(a);
             });
@@ -150,7 +150,7 @@ module.exports = (app,db) => {
                 );
         })
 
-        if(filteredPEStats == 0){
+        if(filteredPEStats.length === 0){
             PEStats.push(req.body);
             res.sendStatus(201,"CREATED");
         }else{
@@ -189,7 +189,7 @@ module.exports = (app,db) => {
 
         var indice = PEStats.indexOf(existsStat[0]);
 
-        if(existsStat == 0){
+        if(existsStat.length === 0){
             res.sendStatus(404,"NOT FOUND");
         }
         else{
