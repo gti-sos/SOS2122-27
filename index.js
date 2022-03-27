@@ -1,11 +1,12 @@
 const express = require("express");
 
 const backend_roque = require("./src/back/index_roque");
-
+const backend_alexis = require("./src/back/index_alexis");
 
 const app = express();
 
 backend_roque(app);
+backend_alexis(app);
 
 const port = process.env.PORT || 8080;
 
@@ -46,20 +47,7 @@ app.listen(port, () => {
     console.log(`Server TRULY ready`);
 });
 
-//OPERACIONES DE LA PARTE DE ROQUE
 
-
-
-// OPERACIONES ALEXIS
-
-app.post(FAMV_API+"/smi_stats",(req,res)=>{
-    smi_stats.push(req.body);
-    res.sendStatus(201, "CREATED");
-});
-
-app.get(FAMV_API+"/smi_stats",(req,res)=>{
-    res.send(JSON.stringify(smi_stats, null, 2));
-});
 
 // OPERACIONES JF
 
