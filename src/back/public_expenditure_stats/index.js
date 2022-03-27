@@ -140,11 +140,11 @@ module.exports = (app,db) => {
         }else{
             filteredPEStats = PEStats.filter((stat)=>{
                 return (
-                    stat.country == req.params.country && 
-                    stat.year == req.params.year &&
-                    stat.public_expenditure == req.params.public_expenditure &&
-                    stat.pe_to_gdp == req.params.pe_to_gdp &&
-                    stat.pe_on_defence == req.params.pe_on_defence
+                    stat.country == req.body.country && 
+                    stat.year == req.body.year &&
+                    stat.public_expenditure == req.body.public_expenditure &&
+                    stat.pe_to_gdp == req.body.pe_to_gdp &&
+                    stat.pe_on_defence == req.body.pe_on_defence
                     );
             })
     
@@ -190,9 +190,9 @@ module.exports = (app,db) => {
                 res.sendStatus(404,"NOT FOUND");
             }
             else{
-                PEStats[indice].pe_on_defence = req.params.pe_on_defence;
-                PEStats[indice].pe_to_gdp = req.params.pe_to_gdp;
-                PEStats[indice].public_expenditure = req.params.public_expenditure;
+                PEStats[indice].pe_on_defence = req.body.pe_on_defence;
+                PEStats[indice].pe_to_gdp = req.body.pe_to_gdp;
+                PEStats[indice].public_expenditure = req.body.public_expenditure;
                 res.sendStatus(200,"OK");
             } 
         }   
