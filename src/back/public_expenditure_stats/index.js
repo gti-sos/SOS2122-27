@@ -130,30 +130,36 @@ module.exports = (app,db) => {
     app.post(ROQUE_BASE_API_URL, (req,res) => {
         //comprobamos que los parametros existan
         if(
-            req.params.country == null ||
-            req.params.year == null ||
-            req.params.public_expenditure == null ||
-            req.params.pe_to_gdp == null ||
-            req.params.pe_on_defence == null
+            req.body.country == null ||
+            req.body.year == null ||
+            req.body.public_expenditure == null ||
+            req.body.pe_to_gdp == null ||
+            req.body.pe_on_defence == null
         ){
+            console.log("Holaaa");
+            console.log(req.body.country);
+            console.log(req.body.year);    
+            console.log(req.body.public_expenditure);    
+            console.log(req.body.pe_to_gdp);    
+            console.log(req.body.pe_on_defence); 
             res.sendStatus(400,"BAD REQUEST");  
-        }
-
-        filteredPEStats = PEStats.filter((stat)=>{
-            return (
-                stat.country == req.params.country && 
-                stat.year == req.params.year &&
-                stat.public_expenditure == req.params.public_expenditure &&
-                stat.pe_to_gdp == req.params.pe_to_gdp &&
-                stat.pe_on_defence == req.params.pe_on_defence
-                );
-        })
-
-        if(filteredPEStats.length === 0){
-            PEStats.push(req.body);
-            res.sendStatus(201,"CREATED");
         }else{
-            res.sendStatus(409,"CONFLICT");
+            filteredPEStats = PEStats.filter((stat)=>{
+                return (
+                    stat.country == req.params.country && 
+                    stat.year == req.params.year &&
+                    stat.public_expenditure == req.params.public_expenditure &&
+                    stat.pe_to_gdp == req.params.pe_to_gdp &&
+                    stat.pe_on_defence == req.params.pe_on_defence
+                    );
+            })
+    
+            if(filteredPEStats.length === 0){
+                PEStats.push(req.body);
+                res.sendStatus(201,"CREATED");
+            }else{
+                res.sendStatus(409,"CONFLICT");
+            }
         }
     });
 
@@ -176,27 +182,34 @@ module.exports = (app,db) => {
             req.params.pe_to_gdp == null ||
             req.params.pe_on_defence == null
         ){
+            console.log("Holaaa");
+            console.log(req.params.country);
+            console.log(req.params.year);    
+            console.log(req.params.public_expenditure);    
+            console.log(req.params.pe_to_gdp);    
+            console.log(req.params.pe_on_defence);    
+
             res.sendStatus(400,"BAD REQUEST");  
-        }
-
-        existsStat = PEStats.filter((stat)=>{
-            return (
-                stat.country == req.params.country && 
-                stat.year == req.params.year
-                );
-        })
-
-        var indice = PEStats.indexOf(existsStat[0]);
-
-        if(existsStat.length === 0){
-            res.sendStatus(404,"NOT FOUND");
-        }
-        else{
-            PEStats[indice].pe_on_defence = req.params.pe_on_defence;
-            PEStats[indice].pe_to_gdp = req.params.pe_to_gdp;
-            PEStats[indice].public_expenditure = req.params.public_expenditure;
-            res.sendStatus(200,"OK");
-        } 
+        }else{
+            existsStat = PEStats.filter((stat)=>{
+                return (
+                    stat.country == req.params.country && 
+                    stat.year == req.params.year
+                    );
+            })
+    
+            var indice = PEStats.indexOf(existsStat[0]);
+    
+            if(existsStat.length === 0){
+                res.sendStatus(404,"NOT FOUND");
+            }
+            else{
+                PEStats[indice].pe_on_defence = req.params.pe_on_defence;
+                PEStats[indice].pe_to_gdp = req.params.pe_to_gdp;
+                PEStats[indice].public_expenditure = req.params.public_expenditure;
+                res.sendStatus(200,"OK");
+            } 
+        }   
     });
 
     //PUT NO PERMITIDO
