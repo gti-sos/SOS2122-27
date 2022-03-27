@@ -47,6 +47,17 @@ app.listen(port, () => {
     console.log(`Server TRULY ready`);
 });
 
+//BASE DE DATOS
+
+var Datastore = require("nedb");
+
+const dbFileName = path.join(__dirname,"public_expenditure_stats.db");
+
+const db = new Datastore({
+    filename: dbFileName, 
+    autoload: true
+});
+
 
 
 // OPERACIONES JF
