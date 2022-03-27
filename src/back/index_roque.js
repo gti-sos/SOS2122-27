@@ -15,7 +15,7 @@ module.exports = (app) => {
         },   
     ];
 
-    var statCountryYear = req.params.country.year;
+    //var statCountryYear = req.params.country.year;
 
     //LOAD INITIAL DATA
 
@@ -29,14 +29,14 @@ module.exports = (app) => {
         res.send(JSON.stringify(PEStats, null, 2));
     });
     
-    app.get(BASE_API_URL+"/:country/:year",(req,res)=>{
+    app.get(ROQUE_BASE_API_URL+"/:country/:year",(req,res)=>{
         filteredPEStats = PEStats.filter((stat)=>{
             return (stat.country.year == statCountryYear);
         })
         res.send(JSON.stringify(PEStats, null, 2));
     });
     
-    app.get(BASE_API_URL+"/docs",(req,res)=>{
+    app.get(ROQUE_BASE_API_URL+"/docs",(req,res)=>{
         res.redirect(API_DOC_PORTAL);
     });
 
@@ -66,13 +66,13 @@ module.exports = (app) => {
 
     //DELETE
 
-    app.delete(BASE_API_URL,(req,res)=>{
+    app.delete(ROQUE_BASE_API_URL,(req,res)=>{
         PEStats = []
         res.sendStatus(200,"OK");
     
     });
     
-    app.delete(BASE_API_URL + "/:country/:year",(req,res)=>{
+    app.delete(ROQUE_BASE_API_URL + "/:country/:year",(req,res)=>{
         PEStats.filter((stat)=>{
             return (stat.country.year != statCountryYear);
         })
