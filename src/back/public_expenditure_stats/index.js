@@ -1,7 +1,7 @@
 module.exports = (app,db) => {
 
     const ROQUE_BASE_API_URL = "/api/v1/public-expenditure-stats";
-    const API_DOC_PORTAL = "";
+    const API_DOC_PORTAL = "https://documenter.getpostman.com/view/8975262/UVyn2yyn";
 
     var PEStats = [];
 
@@ -130,7 +130,6 @@ module.exports = (app,db) => {
     app.post(ROQUE_BASE_API_URL, (req,res) => {
         //comprobamos que los parametros existan
         if(
-            //Object.keys(req).length != 5 ||
             req.params.country == null ||
             req.params.year == null ||
             req.params.public_expenditure == null ||
