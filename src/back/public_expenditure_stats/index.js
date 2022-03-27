@@ -70,6 +70,7 @@ module.exports = (app,db) => {
         
         
         //Obtenemos los elementos
+        /*
         db.find({}, (error)=>{ 
 
             if(error){
@@ -82,6 +83,7 @@ module.exports = (app,db) => {
                 res.sendStatus(200,"Datos correctamente cargados a la BD");                        
             }
         }); 
+        */
     });
 
     //GET GENERAL
