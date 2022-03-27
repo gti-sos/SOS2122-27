@@ -66,7 +66,7 @@ module.exports = (app,db) => {
                 PEStats.push(a);
             });
         }
-        res.send(JSON.stringify(landusage_stats,null,2));
+        res.send(JSON.stringify(PEStats,null,2));
         
         
         //Obtenemos los elementos
