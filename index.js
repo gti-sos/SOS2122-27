@@ -11,22 +11,11 @@ const port = process.env.PORT || 8080;
 
 const bodyParser = require("body-parser");
 
-const ROQUE_BASE_API_URL = "/api/v1";
+
 const FAMV_API = "/api/v1";
 const JF_API = "/api/v1";
 
 app.use(bodyParser.json());
-
-var PEStats = [
-    {
-        country: "espana",
-        year: 2020,
-        public_expenditure: 588279.0,
-        pe_to_gdp: 52.4,
-        pe_on_defence: 2.6
-
-    },   
-];
 
 var smi_stats = [
     {
