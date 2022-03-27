@@ -13,6 +13,14 @@ module.exports = (app,db) => {
     
         },
         {
+            country: "espana",
+            year: 2019,
+            public_expenditure: 524037.0,
+            pe_to_gdp: 42.1,
+            pe_on_defence: 2.94
+    
+        },
+        {
             country: "alemania",
             year: 2020,
             public_expenditure: 1712131.0,
@@ -65,35 +73,59 @@ module.exports = (app,db) => {
         }); 
     });
 
-    //GET
+    //GET GENERAL
     
     app.get(ROQUE_BASE_API_URL, (req,res) => {
         res.send(JSON.stringify(PEStats, null, 2));
     });
+
+    //GET DE LOS DATOS DE UN PAIS
+    
+    app.get(ROQUE_BASE_API_URL+"/:country",(req,res)=>{
+        filteredPEStats = PEStats.filter((stat)=>{
+            return (stat.country == req.params.country);
+        })
+        if(filteredPEStats == 0){
+            res.sendStatus(404,"NOT FOUND");
+        }else{
+            res.send(JSON.stringify(filteredPEStats, null, 2));
+        }
+        
+    });
+
+    //GET DE UN RECURSO CONCRETO
     
     app.get(ROQUE_BASE_API_URL+"/:country/:year",(req,res)=>{
         filteredPEStats = PEStats.filter((stat)=>{
             return (stat.country == req.params.country && stat.year == req.params.year);
         })
-        res.send(JSON.stringify(PEStats, null, 2));
+        if(filteredPEStats == 0){
+            res.sendStatus(404,"NOT FOUND");
+        }else{
+            res.send(JSON.stringify(filteredPEStats, null, 2));
+        }
     });
+
+    //DOCUMENTACION DE LA API
     
     app.get(ROQUE_BASE_API_URL+"/docs",(req,res)=>{
         res.redirect(API_DOC_PORTAL);
     });
 
-    //POST
+    //POST CORRECTO
     
     app.post(ROQUE_BASE_API_URL, (req,res) => {
         PEStats.push(req.body);
         res.sendStatus(201,"CREATED");
     });
 
+    //POST NO PERMITIDO
+
     app.post(ROQUE_BASE_API_URL +"/:country/:year", (req,res) => {
         res.sendStatus(405,"METHOD NOT ALLOWED");
     });
 
-    //PUT
+    //PUT CORRECTO
 
     app.put(ROQUE_BASE_API_URL +"/:country/:year", (req,res) => {
 
@@ -102,17 +134,21 @@ module.exports = (app,db) => {
         res.sendStatus(200,"OK");
     });
 
+    //PUT NO PERMITIDO
+
     app.put(ROQUE_BASE_API_URL, (req,res) => {
         res.sendStatus(405,"METHOD NOT ALLOWED");
     });
 
-    //DELETE
+    //DELETE GENERAL
 
     app.delete(ROQUE_BASE_API_URL,(req,res)=>{
         PEStats = []
         res.sendStatus(200,"OK");
     
     });
+
+    //DELETE DE UN RECURSO CONCRETO
     
     app.delete(ROQUE_BASE_API_URL + "/:country/:year",(req,res)=>{
         PEStats.filter((stat)=>{
