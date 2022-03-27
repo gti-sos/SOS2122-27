@@ -46,11 +46,6 @@ module.exports = (app,db) => {
         } 
     ];
 
-<<<<<<< HEAD
-=======
-    //var statCountryYear = req.params.country.year;
-
->>>>>>> f16e18ae8d58809cf3f72ebd6a2bcf6a043d67cd
     //LOAD INITIAL DATA
 
     app.get(ROQUE_BASE_API_URL + "/loadInitialData", (req,res) => {
