@@ -2,37 +2,25 @@ const express = require("express");
 const path = require("path");
 
 const backend_roque = require("./src/back/public_expenditure_stats/index");
-const backend_alexis = require("./src/back/smi_stats/index.js");
+const backend_alexis = require("./src/back/smi_stats/index");
 
 const app = express();
 
 //BASE DE DATOS
 var Datastore = require("nedb");
 var PE_DB = new Datastore({filename: path.join(__dirname,"./src/back/public_expenditure_stats/publicExpenditureDB.db"), autoload: true});
-
+var SMI_DB = new Datastore({filename: path.join(__dirname,"./src/back/smi_stats/smiDB.db"), autoload: true});
 backend_roque(app,PE_DB);
-backend_alexis(app);
+backend_alexis(app, SMI_DB);
 
 const port = process.env.PORT || 8080;
 
 const bodyParser = require("body-parser");
 
 
-const FAMV_API = "/api/v1";
 const JF_API = "/api/v1";
 
 app.use(bodyParser.json());
-
-var smi_stats = [
-    {
-        country: "espana",
-        year: 2022,
-        smi_local: 1166.70,
-        smi_euros: 1166.70,
-        smi_variation: 3.63
-
-    },   
-];
 
 var DebtStat = [
     {
