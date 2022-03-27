@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 
 const backend_roque = require("./src/back/public_expenditure_stats/index");
-const backend_alexis = require("./src/back/index_alexis");
+const backend_alexis = require("./src/back/smi_stats/index.js");
 
 const app = express();
 

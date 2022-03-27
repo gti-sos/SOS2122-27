@@ -15,7 +15,26 @@ module.exports = (app) => {
         },   
     ];
 
-    
+
+    app.get(FAMV_API + "/loadInitialData", (req,res) => {
+        
+        //Obtenemos los elementos
+        db.find({}, (error)=>{ 
+
+            if(error){
+                console.log("Error en Load Initial Data");
+                res.sendStatus(500); 
+            }
+            else{
+                dataBase.remove({}, {multi: true});
+                dataBase.insert(PEStats);
+                res.sendStatus(200,"Datos correctamente cargados a la BD");                        
+            }
+        }); 
+    });
+
+
+
 app.post(FAMV_API,(req,res)=>{
     smi_stats.push(req.body);
     res.sendStatus(201, "CREATED");
