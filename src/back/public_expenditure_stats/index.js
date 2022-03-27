@@ -218,7 +218,7 @@ module.exports = (app,db) => {
     
     app.delete(ROQUE_BASE_API_URL + "/:country/:year",(req,res)=>{
         PEStats.filter((stat)=>{
-            return (stat.country == req.params.year && stat.year == req.params.year);
+            return (stat.country != req.params.year && stat.year != req.params.year);
         })
         res.sendStatus(200,"OK");
     
