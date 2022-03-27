@@ -2,8 +2,11 @@ module.exports = (app) => {
 
     const FAMV_API = "/api/v1/smi_stats";
     //const db = new Datastore({ filename: datafile, autoload: true });
-    var country = req.params.country;
-    var year = req.params.year
+    //const datafile = path.join(__dirname, 'smi-stats.db');
+    const API_DOC_PORTAL = "";
+
+    //var Datastore = require("nedb");
+
     var smi_stats = [
         {
             country: "espana",
@@ -27,6 +30,7 @@ app.get(FAMV_API,(req,res)=>{
 });
 
 app.get(FAMV_API+"/:country",(req,res)=>{
+    var country = req.params.country;
     filteredCountries = smi_stats.filter((smi_stats)=>{
         return (smi_stats.country == country);
     })
@@ -34,12 +38,17 @@ app.get(FAMV_API+"/:country",(req,res)=>{
 });
 
 app.get(FAMV_API+"/:year",(req,res)=>{
+    var year = req.params.year;
     filteredYears = smi_stats.filter((smi_stats)=>{
         return (smi_stats.year == year);
     })
     res.send(JSON.stringify(contacts, null, 2));
 });
 
+app.get(FAMV_API+"/docs",(req,res)=>{
+    res.redirect(API_DOC_PORTAL);
+});
+/*
 app.put(FAMV_API+"/:country/:year", (req,res)=>{
     var newSMIStat = req.body;
 
@@ -75,13 +84,14 @@ app.put(FAMV_API+"/:country/:year", (req,res)=>{
 }
 
 });
-
+*/
 app.delete(FAMV_API,(req,res)=>{
     data = []
     res.sendStatus(200,"OK");
 });
 
 app.delete(FAMV_API+"/:country",(req,res)=>{
+    var country = req.params.country;
     smi_stats.filter((smi_stats)=>{
         return (smi_stats.country != country);
     })
@@ -90,6 +100,7 @@ app.delete(FAMV_API+"/:country",(req,res)=>{
 });
 
 app.delete(FAMV_API+"/:year",(req,res)=>{
+    var year = req.params.year;
     smi_stats.filter((smi_stats)=>{
         return (smi_stats.year != year);
     })
