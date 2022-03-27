@@ -115,8 +115,33 @@ module.exports = (app,db) => {
     //POST CORRECTO
     
     app.post(ROQUE_BASE_API_URL, (req,res) => {
-        PEStats.push(req.body);
-        res.sendStatus(201,"CREATED");
+        //comprobamos que los parametros existan
+        if(
+            !!req.body.country == false ||
+            !!req.body.year == false ||
+            !!req.body.public_expenditure == false ||
+            !!req.body.pe_to_gdp == false ||
+            !!req.body.pe_on_defence == false
+        ){
+            res.sendStatus(400,"BAD REQUEST");  
+        }
+
+        filteredPEStats = PEStats.filter((stat)=>{
+            return (
+                stat.country == req.params.country && 
+                stat.year == req.params.year &&
+                stat.public_expenditure == req.params.public_expenditure &&
+                stat.pe_to_gdp == req.params.pe_to_gdp &&
+                stat.pe_on_defence == req.params.pe_on_defence
+                );
+        })
+
+        if(filteredPEStats == 0){
+            PEStats.push(req.body);
+            res.sendStatus(201,"CREATED");
+        }else{
+            res.sendStatus(409,"CONFLICT");
+        }
     });
 
     //POST NO PERMITIDO
@@ -129,9 +154,38 @@ module.exports = (app,db) => {
 
     app.put(ROQUE_BASE_API_URL +"/:country/:year", (req,res) => {
 
-        //aqui va el codigo
+        //comprobamos que los parametros existan
+        if(
+            !!req.body.country == false ||
+            !!req.body.year == false ||
+            !!req.body.public_expenditure == false ||
+            !!req.body.pe_to_gdp == false ||
+            !!req.body.pe_on_defence == false
+        ){
+            res.sendStatus(400,"BAD REQUEST");  
+        }
 
-        res.sendStatus(200,"OK");
+        existsStat = PEStats.filter((stat)=>{
+            return (
+                stat.country == req.params.country && 
+                stat.year == req.params.year
+                );
+        })
+
+        var indice = PEStats.indexOf(existsStat[0]);
+
+        if(existsStat == 0){
+            res.sendStatus(404,"NOT FOUND");
+        }
+        else{
+            PEStats[indice].pe_on_defence = req.params.pe_on_defence;
+            PEStats[indice].pe_to_gdp = req.params.pe_to_gdp;
+            PEStats[indice].public_expenditure = req.params.public_expenditure;
+            res.sendStatus(200,"OK");
+        }
+
+        
+
     });
 
     //PUT NO PERMITIDO
