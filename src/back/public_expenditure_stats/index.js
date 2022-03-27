@@ -135,13 +135,7 @@ module.exports = (app,db) => {
             req.body.public_expenditure == null ||
             req.body.pe_to_gdp == null ||
             req.body.pe_on_defence == null
-        ){
-            console.log("Holaaa");
-            console.log(req.body.country);
-            console.log(req.body.year);    
-            console.log(req.body.public_expenditure);    
-            console.log(req.body.pe_to_gdp);    
-            console.log(req.body.pe_on_defence); 
+        ){ 
             res.sendStatus(400,"BAD REQUEST");  
         }else{
             filteredPEStats = PEStats.filter((stat)=>{
@@ -175,20 +169,12 @@ module.exports = (app,db) => {
 
         //comprobamos que los parametros existan
         if(
-            //Object.keys(req).length != 5 ||
-            req.params.country == null ||
-            req.params.year == null ||
-            req.params.public_expenditure == null ||
-            req.params.pe_to_gdp == null ||
-            req.params.pe_on_defence == null
-        ){
-            console.log("Holaaa");
-            console.log(req.params.country);
-            console.log(req.params.year);    
-            console.log(req.params.public_expenditure);    
-            console.log(req.params.pe_to_gdp);    
-            console.log(req.params.pe_on_defence);    
-
+            req.body.country == null ||
+            req.body.year == null ||
+            req.body.public_expenditure == null ||
+            req.body.pe_to_gdp == null ||
+            req.body.pe_on_defence == null
+        ){ 
             res.sendStatus(400,"BAD REQUEST");  
         }else{
             existsStat = PEStats.filter((stat)=>{
