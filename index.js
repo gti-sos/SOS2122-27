@@ -1,5 +1,12 @@
 const express = require("express");
+
+const backend_roque = require("./src/back/index_roque");
+
+
 const app = express();
+
+backend_roque(app);
+
 const port = process.env.PORT || 8080;
 
 const bodyParser = require("body-parser");
@@ -52,14 +59,7 @@ app.listen(port, () => {
 
 //OPERACIONES DE LA PARTE DE ROQUE
 
-app.get(ROQUE_BASE_API_URL + "/public-expenditure-stats", (req,res) => {
-    res.send(JSON.stringify(PEStats, null, 2));
-});
 
-app.post(ROQUE_BASE_API_URL + "/public-expenditure-stats", (req,res) => {
-    PEStats.push(req.body);
-    res.sendStatus(201,"CREATED");
-});
 
 // OPERACIONES ALEXIS
 
