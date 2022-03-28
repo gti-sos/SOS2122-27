@@ -56,6 +56,14 @@ module.exports = (app,db) => {
         } 
     ];
 
+
+
+    //DOCUMENTACION DE LA API
+    
+    app.get(ROQUE_BASE_API_URL+"/docs",(req,res)=>{
+        res.redirect(API_DOC_PORTAL);
+    });
+
     //LOAD INITIAL DATA
 
     app.get(ROQUE_BASE_API_URL + "/loadInitialData", (req,res) => {
@@ -117,12 +125,6 @@ module.exports = (app,db) => {
         }else{
             res.send(JSON.stringify(filteredPEStats, null, 2));
         }
-    });
-
-    //DOCUMENTACION DE LA API
-    
-    app.get(ROQUE_BASE_API_URL+"/docs",(req,res)=>{
-        res.redirect(API_DOC_PORTAL);
     });
 
     //POST CORRECTO
@@ -215,7 +217,7 @@ module.exports = (app,db) => {
     //DELETE DE UN RECURSO CONCRETO
     
     app.delete(ROQUE_BASE_API_URL + "/:country/:year",(req,res)=>{
-        PEStats.filter((stat)=>{
+        PEStats = PEStats.filter((stat)=>{
             return (stat.country != req.params.country || stat.year != req.params.year);
         })
         res.sendStatus(200,"OK");
