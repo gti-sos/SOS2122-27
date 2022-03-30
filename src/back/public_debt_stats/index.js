@@ -1,6 +1,6 @@
 module.exports = (app,db) => {
     const JF_API_URL = "/api/v1/public-debt-stats";
-    const API_DOC_PORTAL = "";
+    const API_DOC_PORTAL = "https://documenter.getpostman.com/view/14853996/UVypzxct";
 
     var DebtStats = [];
 
