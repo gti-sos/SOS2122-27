@@ -1,7 +1,7 @@
 module.exports = (app,db) => {
 
     const FAMV_API = "/api/v1/smi_stats";
-    const API_DOC_PORTAL = "https://documenter.getpostman.com/view/19481651/UVyn3K1F";
+    const API_DOC = "https://documenter.getpostman.com/view/19481651/UVyn3K1F";
     
     var smi_stats = [];
     var initial_smi_stats = [
@@ -43,6 +43,9 @@ module.exports = (app,db) => {
         },
     ];
 
+    app.get(FAMV_API+"/docs",(req,res)=>{
+        res.redirect(API_DOC);
+    });
 
     app.get(FAMV_API + "/loadInitialData", (req,res) => {
         
@@ -85,6 +88,8 @@ app.post(FAMV_API,(req,res)=>{
     }
 });
 
+//POST
+
 app.post(FAMV_API +"/:country/:year", (req,res) => {
     res.sendStatus(405,"METHOD NOT ALLOWED");
 });
@@ -93,6 +98,8 @@ app.post(FAMV_API +"/:country/:year", (req,res) => {
 app.get(FAMV_API,(req,res)=>{
     res.send(JSON.stringify(smi_stats, null, 2));
 });
+
+//GET CONCRETO
 
 app.get(FAMV_API+"/:country",(req,res)=>{
     filteredSMI = smi_stats.filter((stat)=>{
@@ -106,6 +113,8 @@ app.get(FAMV_API+"/:country",(req,res)=>{
 
 });
 
+//GET CONCRETO CON AÑO
+
 app.get(FAMV_API+"/:country/:year",(req,res)=>{
     filteredSMI = smi_stats.filter((stat)=>{
         return (stat.country == req.params.country && stat.year == req.params.year);
@@ -117,9 +126,7 @@ app.get(FAMV_API+"/:country/:year",(req,res)=>{
     }
 });
 
-app.get(FAMV_API+"/docs",(req,res)=>{
-    res.redirect(API_DOC_PORTAL);
-});
+
 
 //PUT
 
@@ -155,7 +162,7 @@ app.put(FAMV_API +"/:country/:year", (req,res) => {
         } 
     }   
 });
-
+// PUT INVALIDO
 app.put(FAMV_API, (req,res) => {
     res.sendStatus(405,"METHOD NOT ALLOWED");
 });
@@ -166,6 +173,9 @@ app.delete(FAMV_API,(req,res)=>{
     res.sendStatus(200,"OK");
 });
 
+
+//DELETE DE UN RECURSO CONCRETO
+
 app.delete(FAMV_API+"/:country",(req,res)=>{
     var SMIcountry = req.params.country;
     smi_stats.filter((stat)=>{
@@ -174,6 +184,8 @@ app.delete(FAMV_API+"/:country",(req,res)=>{
     res.sendStatus(200,"OK");
 
 });
+
+//DELETE DE UN RECURSO CONCRETO CON AÑO
 
 app.delete(FAMV_API + "/:country/:year",(req,res)=>{
     smi_stats.filter((stat)=>{
