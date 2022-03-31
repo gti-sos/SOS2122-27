@@ -32,10 +32,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{SERVER}}{{HOST}}/api/v1/smi_stats/loadInitialData",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/loadInitialData",
 					"host": [
-						"{{SERVER}}{{HOST}}"
+						"{{HOST}}"
 					],
+					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v1",
@@ -73,10 +74,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{SERVER}}{{HOST}}/api/v1/smi_stats/china",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china",
 					"host": [
-						"{{SERVER}}{{HOST}}"
+						"{{HOST}}"
 					],
+					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v1",
@@ -115,10 +117,11 @@
 					}
 				},
 				"url": {
-					"raw": "{{SERVER}}{{HOST}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
 					"host": [
-						"{{SERVER}}{{HOST}}"
+						"{{HOST}}"
 					],
+					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v1",
@@ -155,10 +158,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{SERVER}}{{HOST}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
 					"host": [
-						"{{SERVER}}{{HOST}}"
+						"{{HOST}}"
 					],
+					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v1",
@@ -195,10 +199,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{SERVER}}{{HOST}}/api/v1/smi_stats/china/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china/2020",
 					"host": [
-						"{{SERVER}}{{HOST}}"
+						"{{HOST}}"
 					],
+					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v1",
@@ -229,10 +234,11 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{SERVER}}{{HOST}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
 					"host": [
-						"{{SERVER}}{{HOST}}"
+						"{{HOST}}"
 					],
+					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v1",
@@ -261,10 +267,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{SERVER}}{{HOST}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
 					"host": [
-						"{{SERVER}}{{HOST}}"
+						"{{HOST}}"
 					],
+					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v1",
@@ -301,10 +308,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{SERVER}}{{HOST}}/api/v1/smi_stats/loadInitialData",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/loadInitialData",
 					"host": [
-						"{{SERVER}}{{HOST}}"
+						"{{HOST}}"
 					],
+					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v1",
@@ -334,10 +342,11 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{SERVER}}{{HOST}}/api/v1/smi_stats/portugal/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/portugal/2020",
 					"host": [
-						"{{SERVER}}{{HOST}}"
+						"{{HOST}}"
 					],
+					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v1",
@@ -376,10 +385,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{SERVER}}{{HOST}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
 					"host": [
-						"{{SERVER}}{{HOST}}"
+						"{{HOST}}"
 					],
+					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v1",
@@ -417,10 +427,11 @@
 					}
 				},
 				"url": {
-					"raw": "{{SERVER}}{{HOST}}/api/v1/smi_stats/china/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china/2020",
 					"host": [
-						"{{SERVER}}{{HOST}}"
+						"{{HOST}}"
 					],
+					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v1",
@@ -451,10 +462,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{SERVER}}{{HOST}}/api/v1/smi_stats/docs",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/docs",
 					"host": [
-						"{{SERVER}}{{HOST}}"
+						"{{HOST}}"
 					],
+					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v1",
