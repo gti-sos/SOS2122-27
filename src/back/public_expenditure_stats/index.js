@@ -123,7 +123,8 @@ module.exports = (app,db) => {
         if(filteredPEStats == 0){
             res.sendStatus(404,"NOT FOUND");
         }else{
-            res.send(JSON.stringify(filteredPEStats, null, 2));
+            //se devuelve un unico objeto
+            res.send(JSON.stringify(filteredPEStats[0], null, 2));
         }
     });
 
@@ -131,7 +132,8 @@ module.exports = (app,db) => {
     
     app.post(ROQUE_BASE_API_URL, (req,res) => {
         //comprobamos que los parametros existan
-        if(
+        if( 
+            Object.keys(req.body).length != 5 ||
             req.body.country == null ||
             req.body.year == null ||
             req.body.public_expenditure == null ||
@@ -171,6 +173,7 @@ module.exports = (app,db) => {
 
         //comprobamos que los parametros del req existan
         if(
+            Object.keys(req.body).length != 5 ||
             req.body.country == null ||
             req.body.year == null ||
             req.body.public_expenditure == null ||

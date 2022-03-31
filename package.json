@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test-public-expenditure-stats": "newman run ./tests/PEStats_test.json -e ./tests/env/PEStats_local_env.json",
+    "test": "npm run test-public-expenditure-stats"
   },
   "repository": {
     "type": "git",
