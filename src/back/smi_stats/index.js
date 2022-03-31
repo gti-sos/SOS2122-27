@@ -1,7 +1,7 @@
 module.exports = (app,db) => {
 
     const FAMV_API = "/api/v1/smi_stats";
-    const API_DOC = "https://documenter.getpostman.com/view/19481651/UVyn3K1F";
+    const API_DOC_PORTAL = "https://documenter.getpostman.com/view/19481651/UVyn3K1F";
     
     var smi_stats = [];
     var initial_smi_stats = [
@@ -42,11 +42,11 @@ module.exports = (app,db) => {
             smi_variation:  11.29
         },
     ];
-
-    app.get(FAMV_API+"/docs",(req,res)=>{
-        res.redirect(API_DOC);
+// GET Documentacion
+    app.get(FAMV_API + "/docs", (req,res)=>{
+        res.redirect(API_DOC_PORTAL);
     });
-
+// GET DATOS INICIALES
     app.get(FAMV_API + "/loadInitialData", (req,res) => {
         
         if(smi_stats.length === 0){
