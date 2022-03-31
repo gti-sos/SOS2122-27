@@ -7,7 +7,9 @@
     "start": "node index.js",
     "test-public-expenditure-stats": "newman run ./tests/PEStats_test.json -e ./tests/env/PEStats_local_env.json",
     "test-public-debt-stats": "newman run ./tests/DebtStats_test.json -e ./tests/env/DebtStats_local_env.json",
-    "test": "npm run test-public-expenditure-stats && test-public-debt-stats"
+    "test-smi-stats": "newman run ./tests/SmiStats_test.json -e ./tests/env/SmiStats_local_env.json",
+
+    "test": "npm run test-public-expenditure-stats && npm run test-public-debt-stats && npm run test-smi-stats"
   },
   "repository": {
     "type": "git",
