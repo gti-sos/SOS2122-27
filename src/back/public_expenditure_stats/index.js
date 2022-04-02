@@ -32,7 +32,7 @@ module.exports = (app,db) => {
         },
         {
             country: "francia",
-            year: 2020,
+            year: 2018,
             public_expenditure: 1419593.0,
             pe_to_gdp: 61.6,
             pe_on_defence: 3.29
@@ -100,32 +100,83 @@ module.exports = (app,db) => {
         res.send(JSON.stringify(PEStats, null, 2));
     });
 
-    //GET DE LOS DATOS DE UN PAIS
-    
-    app.get(ROQUE_BASE_API_URL+"/:country",(req,res)=>{
-        filteredPEStats = PEStats.filter((stat)=>{
-            return (stat.country == req.params.country);
-        })
-        if(filteredPEStats == 0){
-            res.sendStatus(404,"NOT FOUND");
-        }else{
-            res.send(JSON.stringify(filteredPEStats, null, 2));
-        }
-        
-    });
-
     //GET DE UN RECURSO CONCRETO
     
     app.get(ROQUE_BASE_API_URL+"/:country/:year",(req,res)=>{
         filteredPEStats = PEStats.filter((stat)=>{
-            return (stat.country == req.params.country && stat.year == req.params.year);
+            return (stat.country === req.params.country && stat.year === req.params.year);
         })
-        if(filteredPEStats == 0){
+        if(filteredPEStats === 0){
             res.sendStatus(404,"NOT FOUND");
         }else{
             //se devuelve un unico objeto
             res.send(JSON.stringify(filteredPEStats[0], null, 2));
         }
+    });
+
+    //BUSQUEDA POR AÑO
+    
+    app.get(ROQUE_BASE_API_URL+"?year=:yearParam",(req,res)=>{
+        filteredPEStats = PEStats.filter((stat)=>{
+            return (stat.year === parseInt(req.params.yearParam));
+        })
+        if(filteredPEStats === 0){
+            res.sendStatus(404,"NOT FOUND");
+        }else{
+            res.send(JSON.stringify(filteredPEStats, null, 2));
+        } 
+    });
+
+    //BUSQUEDA POR PAIS
+    
+    app.get(ROQUE_BASE_API_URL+"?country=:countryParam",(req,res)=>{
+        filteredPEStats = PEStats.filter((stat)=>{
+            return (stat.country === req.params.countryParam);
+        })
+        if(filteredPEStats === 0){
+            res.sendStatus(404,"NOT FOUND");
+        }else{
+            res.send(JSON.stringify(filteredPEStats, null, 2));
+        } 
+    });
+
+    //BUSQUEDA POR PUBLIC EXPENDITURE
+    
+    app.get(ROQUE_BASE_API_URL+"?public_expenditure=:publicExpenditureParam",(req,res)=>{
+        filteredPEStats = PEStats.filter((stat)=>{
+            return (stat.public_expenditure === req.params.publicExpenditureParam);
+        })
+        if(filteredPEStats === 0){
+            res.sendStatus(404,"NOT FOUND");
+        }else{
+            res.send(JSON.stringify(filteredPEStats, null, 2));
+        } 
+    });
+
+    //BUSQUEDA POR PE TO GDP
+    
+    app.get(ROQUE_BASE_API_URL+"?pe_to_gdp=:peToGdpParam",(req,res)=>{
+        filteredPEStats = PEStats.filter((stat)=>{
+            return (stat.pe_to_gdp === req.params.peToGdpParam);
+        })
+        if(filteredPEStats === 0){
+            res.sendStatus(404,"NOT FOUND");
+        }else{
+            res.send(JSON.stringify(filteredPEStats, null, 2));
+        } 
+    });
+
+    //BUSQUEDA POR PE ON DEFENCE
+    
+    app.get(ROQUE_BASE_API_URL+"?pe_on_defence=:peOnDefenceParam",(req,res)=>{
+        filteredPEStats = PEStats.filter((stat)=>{
+            return (stat.pe_on_defence === req.params.peOnDefenceParam);
+        })
+        if(filteredPEStats === 0){
+            res.sendStatus(404,"NOT FOUND");
+        }else{
+            res.send(JSON.stringify(filteredPEStats, null, 2));
+        } 
     });
 
     //POST CORRECTO
@@ -144,11 +195,11 @@ module.exports = (app,db) => {
         }else{
             filteredPEStats = PEStats.filter((stat)=>{
                 return (
-                    stat.country == req.body.country && 
-                    stat.year == req.body.year &&
-                    stat.public_expenditure == req.body.public_expenditure &&
-                    stat.pe_to_gdp == req.body.pe_to_gdp &&
-                    stat.pe_on_defence == req.body.pe_on_defence
+                    stat.country === req.body.country && 
+                    stat.year === req.body.year &&
+                    stat.public_expenditure === req.body.public_expenditure &&
+                    stat.pe_to_gdp === req.body.pe_to_gdp &&
+                    stat.pe_on_defence === req.body.pe_on_defence
                     );
             })
     
@@ -184,8 +235,8 @@ module.exports = (app,db) => {
         }else{
             existsStat = PEStats.filter((stat)=>{
                 return (
-                    stat.country == req.params.country && 
-                    stat.year == req.params.year
+                    stat.country === req.params.country && 
+                    stat.year === req.params.year
                     );
             })
     
