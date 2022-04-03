@@ -22,7 +22,7 @@ backend_roque(app,PE_DB);
 backend_alexis(app, SMI_DB);
 backend_jf(app,PD_DB);
 
-app.use("/", express.static('public'))
+app.use("/", express.static('public'));
 
 app.listen(port, () => {
     console.log(`Server TRULY ready`);
