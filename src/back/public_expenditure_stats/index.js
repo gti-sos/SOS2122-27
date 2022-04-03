@@ -117,12 +117,23 @@ module.exports = (app,db) => {
         if(Object.keys(req.query).length > 0){
             console.log("Query:",req.query);
             selectedStats = filterQuery(req,PEStats);
+
+            if(req.query.limit != undefined || req.query.offset != undefined){
+                selectedStats = paginationMaker(req,selectedStats);
+            }
         }
         //no hay busqueda
         else{
             selectedStats = PEStats;
         }
-        res.send(JSON.stringify(selectedStats, null, 2));
+
+        if(selectedStats.includes("ERROR")) {
+            res.sendStatus(400,"BAD REQUEST"); 
+        } else if(selectedStats.length === 0) {
+            res.sendStatus(404,"NOT FOUND");
+        }else{
+            res.send(JSON.stringify(selectedStats, null, 2));
+        } 
     });
 
     //POST CORRECTO
@@ -258,6 +269,25 @@ module.exports = (app,db) => {
             return flag  
         });
         return filteredStats;
+    }
+
+    //FUNCION DE PAGINACION
+
+    function paginationMaker(req, stats) {
+        var res = [];
+        const offset = req.query.offset;
+        const limit = req.query.limit;
+    
+        if(limit < 0 || offset < 0 || offset > stats.length) {
+            console.error(`Error in pagination, you have exceded limits`);
+            res.push("ERROR");
+            return res;	
+        }
+        const startIndex = offset;
+        const endIndex = startIndex + limit;
+    
+        res = stats.slice(startIndex, endIndex);
+        return res;
     }
 
 };
