@@ -88,15 +88,36 @@ app.post(FAMV_API,(req,res)=>{
     }
 });
 
-//POST
+//POST ERROR
 
 app.post(FAMV_API +"/:country/:year", (req,res) => {
     res.sendStatus(405,"METHOD NOT ALLOWED");
 });
 
-//GET
-app.get(FAMV_API,(req,res)=>{
-    res.send(JSON.stringify(smi_stats, null, 2));
+//GET GENERAL
+    
+app.get(FAMV_API, (req,res) => {
+
+    if(Object.keys(req.query).length > 0){
+        console.log("Query:",req.query);
+        selectedStats = filterQuery(req,smi_stats);
+
+        if(req.query.limit != undefined || req.query.offset != undefined){
+            selectedStats = paginationMaker(req,selectedStats);
+        }
+    }
+
+    else{
+        selectedStats = smi_stats;
+    }
+
+    if(selectedStats.includes("ERROR")) {
+        res.sendStatus(400,"BAD REQUEST"); 
+    } else if(selectedStats.length === 0) {
+        res.sendStatus(404,"NOT FOUND");
+    }else{
+        res.send(JSON.stringify(selectedStats, null, 2));
+    } 
 });
 
 //GET CONCRETO
@@ -194,5 +215,60 @@ app.delete(FAMV_API + "/:country/:year",(req,res)=>{
     res.sendStatus(200,"OK");
 
 });
+
+ //FUNCION DE FILTRADO
+ function filterQuery(req,stats){
+    filteredStats = stats.filter((stat)=>{
+        
+        var flag = true;
+
+        if(req.query.year != undefined) {
+            if(stat.year != req.query.year)  {
+                flag = false;
+            }
+        }
+        if(req.query.country != undefined) {
+            if(stat.country != req.query.country)  {
+                flag = false;
+            }
+        }
+        if(req.query.smi_euros != undefined) {
+            if(stat.smi_euros != req.query.smi_euros)  {
+                flag = false;
+            }
+        }
+        if(req.query.smi_local != undefined) {
+            if(stat.smi_local != req.query.smi_local)  {
+                flag = false;
+            }
+        }
+        if(req.query.smi_variation != undefined) {
+            if(stat.smi_variation != req.query.smi_variation)  {
+                flag = false;
+            }
+        }
+        return flag  
+    });
+    return filteredStats;
+}
+
+//FUNCION DE PAGINACION
+
+function paginationMaker(req, stats) {
+    var res = [];
+    const offset = req.query.offset;
+    const limit = req.query.limit;
+
+    if(limit < 0 || offset < 0 || offset > stats.length) {
+        console.error(`Error in pagination, you have exceded limits`);
+        res.push("ERROR");
+        return res;	
+    }
+    const startIndex = offset;
+    const endIndex = startIndex + limit;
+
+    res = stats.slice(startIndex, endIndex);
+    return res;
+}
 
 };
