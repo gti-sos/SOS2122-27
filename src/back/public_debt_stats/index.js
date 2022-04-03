@@ -43,6 +43,7 @@ module.exports = (app,db) => {
     ];
 
     //DOCUMENTACION DE LA API
+
     //Por persona: 10.
     app.get(JF_API_URL + "/docs", (req,res)=>{
         res.redirect(API_DOC_PORTAL);
@@ -63,7 +64,27 @@ module.exports = (app,db) => {
     //GET GENERAL
     
     app.get(JF_API_URL, (req,res) => {
-        res.send(JSON.stringify(DebtStats, null, 2));
+
+        if(Object.keys(req.query).length > 0){
+            console.log("Query:",req.query);
+            selectedStats = filterQuery(req,DebtStats);
+            
+            if(req.query.limit != undefined || req.query.offset != undefined){
+                selectedStats = paginationMaker(req,selectedStats);
+            }
+
+        }else{
+            selectedStats = DebtStats;
+        }
+
+        if(selectedStats.includes("ERROR")) {
+            res.sendStatus(400,"BAD REQUEST"); 
+        } else if(selectedStats.length === 0) {
+            res.sendStatus(404,"NOT FOUND");
+        }else{
+            res.send(JSON.stringify(selectedStats, null, 2));
+        } 
+
     });
 
     //GET DE LOS DATOS DE UN PAIS
@@ -192,4 +213,60 @@ module.exports = (app,db) => {
         res.sendStatus(200,"OK");
     
     });
+
+    //FUNCION DE PAGINACION
+
+    function paginationMaker(req, stats) {
+        var res = [];
+        const offset = req.query.offset;
+        const limit = req.query.limit;
+    
+        if(limit < 0 || offset < 0 || offset > stats.length) {
+            console.error(`Error in pagination, you have exceded limits`);
+            res.push("ERROR");
+            return res;	
+        }
+        const startIndex = offset;
+        const endIndex = startIndex + limit;
+    
+        res = stats.slice(startIndex, endIndex);
+        return res;
+    }
+
+    //FUNCION DE FILTRADO
+    
+    function filterQuery(req,stats){
+        filteredStats = stats.filter((stat)=>{
+            
+            var flag = true;
+
+            if(req.query.year != undefined) {
+                if(stat.year != req.query.year)  {
+                    flag = false;
+                }
+            }
+            if(req.query.country != undefined) {
+                if(stat.country != req.query.country)  {
+                    flag = false;
+                }
+            }
+            if(req.query.public_expenditure != undefined) {
+                if(stat.public_expenditure != req.query.public_expenditure)  {
+                    flag = false;
+                }
+            }
+            if(req.query.pe_to_gdp != undefined) {
+                if(stat.pe_to_gdp != req.query.pe_to_gdp)  {
+                    flag = false;
+                }
+            }
+            if(req.query.pe_on_defence != undefined) {
+                if(statpe_on_defence != req.query.pe_on_defence)  {
+                    flag = false;
+                }
+            }
+            return flag  
+        });
+        return filteredStats;
+    }
 };
