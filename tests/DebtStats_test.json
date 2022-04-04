@@ -513,15 +513,14 @@
 			"response": []
 		},
 		{
-			"name": "DELETE /public-debt-stats FAILED",
+			"name": "GET /public-debt-stats EMPTY",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Empty\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.length).to.be.eql(0);\r",
+							"pm.test(\"Status code is 404 NOT FOUND\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
 							"});"
 						],
 						"type": "text/javascript"
