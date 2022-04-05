@@ -54,6 +54,12 @@ var app = (function () {
     function space() {
         return text(' ');
     }
+    function attr(node, attribute, value) {
+        if (value == null)
+            node.removeAttribute(attribute);
+        else if (node.getAttribute(attribute) !== value)
+            node.setAttribute(attribute, value);
+    }
     function children(element) {
         return Array.from(element.childNodes);
     }
@@ -426,6 +432,13 @@ var app = (function () {
         dispatch_dev('SvelteDOMRemove', { node });
         detach(node);
     }
+    function attr_dev(node, attribute, value) {
+        attr(node, attribute, value);
+        if (value == null)
+            dispatch_dev('SvelteDOMRemoveAttribute', { node, attribute });
+        else
+            dispatch_dev('SvelteDOMSetAttribute', { node, attribute, value });
+    }
     function set_data_dev(text, data) {
         data = '' + data;
         if (text.wholeText === data)
@@ -476,7 +489,7 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[4] = list[i];
+    	child_ctx[3] = list[i];
     	return child_ctx;
     }
 
@@ -495,7 +508,7 @@ var app = (function () {
     	return block;
     }
 
-    // (25:1) {:then stats}
+    // (44:1) {:then stats}
     function create_then_block(ctx) {
     	let table;
     	let thead;
@@ -545,15 +558,23 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			add_location(th0, file$1, 28, 4, 566);
-    			add_location(th1, file$1, 31, 4, 598);
-    			add_location(th2, file$1, 34, 4, 629);
-    			add_location(th3, file$1, 37, 4, 670);
-    			add_location(th4, file$1, 40, 4, 731);
-    			add_location(tr, file$1, 27, 3, 556);
-    			add_location(thead, file$1, 26, 2, 544);
-    			add_location(tbody, file$1, 45, 2, 806);
-    			add_location(table, file$1, 25, 1, 533);
+    			attr_dev(th0, "class", "svelte-wapebe");
+    			add_location(th0, file$1, 47, 4, 834);
+    			attr_dev(th1, "class", "svelte-wapebe");
+    			add_location(th1, file$1, 50, 4, 866);
+    			attr_dev(th2, "class", "svelte-wapebe");
+    			add_location(th2, file$1, 53, 4, 897);
+    			attr_dev(th3, "class", "svelte-wapebe");
+    			add_location(th3, file$1, 56, 4, 938);
+    			attr_dev(th4, "class", "svelte-wapebe");
+    			add_location(th4, file$1, 59, 4, 999);
+    			add_location(tr, file$1, 46, 3, 824);
+    			attr_dev(thead, "class", "svelte-wapebe");
+    			add_location(thead, file$1, 45, 2, 812);
+    			attr_dev(tbody, "class", "svelte-wapebe");
+    			add_location(tbody, file$1, 64, 2, 1074);
+    			attr_dev(table, "class", "svelte-wapebe");
+    			add_location(table, file$1, 44, 1, 801);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, table, anchor);
@@ -610,34 +631,34 @@ var app = (function () {
     		block,
     		id: create_then_block.name,
     		type: "then",
-    		source: "(25:1) {:then stats}",
+    		source: "(44:1) {:then stats}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (47:3) {#each stats as stat}
+    // (66:3) {#each stats as stat}
     function create_each_block(ctx) {
     	let tr;
     	let td0;
-    	let t0_value = /*stat*/ ctx[4].country + "";
+    	let t0_value = /*stat*/ ctx[3].country + "";
     	let t0;
     	let t1;
     	let td1;
-    	let t2_value = /*stat*/ ctx[4].year + "";
+    	let t2_value = /*stat*/ ctx[3].year + "";
     	let t2;
     	let t3;
     	let td2;
-    	let t4_value = /*stat*/ ctx[4].public_expenditure + "";
+    	let t4_value = /*stat*/ ctx[3].public_expenditure + "";
     	let t4;
     	let t5;
     	let td3;
-    	let t6_value = /*stat*/ ctx[4].pe_to_gdp + "";
+    	let t6_value = /*stat*/ ctx[3].pe_to_gdp + "";
     	let t6;
     	let t7;
     	let td4;
-    	let t8_value = /*stat*/ ctx[4].pe_on_defence + "";
+    	let t8_value = /*stat*/ ctx[3].pe_on_defence + "";
     	let t8;
     	let t9;
 
@@ -659,12 +680,17 @@ var app = (function () {
     			td4 = element("td");
     			t8 = text(t8_value);
     			t9 = space();
-    			add_location(td0, file$1, 48, 4, 854);
-    			add_location(td1, file$1, 51, 4, 896);
-    			add_location(td2, file$1, 54, 4, 935);
-    			add_location(td3, file$1, 57, 4, 988);
-    			add_location(td4, file$1, 60, 4, 1032);
-    			add_location(tr, file$1, 47, 3, 844);
+    			attr_dev(td0, "class", "svelte-wapebe");
+    			add_location(td0, file$1, 67, 4, 1122);
+    			attr_dev(td1, "class", "svelte-wapebe");
+    			add_location(td1, file$1, 70, 4, 1164);
+    			attr_dev(td2, "class", "svelte-wapebe");
+    			add_location(td2, file$1, 73, 4, 1203);
+    			attr_dev(td3, "class", "svelte-wapebe");
+    			add_location(td3, file$1, 76, 4, 1256);
+    			attr_dev(td4, "class", "svelte-wapebe");
+    			add_location(td4, file$1, 79, 4, 1300);
+    			add_location(tr, file$1, 66, 3, 1112);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, tr, anchor);
@@ -685,11 +711,11 @@ var app = (function () {
     			append_dev(tr, t9);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*stats*/ 1 && t0_value !== (t0_value = /*stat*/ ctx[4].country + "")) set_data_dev(t0, t0_value);
-    			if (dirty & /*stats*/ 1 && t2_value !== (t2_value = /*stat*/ ctx[4].year + "")) set_data_dev(t2, t2_value);
-    			if (dirty & /*stats*/ 1 && t4_value !== (t4_value = /*stat*/ ctx[4].public_expenditure + "")) set_data_dev(t4, t4_value);
-    			if (dirty & /*stats*/ 1 && t6_value !== (t6_value = /*stat*/ ctx[4].pe_to_gdp + "")) set_data_dev(t6, t6_value);
-    			if (dirty & /*stats*/ 1 && t8_value !== (t8_value = /*stat*/ ctx[4].pe_on_defence + "")) set_data_dev(t8, t8_value);
+    			if (dirty & /*stats*/ 1 && t0_value !== (t0_value = /*stat*/ ctx[3].country + "")) set_data_dev(t0, t0_value);
+    			if (dirty & /*stats*/ 1 && t2_value !== (t2_value = /*stat*/ ctx[3].year + "")) set_data_dev(t2, t2_value);
+    			if (dirty & /*stats*/ 1 && t4_value !== (t4_value = /*stat*/ ctx[3].public_expenditure + "")) set_data_dev(t4, t4_value);
+    			if (dirty & /*stats*/ 1 && t6_value !== (t6_value = /*stat*/ ctx[3].pe_to_gdp + "")) set_data_dev(t6, t6_value);
+    			if (dirty & /*stats*/ 1 && t8_value !== (t8_value = /*stat*/ ctx[3].pe_on_defence + "")) set_data_dev(t8, t8_value);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(tr);
@@ -700,14 +726,14 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(47:3) {#each stats as stat}",
+    		source: "(66:3) {#each stats as stat}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (23:14)   loading   {:then stats}
+    // (42:14)   loading   {:then stats}
     function create_pending_block(ctx) {
     	let t;
 
@@ -728,7 +754,7 @@ var app = (function () {
     		block,
     		id: create_pending_block.name,
     		type: "pending",
-    		source: "(23:14)   loading   {:then stats}",
+    		source: "(42:14)   loading   {:then stats}",
     		ctx
     	});
 
@@ -756,7 +782,7 @@ var app = (function () {
     		c: function create() {
     			main = element("main");
     			info.block.c();
-    			add_location(main, file$1, 21, 0, 482);
+    			add_location(main, file$1, 40, 0, 751);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -799,7 +825,6 @@ var app = (function () {
     function instance$1($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('PEStatsTable', slots, []);
-    	let { name } = $$props;
     	let stats = [];
     	let loading = true;
     	onMount(getPEStats);
@@ -815,26 +840,15 @@ var app = (function () {
     		}
     	}
 
-    	const writable_props = ['name'];
+    	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<PEStatsTable> was created with unknown prop '${key}'`);
     	});
 
-    	$$self.$$set = $$props => {
-    		if ('name' in $$props) $$invalidate(1, name = $$props.name);
-    	};
-
-    	$$self.$capture_state = () => ({
-    		onMount,
-    		name,
-    		stats,
-    		loading,
-    		getPEStats
-    	});
+    	$$self.$capture_state = () => ({ onMount, stats, loading, getPEStats });
 
     	$$self.$inject_state = $$props => {
-    		if ('name' in $$props) $$invalidate(1, name = $$props.name);
     		if ('stats' in $$props) $$invalidate(0, stats = $$props.stats);
     		if ('loading' in $$props) loading = $$props.loading;
     	};
@@ -843,13 +857,13 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [stats, name];
+    	return [stats];
     }
 
     class PEStatsTable extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$1, create_fragment$1, safe_not_equal, { name: 1 });
+    		init(this, options, instance$1, create_fragment$1, safe_not_equal, {});
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -857,21 +871,6 @@ var app = (function () {
     			options,
     			id: create_fragment$1.name
     		});
-
-    		const { ctx } = this.$$;
-    		const props = options.props || {};
-
-    		if (/*name*/ ctx[1] === undefined && !('name' in props)) {
-    			console_1.warn("<PEStatsTable> was created without expected prop 'name'");
-    		}
-    	}
-
-    	get name() {
-    		throw new Error("<PEStatsTable>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
-
-    	set name(value) {
-    		throw new Error("<PEStatsTable>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
 
