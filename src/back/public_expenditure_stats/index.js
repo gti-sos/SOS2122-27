@@ -3,8 +3,6 @@ module.exports = (app,db) => {
     const ROQUE_BASE_API_URL = "/api/v1/public-expenditure-stats";
     const API_DOC_PORTAL = "https://documenter.getpostman.com/view/8975262/UVyn2yyn";
 
-    var PEStats = [];
-
     var InitialPEStats = [
         {
             country: "espana",
@@ -56,7 +54,7 @@ module.exports = (app,db) => {
         } 
     ];
 
-
+    var PEStats = InitialPEStats;
 
     //DOCUMENTACION DE LA API
     
