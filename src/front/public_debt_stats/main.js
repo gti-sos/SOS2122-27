@@ -1,6 +1,6 @@
-import App from './App.svelte';
+import DebtStats from './DebtStats.svelte';
 
-const app = new App({
+const app = new DebtStats({
 	target: document.body,
 	props: {
 		

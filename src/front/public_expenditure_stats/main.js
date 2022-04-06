@@ -1,6 +1,6 @@
-import App from './App.svelte';
+import PEStats from './PEStats.svelte';
 
-const app = new App({
+const app = new PEStats({
 	target: document.body,
 	props: {
 		
