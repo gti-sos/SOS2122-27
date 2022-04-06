@@ -6,6 +6,7 @@ const backend_alexis = require("./src/back/smi_stats/index");
 const backend_jf = require("./src/back/public_debt_stats/index");
 
 const API_ROQUE = "/api/v1/public-expenditure-stats"
+const JF_API = "/api/v1/public-debt-stats"
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(bodyParser.json());
 
 //FRONTEND
 app.use(API_ROQUE+"/frontend",express.static("./public/public_expenditure_stats"));
+app.use(JF_API+"/frontend",express.static("./public/public_debt_stats"));
 
 //BACKEND
 backend_roque(app,PE_DB);
@@ -29,20 +31,6 @@ backend_alexis(app, SMI_DB);
 backend_jf(app,PD_DB);
 
 app.use("/", express.static('public'));
-
-
-app.get("/api/v1/contacts", (req,res)=>{
-    res.send([
-        {
-            name:"Pedro",
-            phone: 5432323
-        },
-        {
-            name:"Pablo",
-            phone: 66666666
-        }
-    ]);
-});
 
 app.listen(port, () => {
     console.log(`Server TRULY ready`);

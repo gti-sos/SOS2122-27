@@ -16,29 +16,36 @@ module.exports = (app,db) => {
             country: "alemania",
             year: 2020,
             total_debt: 1345784,
-            debt_gdp: 120,
-            per_capita_debt: 28393    
+            debt_gdp: 68.7,
+            per_capita_debt: 27832    
         }, 
+        {
+            country: "reino unido",
+            year: 2020,
+            total_debt: 2479993,
+            debt_gdp: 104.47,
+            per_capita_debt: 37001    
+        },
         {
             country: "francia",
             year: 2020,
-            total_debt: 1345784,
-            debt_gdp: 120,
+            total_debt: 2649261,
+            debt_gdp: 115,
             per_capita_debt: 28393    
         }, 
         {
             country: "italia",
             year: 2020,
-            total_debt: 1345784,
-            debt_gdp: 120,
-            per_capita_debt: 28393    
+            total_debt: 2573468,
+            debt_gdp: 155.6,
+            per_capita_debt: 43429    
         }, 
         {
             country: "portugal",
             year: 2020,
-            total_debt: 1345784,
-            debt_gdp: 120,
-            per_capita_debt: 28393    
+            total_debt: 270491,
+            debt_gdp: 135.2,
+            per_capita_debt: 26266    
         }, 
     ];
 
@@ -186,7 +193,7 @@ module.exports = (app,db) => {
             DebtStats[indice].debt_gdp = req.body.debt_gdp;
             DebtStats[indice].per_capita_debt = req.body.per_capita_debt;
             res.sendStatus(200,"OK");
-        } 
+        }
     }   
     });
 
@@ -250,18 +257,18 @@ module.exports = (app,db) => {
                     flag = false;
                 }
             }
-            if(req.query.public_expenditure != undefined) {
-                if(stat.public_expenditure != req.query.public_expenditure)  {
+            if(req.query.total_debt != undefined) {
+                if(stat.total_debt != req.query.total_debt)  {
                     flag = false;
                 }
             }
-            if(req.query.pe_to_gdp != undefined) {
-                if(stat.pe_to_gdp != req.query.pe_to_gdp)  {
+            if(req.query.debt_gdp != undefined) {
+                if(stat.debt_gdp != req.query.debt_gdp)  {
                     flag = false;
                 }
             }
-            if(req.query.pe_on_defence != undefined) {
-                if(statpe_on_defence != req.query.pe_on_defence)  {
+            if(req.query.per_capita_debt != undefined) {
+                if(stat.per_capita_debt != req.query.per_capita_debt)  {
                     flag = false;
                 }
             }
