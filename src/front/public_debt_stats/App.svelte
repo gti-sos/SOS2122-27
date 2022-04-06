@@ -1,5 +1,5 @@
 <script>
-	import DebtStastTable from './DebtStastTable.svelte';
+	import DebtStastTable from './public_debt_stats/DebtStastTable.svelte';
 </script>
 
 <main>
