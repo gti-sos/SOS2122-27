@@ -260,7 +260,7 @@ module.exports = (app,db) => {
                 }
             }
             if(req.query.pe_on_defence != undefined) {
-                if(statpe_on_defence != req.query.pe_on_defence)  {
+                if(stat.pe_on_defence != req.query.pe_on_defence)  {
                     flag = false;
                 }
             }
