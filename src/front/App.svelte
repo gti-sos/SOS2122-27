@@ -8,10 +8,14 @@
     //Elementos de Felipe
     import DebtStats from './public_debt_stats/DebtStats.svelte';
 
+    //Elementos de Alexis
+    import SmiStats from './smi_stats/SmiStats.svelte';
+
 
     const routes = {
         "/api/v1/public-expenditure-stats/frontend": PEStats,
-        "/api/v1/public-debt-stats/frontend": DebtStats
+        "/api/v1/smi_stats/frontend": SmiStats,
+        "/api/v1/public-debt-stats/frontend": DebtStats        
     }
 
 </script>

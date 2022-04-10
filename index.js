@@ -7,6 +7,7 @@ const backend_jf = require("./src/back/public_debt_stats/index");
 
 const API_ROQUE = "/api/v1/public-expenditure-stats"
 const JF_API = "/api/v1/public-debt-stats"
+const FA_API = "/api/v1/smi_stats"
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(bodyParser.json());
 //FRONTEND
 app.use(API_ROQUE+"/frontend",express.static("./public/public_expenditure_stats"));
 app.use(JF_API+"/frontend",express.static("./public/public_debt_stats"));
+app.use(FA_API+"/frontend",express.static("./public/smi_stats"));
 
 //BACKEND
 backend_roque(app,PE_DB);

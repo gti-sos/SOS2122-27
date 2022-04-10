@@ -29,7 +29,7 @@ function serve() {
 }
 
 export default {
-	input: 'src/front/public_expenditure_stats/main.js',
+	input: 'src/front/smi_stats/main.js',
 	//input: 'src/front/index.js',
 	output: {
 		sourcemap: true,
@@ -75,3 +75,5 @@ export default {
 		clearScreen: false
 	}
 };
+
+
