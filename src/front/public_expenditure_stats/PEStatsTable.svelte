@@ -1,9 +1,21 @@
 <script>
     import { onMount } from 'svelte';
+	import Table from 'sveltestrap/src/Table.svelte';
+	import Button from 'sveltestrap/src/Button.svelte';
 
     
     let stats = [];
-    let loading = true;
+    
+	let newStat = 
+		{
+            country: "",
+            year: "",
+            public_expenditure: "",
+            pe_to_gdp: "",
+            pe_on_defence: "",
+            pe_on_defence: ""
+    
+        }; 
 
     onMount(getPEStats);
 
@@ -13,9 +25,86 @@
         if(res.ok){
             const data = await res.json();
             stats = data;
-            console.log("Received stats: "+stats.length);
+            console.log("Estadísticas recibidas: "+stats.length);
         }	
     }
+
+	async function loadPEStats(){
+        console.log("Loading stats....");
+        const res = await fetch("/api/v1/public-expenditure-stats/loadInitialData",
+			{
+				method: "GET"
+			}).then(function (res){
+				getPEStats();
+				window.alert("Estadísticas cargadas con éxito");
+			});
+    }
+
+	async function deletePEStats(){
+        console.log("Deleting stats....");
+        const res = await fetch("/api/v1/public-expenditure-stats/",
+			{
+				method: "DELETE"
+			}).then(function (res){
+				getPEStats();
+				window.alert("Estadísticas elimidas con éxito");
+			});
+    }
+
+	async function deleteStat(countryDelete, yearDelete){
+        console.log("Deleting entry....");
+        const res = await fetch("/api/v1/public-expenditure-stats/"+countryDelete+"/"+yearDelete,
+			{
+				method: "DELETE"
+			}).then(function (res){
+				getPEStats();
+				window.alert("Entrada eliminada con éxito");
+			});
+    }
+
+	async function insertStat(){
+		console.log("Inserting stat...."+JSON.stringify(newStat));
+		if(!!newStat.country && !!newStat.year){
+			const res = await fetch("/api/v1/public-expenditure-stats",
+			{
+				method: "POST",
+				body: JSON.stringify(newStat),
+				headers: {
+					"Content-Type": "application/json"
+				}
+			}).then(function (res){
+				getPEStats();
+				window.alert("Estadística introducida con éxito");
+			});
+		}else{
+			window.alert("Faltan los campos país y año");
+		}
+		
+	}
+
+	function errors(code){
+        let msg;
+		switch (code) {
+			case 404:
+				msg = "La entrada seleccionada no existe"
+				break;
+			case 400:
+            	msg = "La petición no está correctamente formulada"
+				break;
+			case 409:
+           		msg = "El dato introducido ya existe"
+				break;
+			case 401:
+            	msg = "No autorizado"
+				break;
+			case 405:
+				msg = "Método no permitido"
+				break;
+		}
+        window.alert(msg)
+            return;
+    }
+
 </script>
 
 <style>
@@ -42,7 +131,63 @@ th, td {
 {#await stats}
 loading
 	{:then stats}
-	<table>
+	<Table bordered>
+		<thead>
+			<tr>
+				<th>País</th>
+				<th>Año</th>
+				<th>Gasto público</th>
+				<th>% de gasto público respecto a PIB</th>
+                <th>% destinado a defensa en GP</th>
+				<th colspan="2">Operaciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><input bind:value="{newStat.country}"></td>
+				<td><input bind:value="{newStat.year}"></td>
+				<td><input bind:value="{newStat.public_expenditure}"></td>
+                <td><input bind:value="{newStat.pe_to_gdp}"></td>
+                <td><input bind:value="{newStat.pe_on_defence}"></td>
+				<td><Button outline color="primary" on:click="{insertStat}">
+					Añadir
+					</Button>
+				</td>
+			</tr>
+			{#each stats as stat}
+				<tr>
+					<td>{stat.country}</td>
+					<td>{stat.year}</td>
+					<td>{stat.public_expenditure}</td>
+                    <td>{stat.pe_to_gdp}</td>
+                    <td>{stat.pe_on_defence}</td>
+					<td><Button outline color="warning" on:click={function (){
+						window.location.href = `/api/v1/public-expenditure-stats/frontend/${stat.country}/${stat.year}`
+					}}>
+						Editar
+					</Button>
+					<td><Button outline color="danger" on:click={deleteStat(stat.country,stat.year)}>
+						Borrar
+					</Button>
+					</td>
+				</tr>
+			{/each}
+			<tr>
+				<td><Button outline color="success" on:click={loadPEStats}>
+					Cargar datos
+				</Button></td>
+				<td><Button outline color="danger" on:click={deletePEStats}>
+					Borrar todo
+				</Button></td>
+			</tr>
+		</tbody>
+	</Table>
+
+{/await}
+</main>
+
+<!--
+<table>
 		<thead>
 			<tr>
 				<th>
@@ -85,29 +230,59 @@ loading
 		</tbody>
 	</table>
 
-{/await}
-</main>
 
-
+-->
 
 <!-- 
 
-	<ul class="responsive-table">
-		<li class="table-header">
-		  <div class="col col-1">País</div>
-		  <div class="col col-2">Año</div>
-		  <div class="col col-3">Gasto público</div>
-		  <div class="col col-4">% de gasto público respecto a PIB</div>
-		  <div class="col col-5">% destinado a defensa en GP</div>
-		</li>
-		{#each stats as stat}
-		<li class="table-row">
-		  <div class="col col-1" data-label="País">{stat.country}</div>
-		  <div class="col col-2" data-label="Año">{stat.year}</div>
-		  <div class="col col-3" data-label="Gasto público">{stat.public_expenditure}</div>
-		  <div class="col col-4" data-label="% de gasto público respecto a PIB">{stat.pe_to_gdp}</div>
-		  <div class="col col-4" data-label="% destinado a defensa en GP">{stat.pe_on_defence}</div>
-		</li>
-		{/each}
-	</ul>
+	<Table bordered>
+		<thead>
+			<tr>
+				<th>País</th>
+				<th>Año</th>
+				<th>Tasa de mortalidad</th>
+				<th>Esperanza de vida</th>
+                <th>Tasa de natalidad</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><input bind:value="{newEntry.country}"></td>
+				<td><input bind:value="{newEntry.year}"></td>
+				<td><input bind:value="{newEntry.death_rate}"></td>
+                <td><input bind:value="{newEntry.life_expectancy_birth}"></td>
+                <td><input bind:value="{newEntry.birth_rate}"></td>
+				<td><Button outline color="primary" on:click="{insertEntry}">
+					Añadir
+					</Button>
+				</td>
+			</tr>
+			{#each entries as entry}
+				<tr>
+					<td>{entry.country}</td>
+					<td>{entry.year}</td>
+					<td>{entry.death_rate}</td>
+                    <td>{entry.life_expectancy_birth}</td>
+                    <td>{entry.birth_rate}</td>
+					<td><Button outline color="warning" on:click={function (){
+						window.location.href = `/#/population-levels/${entry.country}/${entry.year}`
+					}}>
+						Editar
+					</Button>
+					<td><Button outline color="danger" on:click={BorrarEntry(entry.country,entry.year)}>
+						Borrar
+					</Button>
+					</td>
+				</tr>
+			{/each}
+			<tr>
+				<td><Button outline color="success" on:click={LoadEntries}>
+					Cargar datos
+				</Button></td>
+				<td><Button outline color="danger" on:click={BorrarEntries}>
+					Borrar todo
+				</Button></td>
+			</tr>
+		</tbody>
+	</Table>
 -->
