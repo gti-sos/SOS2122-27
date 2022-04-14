@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-
+	import Table from 'sveltestrap/src/Table.svelte'
     
     let stats = [];
     let loading = true;
@@ -42,7 +42,7 @@ th, td {
 {#await stats}
 loading
 	{:then stats}
-	<table>
+	<Table bordered>
 		<thead>
 			<tr>
 				<th>
@@ -83,7 +83,7 @@ loading
 			</tr>
 			{/each}
 		</tbody>
-	</table>
+	</Table>
 
 {/await}
 </main>
