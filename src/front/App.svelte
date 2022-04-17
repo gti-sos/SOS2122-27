@@ -1,5 +1,6 @@
 <script>
     import Router from 'svelte-spa-router';
+    import Home from "./Home.svelte";
    
 
     //Elementos de Roque
@@ -13,6 +14,7 @@
 
 
     const routes = {
+        "/": Home,
         "/api/v1/public-expenditure-stats/frontend": PEStats,
         "/api/v1/smi_stats/frontend": SmiStats,
         "/api/v1/public-debt-stats/frontend": DebtStats        
@@ -24,17 +26,3 @@
     <Router {routes}/>
 </main>
 
-<style>
-    main {
-		text-align: left;
-		padding: 2.5em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-	
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>
