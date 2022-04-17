@@ -1,9 +1,9 @@
 <script>
     import { onMount } from 'svelte';
-	import Table from 'sveltestrap/src/Table.svelte'
+	import Table from 'sveltestrap/src/Table.svelte';
     import Button from 'sveltestrap/src/Button.svelte';
 
-
+	let loading = true;
     let stats = [];
     let newStat = 
 	{
@@ -49,9 +49,9 @@
 			});
     }
 
-	async function deleteStat(countryDelete, yearDelete){
+	async function deleteSmiStat(countryRM, yearRM){
         console.log("Deleting entry....");
-        const res = await fetch("/api/v1/smi_stats/"+countryDelete+"/"+yearDelete,
+        const res = await fetch("/api/v1/smi_stats/"+countryRM+"/"+yearRM,
 			{
 				method: "DELETE"
 			}).then(function (res){
@@ -165,7 +165,7 @@ loading
 					}}>
 						Editar
 					</Button>
-					<td><Button outline color="danger" on:click={deleteStat(stat.country,stat.year)}>
+					<td><Button outline color="danger" on:click={deleteSmiStat(stat.country,stat.year)}>
 						Borrar
 					</Button>
 					</td>
