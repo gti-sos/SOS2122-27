@@ -23,9 +23,11 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
 //FRONTEND
+/*
 app.use(API_ROQUE+"/frontend",express.static("./public/public_expenditure_stats"));
 app.use(JF_API+"/frontend",express.static("./public/public_debt_stats"));
 app.use(FA_API+"/frontend",express.static("./public/smi_stats"));
+*/
 
 //BACKEND
 backend_roque(app,PE_DB);

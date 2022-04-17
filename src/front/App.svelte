@@ -15,9 +15,9 @@
 
     const routes = {
         "/": Home,
-        "/api/v1/public-expenditure-stats/frontend": PEStats,
-        "/api/v1/smi_stats/frontend": SmiStats,
-        "/api/v1/public-debt-stats/frontend": DebtStats        
+        "/public-expenditure-stats": PEStats,
+        "/smi_stats": SmiStats,
+        "/public-debt-stats": DebtStats        
     }
 
 </script>
