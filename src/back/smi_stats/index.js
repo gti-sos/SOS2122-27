@@ -267,9 +267,7 @@ function paginationMaker(req, stats) {
         res.push("ERROR");
         return res;	
     }
-    /*
-    const startIndex = offset;
-    const endIndex = startIndex + limit;*/
+
 
     res = stats.slice(offset, limit);
     return res;

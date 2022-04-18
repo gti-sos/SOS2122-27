@@ -15,9 +15,9 @@
 <li><a href="https://sos2122-27.herokuapp.com/api/v1/public-debt-stats">https://sos2122-27.herokuapp.com/api/v1/public-debt-stats</a> (developed by <a href="https://github.com/jfeliperamos">Jose Felipe Ramos</a>)</li>
 </ul>
 <li><strong>Frontends</strong>:<ul>
-<li><a href="https://sos2122-27.herokuapp.com/api/v1/public-expenditure-stats/frontend">https://sos2122-27.herokuapp.com/api/v1/public-expenditure-stats/frontend</a> (developed by <a href="https://github.com/roque-fernandez">Roque Fernandez Iglesias</a>)</li>
+<li><a href="https://sos2122-27.herokuapp.com/#/public-expenditure-stats">https://sos2122-27.herokuapp.com/#/public-expenditure-stats</a> (developed by <a href="https://github.com/roque-fernandez">Roque Fernandez Iglesias</a>)</li>
 <li><a href="https://sos2122-27.herokuapp.com/#/smi_stats">https://sos2122-27.herokuapp.com/api/v1/smi_stats/frontend</a> (developed by <a href="https://github.com/famvcucu">Fco Alexis Morales Vallado</a>)</li>
-<li><a href="https://sos2122-27.herokuapp.com/api/v1/public-debt-stats/frontend">https://sos2122-27.herokuapp.com/api/v1/public-debt-stats/frontend</a> (developed by <a href="https://github.com/jfeliperamos">Jose Felipe Ramos</a>)</li>
+<li><a href="https://sos2122-27.herokuapp.com/#/public-debt-stats">https://sos2122-27.herokuapp.com/#/public-debt-stats</a> (developed by <a href="https://github.com/jfeliperamos">Jose Felipe Ramos</a>)</li>
 </ul>
 </li>
 </ul>
