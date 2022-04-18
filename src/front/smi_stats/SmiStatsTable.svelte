@@ -164,7 +164,7 @@ loading
 						window.location.href = `/api/v1/smi_stats/frontend/${stat.country}/${stat.year}`
 					}}>
 						Editar
-					</Button>
+					</Button></td>
 					<td><Button outline color="danger" on:click={deleteSmiStat(stat.country,stat.year)}>
 						Borrar
 					</Button>

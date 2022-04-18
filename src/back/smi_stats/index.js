@@ -98,7 +98,7 @@ app.post(FAMV_API +"/:country/:year", (req,res) => {
 });
 
 //GET GENERAL
-    
+   
 app.get(FAMV_API, (req,res) => {
 
     if(Object.keys(req.query).length > 0){
@@ -146,7 +146,7 @@ app.get(FAMV_API+"/:country/:year",(req,res)=>{
     if(filteredSMI == 0){
         res.sendStatus(404,"NOT FOUND");
     }else{
-        res.send(JSON.stringify(filteredSMI, null, 2));
+        res.send(JSON.stringify(filteredSMI[0], null, 2));
     }
 });
 
@@ -267,10 +267,11 @@ function paginationMaker(req, stats) {
         res.push("ERROR");
         return res;	
     }
+    /*
     const startIndex = offset;
-    const endIndex = startIndex + limit;
+    const endIndex = startIndex + limit;*/
 
-    res = stats.slice(startIndex, endIndex);
+    res = stats.slice(offset, limit);
     return res;
 }
 
