@@ -212,7 +212,7 @@ app.delete(FAMV_API+"/:country",(req,res)=>{
 //DELETE DE UN RECURSO CONCRETO CON AÑO
 
 app.delete(FAMV_API + "/:country/:year",(req,res)=>{
-    smi_stats.filter((stat)=>{
+    smi_stats = smi_stats.filter((stat)=>{
         return (stat.country != req.params.country || stat.year != req.params.year);
     })
     res.sendStatus(200,"OK");

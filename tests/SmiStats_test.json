@@ -6,7 +6,76 @@
 	},
 	"item": [
 		{
-			"name": "GET Carga Inicial",
+			"name": "GET DOC",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Documentación recibida\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/docs",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"smi_stats",
+						"docs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET LISTA VACIA",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"La lista está vacía\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"smi_stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET CARGA INICIAL",
 			"event": [
 				{
 					"listen": "test",
@@ -48,7 +117,97 @@
 			"response": []
 		},
 		{
-			"name": "GET /smi_stats/china",
+			"name": "GET CONCRETO FALLO 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/chicago",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"smi_stats",
+						"chicago"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET GENERAL CON PAGINACION",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an Array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(Array.isArray(jsonData)).to.eql(true);\r",
+							"});\r",
+							"pm.test(\"Response has contacts\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.be.at.least(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats?limit=3&&offset=1",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"smi_stats"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "3"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "offset",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET CHINA",
 			"event": [
 				{
 					"listen": "test",
@@ -132,7 +291,49 @@
 			"response": []
 		},
 		{
-			"name": "GET /smi_stats actualizado",
+			"name": "POST SIN DATOS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Los campos no son correctos\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"smi_stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET GENERAL",
 			"event": [
 				{
 					"listen": "test",
@@ -173,50 +374,7 @@
 			"response": []
 		},
 		{
-			"name": "GET /smi_stats/china/2020",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"Response is an Array\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(Array.isArray(jsonData)).to.eql(true);\r",
-							"});\r",
-							"pm.test(\"Response has contacts\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.length).to.be.at.least(1);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china/2020",
-					"host": [
-						"{{HOST}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"api",
-						"v1",
-						"smi_stats",
-						"china",
-						"2020"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "DELETE /smi_stats",
+			"name": "DELETE CHINA 2021",
 			"event": [
 				{
 					"listen": "test",
@@ -234,7 +392,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china/2021",
 					"host": [
 						"{{HOST}}"
 					],
@@ -242,14 +400,16 @@
 					"path": [
 						"api",
 						"v1",
-						"smi_stats"
+						"smi_stats",
+						"china",
+						"2021"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "GET Lista Vacía",
+			"name": "GET CHINA 2021 FALLO 404",
 			"event": [
 				{
 					"listen": "test",
@@ -267,48 +427,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
-					"host": [
-						"{{HOST}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"api",
-						"v1",
-						"smi_stats"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET Carga Inicial 2",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"Response is an Array\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(Array.isArray(jsonData)).to.eql(true);\r",
-							"});\r",
-							"pm.test(\"Response has contacts\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.length).to.be.at.least(1);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/loadInitialData",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china/2021",
 					"host": [
 						"{{HOST}}"
 					],
@@ -317,21 +436,22 @@
 						"api",
 						"v1",
 						"smi_stats",
-						"loadInitialData"
+						"china",
+						"2021"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "DELETE China 2021",
+			"name": "PUT CONCRETO FALLO 404",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -339,10 +459,19 @@
 				}
 			],
 			"request": {
-				"method": "DELETE",
+				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"country\": \"chicago\",\r\n            \"year\": 1998,\r\n            \"smi_local\": 2222.70,\r\n            \"smi_euros\": 1166.70,\r\n            \"smi_variation\": 3.63 \r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/portugal/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/chicago/1998",
 					"host": [
 						"{{HOST}}"
 					],
@@ -351,30 +480,22 @@
 						"api",
 						"v1",
 						"smi_stats",
-						"portugal",
-						"2020"
+						"chicago",
+						"1998"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "GET /smi_stats Sin China 2021",
+			"name": "PUT CONCRETO FALLO 400",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"Response is an Array\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(Array.isArray(jsonData)).to.eql(true);\r",
-							"});\r",
-							"pm.test(\"Response has contacts\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.length).to.be.at.least(1);\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -382,10 +503,19 @@
 				}
 			],
 			"request": {
-				"method": "GET",
+				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/chicago/1998",
 					"host": [
 						"{{HOST}}"
 					],
@@ -393,14 +523,16 @@
 					"path": [
 						"api",
 						"v1",
-						"smi_stats"
+						"smi_stats",
+						"chicago",
+						"1998"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "PUT China 2020",
+			"name": "PUT CHINA 2020",
 			"event": [
 				{
 					"listen": "test",
@@ -444,7 +576,43 @@
 			"response": []
 		},
 		{
-			"name": "GET Documentación",
+			"name": "GET CONCRETO",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china/2020",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"smi_stats",
+						"china",
+						"2020"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE GENERAL",
 			"event": [
 				{
 					"listen": "test",
@@ -459,10 +627,10 @@
 				}
 			],
 			"request": {
-				"method": "GET",
+				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/docs",
+					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
 					"host": [
 						"{{HOST}}"
 					],
@@ -470,8 +638,7 @@
 					"path": [
 						"api",
 						"v1",
-						"smi_stats",
-						"docs"
+						"smi_stats"
 					]
 				}
 			},
