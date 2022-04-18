@@ -269,7 +269,7 @@ function paginationMaker(req, stats) {
     }
 
 
-    res = stats.slice(offset, limit);
+    res = stats.slice(offset, limit+offset);
     return res;
 }
 
