@@ -5,6 +5,7 @@
 
     //Elementos de Roque
     import PEStats from './public_expenditure_stats/PEStats.svelte';
+    import EditPEStatsTable from './public_expenditure_stats/EditPEStatsTable.svelte';
 
     //Elementos de Felipe
     import DebtStats from './public_debt_stats/DebtStats.svelte';
@@ -15,9 +16,15 @@
 
     const routes = {
         "/": Home,
+
         "/public-expenditure-stats": PEStats,
+        "/public-expenditure-stats/:country/:year": EditPEStatsTable,
+
+
         "/smi-stats": SmiStats,
-        "/public-debt-stats": DebtStats        
+
+        "/public-debt-stats": DebtStats   
+
     }
 
 </script>

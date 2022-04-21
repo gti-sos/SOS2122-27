@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
-	import Table from 'sveltestrap/src/Table.svelte';
-	import Button from 'sveltestrap/src/Button.svelte';
+	import { Table, Button} from 'sveltestrap';
+	
 
     
     let stats = [];
@@ -12,7 +12,6 @@
             year: "",
             public_expenditure: "",
             pe_to_gdp: "",
-            pe_on_defence: "",
             pe_on_defence: ""
     
         }; 
@@ -73,6 +72,11 @@
 					"Content-Type": "application/json"
 				}
 			}).then(function (res){
+				newStat.country ="";
+				newStat.year = "";
+            	newStat.public_expenditure = "";
+            	newStat.pe_to_gdp = "";
+            	newStat.pe_on_defence = "";
 				getPEStats();
 				window.alert("Estadística introducida con éxito");
 			});
@@ -121,7 +125,7 @@ tbody{
 th, td {
    width: 15%;
    text-align: center;
-   vertical-align: top;
+   vertical-align: center;
    border: 1px solid #000;
    border-spacing: 0;
 }
@@ -162,7 +166,7 @@ loading
                     <td>{stat.pe_to_gdp}</td>
                     <td>{stat.pe_on_defence}</td>
 					<td><Button outline color="warning" on:click={function (){
-						window.location.href = `/api/v1/public-expenditure-stats/frontend/${stat.country}/${stat.year}`
+						window.location.href = `/#/public-expenditure-stats/${stat.country}/${stat.year}`
 					}}>
 						Editar
 					</Button>

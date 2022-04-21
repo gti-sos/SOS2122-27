@@ -17,7 +17,7 @@ var PE_DB = new Datastore({filename: path.join(__dirname,"./src/back/public_expe
 var SMI_DB = new Datastore({filename: path.join(__dirname,"./src/back/smi_stats/smiDB.db"), autoload: true});
 var PD_DB = new Datastore({filename: path.join(__dirname,"./src/back/public_debt_stats/publicDebtDB.db"), autoload: true});
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8090;
 const bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
