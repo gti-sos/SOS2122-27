@@ -1,9 +1,9 @@
 module.exports = (app,db) => {
 
-    const ROQUE_BASE_API_URL = "/api/v1/public-expenditure-stats";
+    const ROQUE_BASE_API_URL = "/api/v2/public-expenditure-stats";
     const API_DOC_PORTAL = "https://documenter.getpostman.com/view/8975262/UVyn2yyn";
 
-    var InitialPEStats = [
+    var initialPEStats = [
         {
             country: "espana",
             year: 2020,
@@ -54,7 +54,7 @@ module.exports = (app,db) => {
         } 
     ];
 
-    var PEStats = InitialPEStats;
+    var PEStats = initialPEStats;
 
     //DOCUMENTACION DE LA API
     
@@ -64,108 +64,178 @@ module.exports = (app,db) => {
 
     //LOAD INITIAL DATA
 
-    app.get(ROQUE_BASE_API_URL + "/loadInitialData", (req,res) => {
+    app.get(ROQUE_BASE_API_URL + "/loadInitialData", (req, res) => {
 
-        //inicializamos el vector
-        if(PEStats.length === 0){
-            InitialPEStats.forEach((a)=>{
-                PEStats.push(a);
-            });
-        }
-        res.send(JSON.stringify(PEStats,null,2));
-        
-        
-        //Obtenemos los elementos
-        /*
-        db.find({}, (error)=>{ 
-
-            if(error){
-                console.log("Error en Load Initial Data");
-                res.sendStatus(500); 
+        db.find({}, function (err, filteredList) {
+            if (err) {
+                res.sendStatus(500, "ERROR EN CLIENTE");
+                return;
             }
-            else{
-                dataBase.remove({}, {multi: true});
-                dataBase.insert(PEStats);
-                res.sendStatus(200,"Datos correctamente cargados a la BD");                        
-            }
-        }); 
-        */
-    });
-
-    
-
-    //GET DE UN RECURSO CONCRETO
-    
-    app.get(ROQUE_BASE_API_URL+"/:country/:year",(req,res)=>{
-        filteredPEStats = PEStats.filter((stat)=>{
-            return (stat.country == req.params.country && stat.year == req.params.year);
-        })
-        if(filteredPEStats.length === 0){
-            res.sendStatus(404,"NOT FOUND");
-        }else{
-            //se devuelve un unico objeto
-            res.send(JSON.stringify(filteredPEStats[0], null, 2));
+            if (filteredList == 0) {
+                for (var i = 0; i < initialPEStats.length; i++) {
+                    db.insert(initialPEStats[i]);
+                }
+                res.sendStatus(200, "OK.");
+                return;
+            }else{
+            res.sendStatus(200, "Ya inicializados")
         }
-    });
+        });
+    })
 
     //GET GENERAL
     
-    app.get(ROQUE_BASE_API_URL, (req,res) => {
-        //hay busqueda
-        if(Object.keys(req.query).length > 0){
-            console.log("Query:",req.query);
-            selectedStats = filterQuery(req,PEStats);
+    app.get(ROQUE_BASE_API_URL, (req, res) => {
 
-            if(req.query.limit != undefined || req.query.offset != undefined){
-                selectedStats = paginationMaker(req,selectedStats);
+        var year = req.query.year;
+        var from = req.query.from;
+        var to = req.query.to;
+
+        //Comprobamos query
+
+        for (var i = 0; i < Object.keys(req.query).length; i++) {
+            var element = Object.keys(req.query)[i];
+            if (element != "year" && element != "from" && element != "to" && element != "limit" && element != "offset") {
+                res.sendStatus(400, "BAD REQUEST");
+                return;
             }
         }
-        //no hay busqueda
-        else{
-            selectedStats = PEStats;
-        }
 
-        if(selectedStats.includes("ERROR")) {
-            res.sendStatus(400,"BAD REQUEST"); 
-        } else if(selectedStats.length === 0) {
-            res.sendStatus(404,"NOT FOUND");
-        }else{
-            res.send(JSON.stringify(selectedStats, null, 2));
-        } 
-    });
+        //Comprobamos si from es mas pequeño o igual a to
+        if (from > to) {
+            res.sendStatus(400, "BAD REQUEST");
+            return;
+        }
+        db.find({}, function (err, filteredList) {
+            if (err) {
+                res.sendStatus(500, "ERROR EN CLIENTE");
+                return;
+            }
+
+            // Apartado para búsqueda por año
+            if (year != null) {
+                var filteredList = filteredList.filter((reg) => {
+                    return (reg.year == year);
+                });
+                if (filteredList == 0) {
+                    res.sendStatus(404, "NOT FOUND");
+                    return;
+                }
+            }
+
+            // Apartado para from y to
+            if (from != null && to != null) {
+                filteredList = filteredList.filter((reg) => {
+                    return (reg.year >= from && reg.year <= to);
+                });
+
+                if (filteredList == 0) {
+                    res.sendStatus(404, "NOT FOUND");
+                    return;
+                }
+            }
+
+            // Resultado sin ID
+            if (req.query.limit != undefined || req.query.offset != undefined) {
+                filteredList = pagingMaker(req, filteredList);
+            }
+            filteredList.forEach((element) => {
+                delete element._id;
+            });
+
+            //Comprobamos fields
+            if(req.query.fields!=null){
+                //Comprobamos si los campos son correctos
+                var listaFields = req.query.fields.split(",");
+                for(var i = 0; i<listaFields.length;i++){
+                    var element = listaFields[i];
+                    if(element != "country" && element != "year" && element != "public_expenditure"  && element != "pe_on_defence" && element != "pe_to_gdp"){
+                        res.sendStatus(400, "BAD REQUEST");
+                        return;
+                    }
+                }
+                //Escogemos los campos correspondientes
+                filteredList = checkFields(req,filteredList);
+            }
+            res.send(JSON.stringify(filteredList, null, 2));
+        })
+    })
+
+    //GET DE UN RECURSO CONCRETO
+    
+    app.get(ROQUE_BASE_API_URL + "/:country/:year", (req, res) => {
+
+        var country = req.params.country
+        var year = req.params.year
+
+        db.find({}, function (err, filteredList) {
+            if (err) {
+                res.sendStatus(500, "ERROR EN CLIENTE");
+                return;
+            }
+            filteredList = filteredList.filter((reg) => {
+                return (reg.country == country && reg.year == year);
+            });
+            if (filteredList == 0) {
+                res.sendStatus(404, "NOT FOUND");
+                return;
+            }
+
+            //RESULTADO
+
+            //Paginación
+            if (req.query.limit != undefined || req.query.offset != undefined) {
+                filteredList = pagingMaker(req, filteredList);
+                res.send(JSON.stringify(filteredList, null, 2));
+            }
+            filteredList.forEach((element) => {
+                delete element._id;
+            });
+            //Comprobamos fields
+            if(req.query.fields!=null){
+                //Comprobamos si los campos son correctos
+                var listaFields = req.query.fields.split(",");
+                for(var i = 0; i<listaFields.length;i++){
+                    var element = listaFields[i];
+                    if(element != "country" && element != "year" && element != "public_expenditure"  && element != "pe_on_defence" && element != "pe_to_gdp"){
+                        res.sendStatus(400, "BAD REQUEST");
+                        return;
+                    }
+                }
+                //Escogemos los fields correspondientes
+                filteredList = checkFields(req,filteredList);
+            }
+            res.send(JSON.stringify(filteredList[0], null, 2));
+        });
+    })
 
     //POST CORRECTO
     
-    app.post(ROQUE_BASE_API_URL, (req,res) => {
-        //comprobamos que los parametros existan
-        if( 
-            Object.keys(req.body).length != 5 ||
-            req.body.country == null ||
-            req.body.year == null ||
-            req.body.public_expenditure == null ||
-            req.body.pe_to_gdp == null ||
-            req.body.pe_on_defence == null
-        ){ 
-            res.sendStatus(400,"BAD REQUEST");  
-        }else{
-            filteredPEStats = PEStats.filter((stat)=>{
-                return (
-                    stat.country == req.body.country && 
-                    stat.year == req.body.year &&
-                    stat.public_expenditure == req.body.public_expenditure &&
-                    stat.pe_to_gdp == req.body.pe_to_gdp &&
-                    stat.pe_on_defence == req.body.pe_on_defence
-                    );
+    app.post(ROQUE_BASE_API_URL, (req, res) => {
+
+        if (checkBody(req)) {
+            res.sendStatus(400, "BAD REQUEST");
+        } else {
+            db.find({}, function (err, filteredList) {
+
+                if (err) {
+                    res.sendStatus(500, "ERROR EN CLIENTE");
+                    return;
+                }
+
+                filteredList = filteredList.filter((reg) => {
+                    return (req.body.country == reg.country && req.body.year == reg.year)
+                })
+
+                if (filteredList.length != 0) {
+                    res.sendStatus(409, "CONFLICT");
+                } else {
+                    db.insert(req.body);
+                    res.sendStatus(201, "CREATED");
+                }
             })
-    
-            if(filteredPEStats.length === 0){
-                PEStats.push(req.body);
-                res.sendStatus(201,"CREATED");
-            }else{
-                res.sendStatus(409,"CONFLICT");
-            }
         }
-    });
+    })
 
     //POST NO PERMITIDO
 
@@ -175,39 +245,48 @@ module.exports = (app,db) => {
 
     //PUT CORRECTO
 
-    app.put(ROQUE_BASE_API_URL +"/:country/:year", (req,res) => {
+    app.put(ROQUE_BASE_API_URL + "/:country/:year", (req, res) => {
 
-        //comprobamos que los parametros del req existan
-        if(
-            Object.keys(req.body).length != 5 ||
-            req.body.country == null ||
-            req.body.year == null ||
-            req.body.public_expenditure == null ||
-            req.body.pe_to_gdp == null ||
-            req.body.pe_on_defence == null
-        ){ 
-            res.sendStatus(400,"BAD REQUEST");  
-        }else{
-            existsStat = PEStats.filter((stat)=>{
-                return (
-                    stat.country == req.params.country && 
-                    stat.year == req.params.year
-                    );
-            })
-    
-            var indice = PEStats.indexOf(existsStat[0]);
-    
-            if(existsStat.length === 0){
-                res.sendStatus(404,"NOT FOUND");
+        //comprobamos body
+
+        if (checkBody(req)) {
+            res.sendStatus(400, "BAD REQUEST");
+            return;
+        }
+        var countryR = req.params.country;
+        var yearR = req.params.year;
+
+        db.find({}, function (err, filteredList) {
+            if (err) {
+                res.sendStatus(500, "ERROR EN CLIENTE");
+                return;
             }
-            else{
-                PEStats[indice].pe_on_defence = req.body.pe_on_defence;
-                PEStats[indice].pe_to_gdp = req.body.pe_to_gdp;
-                PEStats[indice].public_expenditure = req.body.public_expenditure;
-                res.sendStatus(200,"OK");
-            } 
-        }   
-    });
+
+            //comprobamos que el elemento exista
+            filteredList = filteredList.filter((reg) => {
+                return (reg.country == countryR && reg.year == yearR);
+            });
+            if (filteredList == 0) {
+                res.sendStatus(404, "NOT FOUND");
+                return;
+            }
+
+            //comprobamos que los campos coincidan
+            if (countryR != req.body.country || yearR != req.body.year) {
+                res.sendStatus(400, "BAD REQUEST");
+                return;
+            }
+
+            //actualizamos valor
+            db.update({$and:[{country: String(countryR)}, {year: parseInt(yearR)}]}, {$set: req.body}, {},function(err) {
+                if (err) {
+                    res.sendStatus(500, "ERROR EN CLIENTE");
+                }else{
+                    res.sendStatus(200,"UPDATED");
+                }
+            });
+        })
+    })
 
     //PUT NO PERMITIDO
 
@@ -217,21 +296,45 @@ module.exports = (app,db) => {
 
     //DELETE GENERAL
 
-    app.delete(ROQUE_BASE_API_URL,(req,res)=>{
-        PEStats = []
-        res.sendStatus(200,"OK");
-    
-    });
+    app.delete(ROQUE_BASE_API_URL,(req, res)=>{
+        db.remove({}, { multi: true }, (err, numRemoved)=>{
+            if (err){
+                res.sendStatus(500,"ERROR EN CLIENTE");
+                return;
+            }
+            res.sendStatus(200,"DELETED");
+            return;
+        });
+    })
 
     //DELETE DE UN RECURSO CONCRETO
     
-    app.delete(ROQUE_BASE_API_URL + "/:country/:year",(req,res)=>{
-        PEStats = PEStats.filter((stat)=>{
-            return (stat.country != req.params.country || stat.year != req.params.year);
-        })
-        res.sendStatus(200,"OK");
-    
-    });
+    app.delete(ROQUE_BASE_API_URL+"/:country/:year",(req, res)=>{
+        var countryR = req.params.country;
+        var yearR = req.params.year;
+
+        db.find({country: countryR, year: parseInt(yearR)}, {}, (err, filteredList)=>{
+            if (err){
+                res.sendStatus(500,"ERROR EN CLIENTE");
+                return;
+            }
+            if(filteredList==0){
+                res.sendStatus(404,"NOT FOUND");
+                return;
+            }
+            db.remove({country: countryR, year: parseInt(yearR)}, {}, (err)=>{
+                if (err){
+                    res.sendStatus(500,"ERROR EN CLIENTE");
+                    return;
+                }
+            
+                res.sendStatus(200,"DELETED");
+                return;
+                
+            });
+        });
+
+    })
 
     //FUNCION DE FILTRADO
     function filterQuery(req,stats){
@@ -271,21 +374,98 @@ module.exports = (app,db) => {
 
     //FUNCION DE PAGINACION
 
-    function paginationMaker(req, stats) {
+    function pagingMaker(req, lista){
         var res = [];
-        const offset = req.query.offset;
         const limit = req.query.limit;
-    
-        if(limit < 0 || offset < 0 || offset > stats.length) {
-            console.error(`Error in pagination, you have exceded limits`);
-            res.push("ERROR");
-            return res;	
+        const offset = req.query.offset;
+        
+        if(limit < 1 || offset < 0 || offset > lista.length){
+            res.push("ERROR EN PARAMETROS LIMIT Y/O OFFSET");
+            return res;
         }
-        const startIndex = offset;
-        const endIndex = startIndex + limit;
-    
-        res = stats.slice(startIndex, endIndex);
+
+        res = lista.slice(offset,parseInt(limit)+parseInt(offset));
         return res;
+    }
+
+    //FUNCION PARA COMPROBAR LOS CAMPOS DE PETICION
+
+    function checkBody(req) {
+        return (req.body.country == null ||
+            req.body.year == null ||
+            req.body.public_expenditure == null ||
+            req.body.pe_to_gdp == null ||
+            req.body.pe_on_defence == null
+        )
+    }
+
+    //FUNCION PARA COMPROBAR LOS CAMPOS DEL OBJETO
+
+    function checkFields(req, lista){
+        var fields = req.query.fields;
+        var hasCountry = false;
+        var hasYear = false;
+        var hasPE = false;
+        var hasPEToGDP = false;
+        var hasPEOnDefence = false;
+        fields = fields.split(",");
+
+        for(var i = 0; i<fields.length;i++){
+            var element = fields[i];
+            if(element=='country'){
+                hasCountry=true;
+            }
+            if(element=='year'){
+                hasYear=true;
+            }
+            if(element=='public_exxpenditure'){
+                hasPE=true;
+            }
+            if(element=='pe_to_gdp'){
+                hasPEToGDP=true;
+            }
+            if(element=='pe_on_defence'){
+                hasPEOnDefence=true;
+            }
+        }
+
+        //Country
+        if(!hasCountry){
+            lista.forEach((element)=>{
+                delete element.country;
+            })
+        }
+
+        //Year
+        if(!hasYear){
+            lista.forEach((element)=>{
+                delete element.year;
+            })
+        }
+
+        //PE
+        if(!hasPE){
+            lista.forEach((element)=>{
+                delete element.public_exxpenditure;
+            })
+        }
+
+        //PE_to_gdp
+        if(!hasPEToGDP){
+            lista.forEach((element)=>{
+                delete element.pe_to_gdp;
+            })
+        }
+
+        //PE_on_defence
+        if(!hasPEOnDefencee){
+            lista.forEach((element)=>{
+                delete element.pe_on_defence;
+            })
+        }
+
+        return lista;
+
     }
 
 };
