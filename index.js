@@ -32,6 +32,7 @@ app.use(FA_API+"/frontend",express.static("./public/smi_stats"));
 
 //BACKEND
 backend_roque_v1(app,PE_DB);
+backend_roque_v2(app,PE_DB);
 backend_alexis(app, SMI_DB);
 backend_jf(app,PD_DB);
 
