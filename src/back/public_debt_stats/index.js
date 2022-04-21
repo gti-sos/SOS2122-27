@@ -233,10 +233,8 @@ module.exports = (app,db) => {
             res.push("ERROR");
             return res;	
         }
-        const startIndex = offset;
-        const endIndex = startIndex + limit;
     
-        res = stats.slice(startIndex, endIndex);
+        res = stats.slice(offset, limit+offset);
         return res;
     }
 

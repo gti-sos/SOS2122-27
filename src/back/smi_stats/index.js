@@ -3,6 +3,7 @@ module.exports = (app,db) => {
     const FAMV_API = "/api/v1/smi_stats";
     const API_DOC_PORTAL = "https://documenter.getpostman.com/view/19481651/UVyn3K1F";
     
+    var smi_stats = []
     var initial_smi_stats = [
         {
             country: "spain",
@@ -42,7 +43,7 @@ module.exports = (app,db) => {
         },
     ];
 
-    var smi_stats = initial_smi_stats;
+   //var smi_stats = initial_smi_stats;
     
 // GET Documentacion
     app.get(FAMV_API + "/docs", (req,res)=>{
@@ -97,7 +98,7 @@ app.post(FAMV_API +"/:country/:year", (req,res) => {
 });
 
 //GET GENERAL
-    
+   
 app.get(FAMV_API, (req,res) => {
 
     if(Object.keys(req.query).length > 0){
@@ -145,7 +146,7 @@ app.get(FAMV_API+"/:country/:year",(req,res)=>{
     if(filteredSMI == 0){
         res.sendStatus(404,"NOT FOUND");
     }else{
-        res.send(JSON.stringify(filteredSMI, null, 2));
+        res.send(JSON.stringify(filteredSMI[0], null, 2));
     }
 });
 
@@ -211,7 +212,7 @@ app.delete(FAMV_API+"/:country",(req,res)=>{
 //DELETE DE UN RECURSO CONCRETO CON AÑO
 
 app.delete(FAMV_API + "/:country/:year",(req,res)=>{
-    smi_stats.filter((stat)=>{
+    smi_stats = smi_stats.filter((stat)=>{
         return (stat.country != req.params.country || stat.year != req.params.year);
     })
     res.sendStatus(200,"OK");
@@ -266,10 +267,9 @@ function paginationMaker(req, stats) {
         res.push("ERROR");
         return res;	
     }
-    const startIndex = offset;
-    const endIndex = startIndex + limit;
 
-    res = stats.slice(startIndex, endIndex);
+
+    res = stats.slice(offset, limit+offset);
     return res;
 }
 

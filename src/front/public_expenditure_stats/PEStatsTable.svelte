@@ -112,10 +112,10 @@
 </script>
 
 <style>
-table {
+/*table {
    width: 100%;
    border: 1px solid #000;
-}
+}*/
 thead{
 	background-color: #9381ff;
 }
