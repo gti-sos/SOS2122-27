@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "4de6ba27-d90c-424c-8e8c-54c888454527",
-		"name": "Pruebas local",
+		"_postman_id": "90c503c0-92a4-4f6c-932e-1499a3a8ac70",
+		"name": "Pruebas local v2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "GET /public-expenditure-stats/espana/2020",
+			"name": "GET /public-expenditure-stats",
 			"event": [
 				{
 					"listen": "test",
@@ -32,14 +32,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-expenditure-stats"
 					]
 				}
@@ -73,14 +73,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats?limit=2&offset=0",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats?limit=2&offset=0",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-expenditure-stats"
 					],
 					"query": [
@@ -124,14 +124,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats?year=2019",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats?year=2019",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-expenditure-stats"
 					],
 					"query": [
@@ -163,14 +163,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats/espana/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/espana/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-expenditure-stats",
 						"espana",
 						"2020"
@@ -198,14 +198,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-expenditure-stats"
 					]
 				}
@@ -231,14 +231,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats/espana/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/espana/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-expenditure-stats",
 						"espana",
 						"2020"
@@ -266,14 +266,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats/china/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/china/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-expenditure-stats",
 						"china",
 						"2020"
@@ -305,14 +305,14 @@
 					"raw": "{\r\n    \"country\": \"china\",\r\n    \"year\": 2020,\r\n    \"public_expenditure\": 4370440.0,\r\n    \"pe_to_gdp\": 34.12,\r\n    \"pe_on_defence\": 4.91\r\n}"
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats/espana/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/espana/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-expenditure-stats",
 						"espana",
 						"2020"
@@ -349,14 +349,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-expenditure-stats"
 					]
 				}
@@ -382,14 +382,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats/china/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/china/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-expenditure-stats",
 						"china",
 						"2020"
@@ -421,14 +421,14 @@
 					"raw": "{\r\n    \"country\": \"china\",\r\n    \"year\": 2020,\r\n    \"public_expenditure\": 5000000.0,\r\n    \"pe_to_gdp\": 35,\r\n    \"pe_on_defence\": 5.1\r\n}"
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-expenditure-stats"
 					]
 				}
@@ -463,14 +463,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats/china/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/china/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-expenditure-stats",
 						"china",
 						"2020"
@@ -569,6 +569,41 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/loadInitialData",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v2",
+						"public-expenditure-stats",
+						"loadInitialData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /public-expenditure-stats",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
 							"pm.test(\"Response is an Array\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(Array.isArray(jsonData)).to.eql(true);\r",
@@ -586,16 +621,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats/loadInitialData",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
-						"public-expenditure-stats",
-						"loadInitialData"
+						"v2",
+						"public-expenditure-stats"
 					]
 				}
 			},

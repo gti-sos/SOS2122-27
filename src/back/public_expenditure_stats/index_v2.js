@@ -1,7 +1,7 @@
 module.exports = (app,db) => {
 
     const ROQUE_BASE_API_URL = "/api/v2/public-expenditure-stats";
-    const API_DOC_PORTAL = "https://documenter.getpostman.com/view/8975262/UVyn2yyn";
+    const API_DOC_PORTAL = "https://documenter.getpostman.com/view/8975262/Uyr8nyWh";
 
     var initialPEStats = [
         {
@@ -374,6 +374,7 @@ module.exports = (app,db) => {
 
     //FUNCION DE PAGINACION
 
+    /*
     function pagingMaker(req, lista){
         var res = [];
         const limit = req.query.limit;
@@ -385,6 +386,23 @@ module.exports = (app,db) => {
         }
 
         res = lista.slice(offset,parseInt(limit)+parseInt(offset));
+        return res;
+    }
+    */
+
+    function pagingMaker(req, stats) {
+        var res = [];
+        const offset = req.query.offset;
+        const limit = req.query.limit;
+    
+        if(limit < 0 || offset < 0 || offset > stats.length) {
+            console.error(`Error in pagination, you have exceded limits`);
+            res.push("ERROR");
+            return res;	
+        }
+    
+    
+        res = stats.slice(offset, limit+offset);
         return res;
     }
 

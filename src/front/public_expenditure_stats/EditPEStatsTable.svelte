@@ -18,7 +18,7 @@
 
     async function getStats(){
         console.log("Fetching entries....");
-        const res = await fetch("/api/v1/public-expenditure-stats/"+params.country+"/"+params.year); 
+        const res = await fetch("/api/v2/public-expenditure-stats/"+params.country+"/"+params.year); 
         if(res.ok){
             const data = await res.json();
             stat = data;
@@ -35,7 +35,7 @@
 
     async function editStat(){
         console.log("Updating entry...."+updatedCountry);
-        const res = await fetch("/api/v1/public-expenditure-stats/"+params.country+"/"+params.year,
+        const res = await fetch("/api/v2/public-expenditure-stats/"+params.country+"/"+params.year,
 			{
 				method: "PUT",
 				body: JSON.stringify({

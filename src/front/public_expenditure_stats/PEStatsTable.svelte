@@ -20,7 +20,7 @@
 
     async function getPEStats(){
         console.log("Fetching stats....");
-        const res = await fetch("/api/v1/public-expenditure-stats");
+        const res = await fetch("/api/v2/public-expenditure-stats");
         if(res.ok){
             const data = await res.json();
             stats = data;
@@ -30,7 +30,7 @@
 
 	async function loadPEStats(){
         console.log("Loading stats....");
-        const res = await fetch("/api/v1/public-expenditure-stats/loadInitialData",
+        const res = await fetch("/api/v2/public-expenditure-stats/loadInitialData",
 			{
 				method: "GET"
 			}).then(function (res){
@@ -41,7 +41,7 @@
 
 	async function deletePEStats(){
         console.log("Deleting stats....");
-        const res = await fetch("/api/v1/public-expenditure-stats/",
+        const res = await fetch("/api/v2/public-expenditure-stats/",
 			{
 				method: "DELETE"
 			}).then(function (res){
@@ -52,7 +52,7 @@
 
 	async function deleteStat(countryDelete, yearDelete){
         console.log("Deleting entry....");
-        const res = await fetch("/api/v1/public-expenditure-stats/"+countryDelete+"/"+yearDelete,
+        const res = await fetch("/api/v2/public-expenditure-stats/"+countryDelete+"/"+yearDelete,
 			{
 				method: "DELETE"
 			}).then(function (res){
@@ -64,7 +64,7 @@
 	async function insertStat(){
 		console.log("Inserting stat...."+JSON.stringify(newStat));
 		if(!!newStat.country && !!newStat.year){
-			const res = await fetch("/api/v1/public-expenditure-stats",
+			const res = await fetch("/api/v2/public-expenditure-stats",
 			{
 				method: "POST",
 				body: JSON.stringify(newStat),
