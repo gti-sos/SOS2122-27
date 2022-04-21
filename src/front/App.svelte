@@ -1,6 +1,7 @@
 <script>
     import Router from 'svelte-spa-router';
     import Home from "./Home.svelte";
+    import Info from "./Info.svelte";
    
 
     //Elementos de Roque
@@ -16,6 +17,7 @@
 
     const routes = {
         "/": Home,
+        "/info": Info,
 
         "/public-expenditure-stats": PEStats,
         "/public-expenditure-stats/:country/:year": EditPEStatsTable,
