@@ -18,7 +18,6 @@
         "/": Home,
 
         "/public-expenditure-stats": PEStats,
-<<<<<<< HEAD
         "/public-expenditure-stats/:country/:year": EditPEStatsTable,
 
 
@@ -26,10 +25,6 @@
 
         "/public-debt-stats": DebtStats   
 
-=======
-        "/smi_stats": SmiStats,
-        "/public-debt-stats": DebtStats        
->>>>>>> 98c5af95d4667dd51756d372448a80af5f3e4e26
     }
 
 </script>
