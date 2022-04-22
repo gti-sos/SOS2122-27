@@ -1,8 +1,21 @@
 <script>
     import { onMount } from 'svelte';
-	import { Table, Button} from 'sveltestrap';
-	
+	import {Pagination, PaginationItem, PaginationLink, Table, Button, Alert } from "sveltestrap";
 
+	//vatiables para mostrar mensajes
+	let visibleError = false;
+	let visibleMsg = false;
+	let errorMsg = "";
+	let msg = "";
+
+
+	//variables para la paginacion
+	let c_offset = 0;
+    let offset = 0;
+    let limit = 10;
+    let c_page = 1;
+    let lastPage = 1;
+    let total = 0;
     
     let stats = [];
     
@@ -24,9 +37,36 @@
         if(res.ok){
             const data = await res.json();
             stats = data;
+			total = data.length;
+			update();
             console.log("Estadísticas recibidas: "+stats.length);
-        }	
+        }else{
+			errors(res.status);
+		}
     }
+
+	async function getPEStatsPaging() {
+    	console.log("Fetching data...");
+   		const res = await fetch("/api/v2/public-expenditure-stats"+ "?limit=" + limit + "&offset=" + c_offset);
+		
+        if(res.ok){
+			console.log("getPEStatsPaging Ok.");
+			const json = await res.json();
+			stats = json;
+			console.log(`We have ${stats.length} stats.`);
+			for(let i=0; i<stats.length ; i++){
+				let data = [];
+				let y = stats[i].year;
+				if(y > yFrom && y<yTo){
+					data.push(y);
+					stats = data;
+				}
+			}
+			update();
+		}else{
+			errors(res.status);
+		}
+  	}
 
 	async function loadPEStats(){
         console.log("Loading stats....");
@@ -34,8 +74,15 @@
 			{
 				method: "GET"
 			}).then(function (res){
-				getPEStats();
-				window.alert("Estadísticas cargadas con éxito");
+				if(res.ok){
+					getPEStats();
+					visibleError = false;
+					visibleMsg = true;
+					msg = "Estadísticas cargadas con éxito";
+				}
+				else{
+					errors(res.status);
+				}
 			});
     }
 
@@ -45,8 +92,15 @@
 			{
 				method: "DELETE"
 			}).then(function (res){
-				getPEStats();
-				window.alert("Estadísticas elimidas con éxito");
+				if(res.ok){
+					getPEStats();
+					visibleError = false;
+					visibleMsg = true;
+					msg = "Estadísticas eliminadas con éxito";
+				}
+				else{
+					errors(res.status);
+				}
 			});
     }
 
@@ -56,8 +110,15 @@
 			{
 				method: "DELETE"
 			}).then(function (res){
-				getPEStats();
-				window.alert("Entrada eliminada con éxito");
+				if(res.ok){
+					getPEStats();
+					visibleError = false;
+					visibleMsg = true;
+					msg = "Entrada eliminada con éxito";
+				}
+				else{
+					errors(res.status);
+				}
 			});
     }
 
@@ -72,42 +133,79 @@
 					"Content-Type": "application/json"
 				}
 			}).then(function (res){
-				newStat.country ="";
-				newStat.year = "";
-            	newStat.public_expenditure = "";
-            	newStat.pe_to_gdp = "";
-            	newStat.pe_on_defence = "";
-				getPEStats();
-				window.alert("Estadística introducida con éxito");
+				if(res.ok){
+					newStat.country ="";
+					newStat.year = "";
+					newStat.public_expenditure = "";
+					newStat.pe_to_gdp = "";
+					newStat.pe_on_defence = "";
+					getPEStats();
+					visibleError = false;
+					visibleMsg = true;
+					msg = "Estadística introducida con éxito";
+				}
+				else{
+					errors(res.status);
+				}
 			});
 		}else{
-			window.alert("Faltan los campos país y año");
+			visibleError = true;
+			errorMsg = "Faltan los campos país y año";
 		}
 		
 	}
 
 	function errors(code){
-        let msg;
+        let error;
 		switch (code) {
 			case 404:
-				msg = "La entrada seleccionada no existe"
+				error = "La entrada " + newStat.country + "/" + newStat.year + " no existe"
 				break;
 			case 400:
-            	msg = "La petición no está correctamente formulada"
+				error = "La petición no está correctamente formulada"
 				break;
 			case 409:
-           		msg = "El dato introducido ya existe"
+				error = "El dato introducido ya existe"
 				break;
 			case 401:
-            	msg = "No autorizado"
+				error = "No autorizado"
 				break;
 			case 405:
-				msg = "Método no permitido"
+				error = "Método no permitido"
 				break;
+			default:
+				error = "Error desconocido"
 		}
-        window.alert(msg)
-            return;
+		visibleMsg=false;
+		visibleError=true;
+        errorMsg = error;
+        return;
     }
+
+	async function update() {
+      const res = await fetch("/api/v2/public-expenditure-stats");
+      if (res.status == 200) {
+        const json = await res.json();
+        total = json.length;
+        changePage(c_page, c_offset);
+      } 
+    }
+
+	function range(size, start = 0) {
+      return [...Array(size).keys()].map((i) => i + start);
+	}
+
+	function changePage(page, offset) {
+      
+      lastPage = Math.ceil(total/10);
+      console.log("Last page = " + lastPage);
+      if (page !== c_page) {
+        c_offset = offset;
+        c_page = page;
+        getPEStats();
+		getPEStatsPaging();
+      }
+    } 
 
 </script>
 
@@ -132,6 +230,18 @@ th, td {
 </style>
 
 <main>
+
+	<Alert color="danger" isOpen={visibleError} toggle={() => (visibleError = false)}>
+		{#if errorMsg}
+			<p>ERROR: {errorMsg}</p>
+		   {/if}
+	</Alert>
+	<Alert color="success" isOpen={visibleMsg} toggle={() => (visibleMsg = false)}>
+		{#if msg}
+			<p>Correcto: {msg}</p>
+		{/if}
+	</Alert>
+
 {#await stats}
 loading
 	{:then stats}
@@ -185,108 +295,31 @@ loading
 				</Button></td>
 			</tr>
 		</tbody>
+
+		
+
 	</Table>
+
+	<div>
+		<Pagination ariaLabel="Web pagination">
+		  <PaginationItem class = {c_page === 1 ? "enable" : ""}>
+				<PaginationLink previous href="#/public-expenditure-stats" on:click={() => changePage(c_page - 1, c_offset - 10)}/>
+		  </PaginationItem>
+		  {#each range(lastPage, 1) as page}
+				<PaginationItem class = {c_page === page ? "active" : ""}>
+				  <PaginationLink previous href="#/public-expenditure-stats" on:click={() => changePage(page, (page - 1) * 10)}>
+					  {page}
+				  </PaginationLink>
+				</PaginationItem>
+		  {/each}
+		  <PaginationItem class = {c_page === lastPage ? "disabled" : ""}>
+				<PaginationLink next href="#/public-expenditure-stats" on:click={() => changePage(c_page + 1, c_offset + 10)}/>
+		  </PaginationItem>
+		</Pagination>
+
+  </div>
 
 {/await}
 </main>
 
-<!--
-<table>
-		<thead>
-			<tr>
-				<th>
-					País
-				</th>
-				<th>
-					Año
-				</th>
-				<th>
-					Gasto público
-				</th>
-				<th>
-					% de gasto público respecto a PIB
-				</th>
-				<th>
-					% destinado a defensa en GP
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			{#each stats as stat}
-			<tr>
-				<td>
-					{stat.country}
-				</td>
-				<td>
-					{stat.year}
-				</td>
-				<td>
-					{stat.public_expenditure}
-				</td>
-				<td>
-					{stat.pe_to_gdp}
-				</td>
-				<td>
-					{stat.pe_on_defence}
-				</td>
-			</tr>
-			{/each}
-		</tbody>
-	</table>
 
-
--->
-
-<!-- 
-
-	<Table bordered>
-		<thead>
-			<tr>
-				<th>País</th>
-				<th>Año</th>
-				<th>Tasa de mortalidad</th>
-				<th>Esperanza de vida</th>
-                <th>Tasa de natalidad</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><input bind:value="{newEntry.country}"></td>
-				<td><input bind:value="{newEntry.year}"></td>
-				<td><input bind:value="{newEntry.death_rate}"></td>
-                <td><input bind:value="{newEntry.life_expectancy_birth}"></td>
-                <td><input bind:value="{newEntry.birth_rate}"></td>
-				<td><Button outline color="primary" on:click="{insertEntry}">
-					Añadir
-					</Button>
-				</td>
-			</tr>
-			{#each entries as entry}
-				<tr>
-					<td>{entry.country}</td>
-					<td>{entry.year}</td>
-					<td>{entry.death_rate}</td>
-                    <td>{entry.life_expectancy_birth}</td>
-                    <td>{entry.birth_rate}</td>
-					<td><Button outline color="warning" on:click={function (){
-						window.location.href = `/#/population-levels/${entry.country}/${entry.year}`
-					}}>
-						Editar
-					</Button>
-					<td><Button outline color="danger" on:click={BorrarEntry(entry.country,entry.year)}>
-						Borrar
-					</Button>
-					</td>
-				</tr>
-			{/each}
-			<tr>
-				<td><Button outline color="success" on:click={LoadEntries}>
-					Cargar datos
-				</Button></td>
-				<td><Button outline color="danger" on:click={BorrarEntries}>
-					Borrar todo
-				</Button></td>
-			</tr>
-		</tbody>
-	</Table>
--->

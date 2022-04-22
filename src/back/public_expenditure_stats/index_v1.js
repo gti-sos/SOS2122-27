@@ -288,4 +288,21 @@ module.exports = (app,db) => {
         return res;
     }
 
+    function paginationMaker(req, stats) {
+        var res = [];
+        const offset = req.query.offset;
+        const limit = req.query.limit;
+    
+        if(limit < 0 || offset < 0 || offset > stats.length) {
+            console.error(`Error in pagination, you have exceded limits`);
+            res.push("ERROR");
+            return res;	
+        }
+        const startIndex = offset;
+        const endIndex = startIndex + limit;
+    
+        res = stats.slice(startIndex, endIndex);
+        return res;
+    }
+
 };

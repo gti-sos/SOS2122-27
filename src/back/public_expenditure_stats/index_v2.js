@@ -51,7 +51,41 @@ module.exports = (app,db) => {
             pe_to_gdp: 49.3,
             pe_on_defence: 4.16
     
-        } 
+        },
+        {
+            country: "brasil",
+            year: 2020,
+            public_expenditure: 544871.3,
+            pe_to_gdp: 42.87,
+            pe_on_defence: 3.21
+    
+        },
+        {
+            country: "belgica",
+            year: 2020,
+            public_expenditure: 277969.3,
+            pe_to_gdp: 54.8,
+            pe_on_defence: 1.78
+    
+        },
+        {
+            country: "finlandia",
+            year: 2018,
+            public_expenditure: 124491.0,
+            pe_to_gdp: 53.3,
+            pe_on_defence: 2.66
+    
+        },
+        {
+            country: "grecia",
+            year: 2018,
+            public_expenditure: 87133.0,
+            pe_to_gdp: 48.5,
+            pe_on_defence: 5.23
+    
+        }
+
+
     ];
 
     var PEStats = initialPEStats;
@@ -374,35 +408,26 @@ module.exports = (app,db) => {
 
     //FUNCION DE PAGINACION
 
-    /*
-    function pagingMaker(req, lista){
+    function pagingMaker(req, list){
         var res = [];
-        const limit = req.query.limit;
-        const offset = req.query.offset;
+        var limit = req.query.limit;
+        var offset = req.query.offset;
         
-        if(limit < 1 || offset < 0 || offset > lista.length){
+        if(limit < 1 || offset < 0 || offset > list.length){
             res.push("ERROR EN PARAMETROS LIMIT Y/O OFFSET");
             return res;
         }
 
-        res = lista.slice(offset,parseInt(limit)+parseInt(offset));
-        return res;
-    }
-    */
-
-    function pagingMaker(req, stats) {
-        var res = [];
-        const offset = req.query.offset;
-        const limit = req.query.limit;
-    
-        if(limit < 0 || offset < 0 || offset > stats.length) {
-            console.error(`Error in pagination, you have exceded limits`);
-            res.push("ERROR");
-            return res;	
+        //limit no definido
+        if(limit == undefined && offset != undefined){
+            limit = list.length - offset;
         }
-    
-    
-        res = stats.slice(offset, limit+offset);
+        //offset no definido
+        else if(limit != undefined && offset == undefined){
+            offset = 0;
+        }
+
+        res = list.slice(offset,parseInt(limit)+parseInt(offset));
         return res;
     }
 
@@ -436,7 +461,7 @@ module.exports = (app,db) => {
             if(element=='year'){
                 hasYear=true;
             }
-            if(element=='public_exxpenditure'){
+            if(element=='public_expenditure'){
                 hasPE=true;
             }
             if(element=='pe_to_gdp'){
@@ -476,7 +501,7 @@ module.exports = (app,db) => {
         }
 
         //PE_on_defence
-        if(!hasPEOnDefencee){
+        if(!hasPEOnDefence){
             lista.forEach((element)=>{
                 delete element.pe_on_defence;
             })
