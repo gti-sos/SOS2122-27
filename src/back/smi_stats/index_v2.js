@@ -102,41 +102,82 @@ app.post(FAMV_API +"/:country/:year", (req,res) => {
 app.get(FAMV_API, (req,res) => {
 
     console.log("Obteniendo smi_stats..");
-    var query = req.query;
-    for(i in query){
-        if (i == 'year') {
-            query[i] = parseInt(query[i]);
-          } else if (i == 'smi_local') {
-            query[i] = parseFloat(query[i]);
-          } else if (i == 'smi_euros') {
-            query[i] = parseFloat(query[i]);
-          } else if (i == 'smi_variation') {
-            query[i] = parseFloat(query[i]);
-          }
-        }
-        //Paginacion
-        var limit = query.limit;
-        var offset = query.offset;
-        delete query.offset;
-        delete query.limit;
 
-        db.find(query).skip(offset).limit(limit).exec((errro, smi_stats) =>{
-            if (error){
-                console.error("Error accediendo a DB con GET")
-                res.sendStatus(500);
+    var year = req.query.year;
+    var from = req.query.from;
+    var to = req.query.to;
+    var query = req.query;
+
+    //Consulta OK
+    for (var i = 0; i < Object.keys(query).length; i++) {
+        var element = Object.keys(query)[i];
+        if (element != "year" && element != "from" && element != "to" && element != "limit" && element != "offset") {
+            res.sendStatus(400, "BAD REQUEST");
+            return;
+        }
+    }
+
+    //from<=to
+    if(from > to){
+        res.sendStatus(400, "BAD REQUEST");
+        return;
+    }
+    db.find({}, function (err, filteredList){
+        if (err) {
+            res.sendStatus(500, "ERROR EN CLIENTE");
+            return;
+        }
+
+    //Filtro año
+        if (year != null) {
+            var filteredList = filteredList.filter((reg) => {
+                return (reg.year == year);
+            });
+            if (filteredList == 0) {
+                res.sendStatus(404, "NOT FOUND");
+                return;
             }
-            smi_stats.forEach((r) =>{
-                delete r._id;
+        }
+
+        //Filtros From-To   
+        if (from != null && to != null) {
+            filteredList = filteredList.filter((reg) => {
+                return (reg.year >= from && reg.year <= to);
             });
 
-            res.status(200).send(JSON.stringify(smi_stats, null, 2));
-            console.log("Datos enviados: " + JSON.stringify(smi_stats, null, 2));
+            if (filteredList == 0) {
+                res.sendStatus(404, "NOT FOUND");
+                return;
+            }
+        }
+
+        // Eliminacion de _ID
+        if (req.query.limit != undefined || req.query.offset != undefined) {
+            filteredList = pagingMaker(req, filteredList);
+        }
+        filteredList.forEach((element) => {
+            delete element._id;
         });
 
-        console.log("OK.");
-
-          
+        //Check de campos
+        var fields = req.query.fields
+        if(fields!=null){
+            //Comprobamos si los campos son correctos
+            var listaFields = fields.split(",");
+            for(var i = 0; i<listaFields.length;i++){
+                var element = listaFields[i];
+                if(element != "country" && element != "year" && element != "smi_local"  && element != "smi_euros" && element != "smi_variation"){
+                    res.sendStatus(400, "BAD REQUEST");
+                    return;
+                }
+            }
+            //Escogemos los campos correspondientes
+            filteredList = checkFields(req,filteredList);
+        }
+        res.send(JSON.stringify(filteredList,null,2));
+        })
     });
+    
 
 
 

@@ -101,55 +101,15 @@ app.post(FAMV_API +"/:country/:year", (req,res) => {
    
 app.get(FAMV_API, (req,res) => {
 
-    console.log("Obteniendo smi_stats..");
-    var query = req.query;
-    for(i in query){
-        if (i == 'year') {
-            query[i] = parseInt(query[i]);
-          } else if (i == 'smi_local') {
-            query[i] = parseFloat(query[i]);
-          } else if (i == 'smi_euros') {
-            query[i] = parseFloat(query[i]);
-          } else if (i == 'smi_variation') {
-            query[i] = parseFloat(query[i]);
-          }
-        }
-        //Paginacion
-        var limit = query.limit;
-        var offset = query.offset;
-        delete query.offset;
-        delete query.limit;
-
-        db.find(query).skip(offset).limit(limit).exec((errro, smi_stats) =>{
-            if (error){
-                console.error("Error accediendo a DB con GET")
-                res.sendStatus(500);
-            }
-            smi_stats.forEach((r) =>{
-                delete r._id;
-            });
-
-            res.status(200).send(JSON.stringify(smi_stats, null, 2));
-            console.log("Datos enviados: " + JSON.stringify(smi_stats, null, 2));
-        });
-
-        console.log("OK.");
-
-          
-    });
-
-
-    /*
     if(Object.keys(req.query).length > 0){
         console.log("Query:",req.query);
         selectedStats = filterQuery(req,smi_stats);
-
+        
         if(req.query.limit != undefined || req.query.offset != undefined){
             selectedStats = paginationMaker(req,selectedStats);
         }
-    }
 
-    else{
+    }else{
         selectedStats = smi_stats;
     }
 
@@ -159,8 +119,8 @@ app.get(FAMV_API, (req,res) => {
         res.sendStatus(404,"NOT FOUND");
     }else{
         res.send(JSON.stringify(selectedStats, null, 2));
-    } */
-
+    } 
+});
 
 //GET CONCRETO
 
