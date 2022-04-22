@@ -1,6 +1,6 @@
 module.exports = (app,db) => {
 
-    const FAMV_API = "/api/v1/smi_stats";
+    const FAMV_API = "/api/v2/smi_stats";
     const API_DOC_PORTAL = "https://documenter.getpostman.com/view/19481651/UVyn3K1F";
     
     var smi_stats = []
@@ -101,27 +101,45 @@ app.post(FAMV_API +"/:country/:year", (req,res) => {
    
 app.get(FAMV_API, (req,res) => {
 
-    if(Object.keys(req.query).length > 0){
-        console.log("Query:",req.query);
-        selectedStats = filterQuery(req,smi_stats);
-
-        if(req.query.limit != undefined || req.query.offset != undefined){
-            selectedStats = paginationMaker(req,selectedStats);
+    console.log("Obteniendo smi_stats..");
+    var query = req.query;
+    for(i in query){
+        if (i == 'year') {
+            query[i] = parseInt(query[i]);
+          } else if (i == 'smi_local') {
+            query[i] = parseFloat(query[i]);
+          } else if (i == 'smi_euros') {
+            query[i] = parseFloat(query[i]);
+          } else if (i == 'smi_variation') {
+            query[i] = parseFloat(query[i]);
+          }
         }
-    }
+        //Paginacion
+        var limit = query.limit;
+        var offset = query.offset;
+        delete query.offset;
+        delete query.limit;
 
-    else{
-        selectedStats = smi_stats;
-    }
+        db.find(query).skip(offset).limit(limit).exec((errro, smi_stats) =>{
+            if (error){
+                console.error("Error accediendo a DB con GET")
+                res.sendStatus(500);
+            }
+            smi_stats.forEach((r) =>{
+                delete r._id;
+            });
 
-    if(selectedStats.includes("ERROR")) {
-        res.sendStatus(400,"BAD REQUEST"); 
-    } else if(selectedStats.length === 0) {
-        res.sendStatus(404,"NOT FOUND");
-    }else{
-        res.send(JSON.stringify(selectedStats, null, 2));
-    } 
-});
+            res.status(200).send(JSON.stringify(smi_stats, null, 2));
+            console.log("Datos enviados: " + JSON.stringify(smi_stats, null, 2));
+        });
+
+        console.log("OK.");
+
+          
+    });
+
+
+
 
 //GET CONCRETO
 
@@ -256,7 +274,7 @@ app.delete(FAMV_API + "/:country/:year",(req,res)=>{
 }
 
 //FUNCION DE PAGINACION
-
+/*
 function paginationMaker(req, stats) {
     var res = [];
     const offset = req.query.offset;
@@ -271,6 +289,6 @@ function paginationMaker(req, stats) {
 
     res = stats.slice(offset, limit+offset);
     return res;
-}
+}*/
 
 };
