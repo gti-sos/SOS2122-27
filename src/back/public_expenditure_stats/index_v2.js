@@ -373,7 +373,7 @@ module.exports = (app,db) => {
     }
 
     //FUNCION DE PAGINACION
-       
+
     function pagingMaker(req, list){
         var res = [];
         var limit = req.query.limit;
@@ -427,7 +427,7 @@ module.exports = (app,db) => {
             if(element=='year'){
                 hasYear=true;
             }
-            if(element=='public_exxpenditure'){
+            if(element=='public_expenditure'){
                 hasPE=true;
             }
             if(element=='pe_to_gdp'){
