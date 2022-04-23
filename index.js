@@ -4,7 +4,8 @@ const path = require("path");
 const backend_roque_v1 = require("./src/back/public_expenditure_stats/index_v1");
 const backend_roque_v2 = require("./src/back/public_expenditure_stats/index_v2");
 const backend_alexis = require("./src/back/smi_stats/index");
-const backend_jf = require("./src/back/public_debt_stats/index");
+const backend_jf_v1 = require("./src/back/public_debt_stats/index_v1");
+const backend_jf_v1 = require("./src/back/public_debt_stats/index_v2");
 
 const API_ROQUE = "/api/v1/public-expenditure-stats"
 const JF_API = "/api/v1/public-debt-stats"
