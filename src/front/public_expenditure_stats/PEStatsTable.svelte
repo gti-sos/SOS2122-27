@@ -16,6 +16,10 @@
     let c_page = 1;
     let lastPage = 1;
     let total = 0;
+
+	//variables para filtrar por año
+	let from = 2017;
+	let to = 2022;
     
     let stats = [];
     
@@ -51,22 +55,28 @@
 		
         if(res.ok){
 			console.log("getPEStatsPaging Ok.");
-			const json = await res.json();
-			stats = json;
-			console.log(`We have ${stats.length} stats.`);
-			for(let i=0; i<stats.length ; i++){
-				let data = [];
-				let y = stats[i].year;
-				if(y > yFrom && y<yTo){
-					data.push(y);
-					stats = data;
-				}
-			}
+			const data = await res.json();
+			stats = data;
+			console.log("Estadísticas recibidas: "+stats.length);
 			update();
 		}else{
 			errors(res.status);
 		}
   	}
+
+	async function getPEStatsByYear(){
+		console.log("Fetching stats from ",from," to ",to," ......");
+        const res = await fetch("/api/v2/public-expenditure-stats"+"?from="+from+"&to="+to);
+        if(res.ok){
+            const data = await res.json();
+            stats = data;
+			total = data.length;
+			update();
+            console.log("Estadísticas recibidas: "+stats.length);
+        }else{
+			errors(res.status);
+		}
+	}
 
 	async function loadPEStats(){
         console.log("Loading stats....");
@@ -140,9 +150,11 @@
 					newStat.pe_to_gdp = "";
 					newStat.pe_on_defence = "";
 					getPEStats();
+					getPEStatsPaging();
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadística introducida con éxito";
+					console.log("Total: ",total);
 				}
 				else{
 					errors(res.status);
@@ -197,7 +209,7 @@
 
 	function changePage(page, offset) {
       
-      lastPage = Math.ceil(total/10);
+      lastPage = Math.ceil(total/limit);
       console.log("Last page = " + lastPage);
       if (page !== c_page) {
         c_offset = offset;
@@ -294,6 +306,17 @@ loading
 					Borrar todo
 				</Button></td>
 			</tr>
+
+			<tr>
+				<td>Filtrado por años</td>
+				<td>desde</td>
+                <td><input bind:value="{from}"></td>
+				<td>hasta</td>
+                <td><input bind:value="{to}"></td>
+				<td><Button outline color="success" on:click={getPEStatsByYear}>
+					Filtrar
+				</Button></td>
+			</tr>
 		</tbody>
 
 		
@@ -302,7 +325,7 @@ loading
 
 	<div>
 		<Pagination ariaLabel="Web pagination">
-		  <PaginationItem class = {c_page === 1 ? "enable" : ""}>
+		  <PaginationItem class = {c_page === 1 ? "disabled" : ""}>
 				<PaginationLink previous href="#/public-expenditure-stats" on:click={() => changePage(c_page - 1, c_offset - 10)}/>
 		  </PaginationItem>
 		  {#each range(lastPage, 1) as page}
