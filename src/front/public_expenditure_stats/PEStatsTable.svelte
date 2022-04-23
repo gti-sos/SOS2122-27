@@ -150,6 +150,7 @@
 					newStat.pe_to_gdp = "";
 					newStat.pe_on_defence = "";
 					getPEStats();
+					getPEStatsPaging();
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadística introducida con éxito";
