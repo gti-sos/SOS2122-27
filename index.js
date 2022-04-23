@@ -37,7 +37,8 @@ backend_roque_v1(app,PE_DB);
 backend_roque_v2(app,PE_DB);
 backend_alexis_v1(app, SMI_DB);
 backend_alexis_v2(app, SMI_DB);
-backend_jf(app,PD_DB);
+backend_jf_v1(app,PD_DB);
+backend_jf_v2(app,PD_DB);
 
 app.use("/", express.static('public'));
 
