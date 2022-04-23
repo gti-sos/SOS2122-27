@@ -668,7 +668,7 @@
 	"variable": [
 		{
 			"key": "SERVER",
-			"value": "http://localhost:8080",
+			"value": "http://localhost:8090",
 			"type": "string"
 		}
 	]
