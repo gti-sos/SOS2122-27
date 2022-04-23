@@ -104,13 +104,12 @@ app.get(FAMV_API, (req,res) => {
     if(Object.keys(req.query).length > 0){
         console.log("Query:",req.query);
         selectedStats = filterQuery(req,smi_stats);
-
+        
         if(req.query.limit != undefined || req.query.offset != undefined){
             selectedStats = paginationMaker(req,selectedStats);
         }
-    }
 
-    else{
+    }else{
         selectedStats = smi_stats;
     }
 
@@ -256,7 +255,7 @@ app.delete(FAMV_API + "/:country/:year",(req,res)=>{
 }
 
 //FUNCION DE PAGINACION
-
+/*
 function paginationMaker(req, stats) {
     var res = [];
     const offset = req.query.offset;
@@ -271,6 +270,6 @@ function paginationMaker(req, stats) {
 
     res = stats.slice(offset, limit+offset);
     return res;
-}
+}*/
 
 };

@@ -51,7 +51,41 @@ module.exports = (app,db) => {
             pe_to_gdp: 49.3,
             pe_on_defence: 4.16
     
-        } 
+        },
+        {
+            country: "brasil",
+            year: 2020,
+            public_expenditure: 544871.3,
+            pe_to_gdp: 42.87,
+            pe_on_defence: 3.21
+    
+        },
+        {
+            country: "belgica",
+            year: 2020,
+            public_expenditure: 277969.3,
+            pe_to_gdp: 54.8,
+            pe_on_defence: 1.78
+    
+        },
+        {
+            country: "finlandia",
+            year: 2018,
+            public_expenditure: 124491.0,
+            pe_to_gdp: 53.3,
+            pe_on_defence: 2.66
+    
+        },
+        {
+            country: "grecia",
+            year: 2018,
+            public_expenditure: 87133.0,
+            pe_to_gdp: 48.5,
+            pe_on_defence: 5.23
+    
+        }
+
+
     ];
 
     var PEStats = initialPEStats;
@@ -373,7 +407,7 @@ module.exports = (app,db) => {
     }
 
     //FUNCION DE PAGINACION
-       
+
     function pagingMaker(req, list){
         var res = [];
         var limit = req.query.limit;
@@ -427,7 +461,7 @@ module.exports = (app,db) => {
             if(element=='year'){
                 hasYear=true;
             }
-            if(element=='public_exxpenditure'){
+            if(element=='public_expenditure'){
                 hasPE=true;
             }
             if(element=='pe_to_gdp'){
