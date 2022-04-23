@@ -135,6 +135,7 @@ module.exports = (app,db) => {
             }
         }
 
+
         //Comprobamos si from es mas pequeño o igual a to
         if (from > to) {
             res.sendStatus(400, "BAD REQUEST");
@@ -151,10 +152,7 @@ module.exports = (app,db) => {
                 var filteredList = filteredList.filter((reg) => {
                     return (reg.year == year);
                 });
-                if (filteredList == 0) {
-                    res.sendStatus(404, "NOT FOUND");
-                    return;
-                }
+                
             }
 
             // Apartado para from y to
@@ -162,11 +160,12 @@ module.exports = (app,db) => {
                 filteredList = filteredList.filter((reg) => {
                     return (reg.year >= from && reg.year <= to);
                 });
+            }
 
-                if (filteredList == 0) {
-                    res.sendStatus(404, "NOT FOUND");
-                    return;
-                }
+            //comprobamos que haya elementos
+            if (filteredList == 0) {
+                res.sendStatus(404, "NOT FOUND");
+                return;
             }
 
             // Resultado sin ID

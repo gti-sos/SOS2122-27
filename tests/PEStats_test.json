@@ -6,6 +6,42 @@
 	},
 	"item": [
 		{
+			"name": "Inicialización",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/loadInitialData",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v2",
+						"public-expenditure-stats",
+						"loadInitialData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GET /public-expenditure-stats",
 			"event": [
 				{
@@ -198,7 +234,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/espana/2020",
 					"host": [
 						"{{HOST}}"
 					],
@@ -206,7 +242,9 @@
 					"path": [
 						"api",
 						"v2",
-						"public-expenditure-stats"
+						"public-expenditure-stats",
+						"espana",
+						"2020"
 					]
 				}
 			},
@@ -498,14 +536,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-expenditure-stats"
 					]
 				}
@@ -536,7 +574,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"country\": \"alemania\",\r\n    \"year\": 2010,\r\n    \"public_expenditure\": 958279.0,\r\n    \"pe_to_gdp\": 49.4,\r\n    \"pe_on_defence\": 2.4\r\n\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -544,14 +582,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-expenditure-stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-expenditure-stats"
 					]
 				}
