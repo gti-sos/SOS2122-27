@@ -86,6 +86,7 @@
 			}).then(function (res){
 				if(res.ok){
 					getPEStats();
+					update();
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadísticas cargadas con éxito";

@@ -90,7 +90,7 @@
 
     var PEStats = initialPEStats;
 
-module.exports = (app,db) => {
+module.exports.register = (app,db) => {
 
     //DOCUMENTACION DE LA API
     
