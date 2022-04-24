@@ -76,7 +76,7 @@
             smi_euros: 178.8,
             smi_variation:  33.79
         }, 
-        {
+        /*{
             country: "south korea",
             year: 2021,
             smi_local: 1822480.0,
@@ -138,7 +138,7 @@
             smi_local: 1212.0,
             smi_euros: 192.1,
             smi_variation:  11.29
-        }
+        }*/
     ];
 
 module.exports.register = (app,db) => {
