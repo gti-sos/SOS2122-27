@@ -14,6 +14,7 @@
 
     //Elementos de Alexis
     import SmiStats from './smi_stats/SmiStats.svelte';
+    import EditSmiStatsTable from './smi_stats/EditSmiStatsTable.svelte';
 
 
     const routes = {
@@ -26,7 +27,8 @@
         "/public-debt-stats": DebtStats,
         "/public-debt-stats/:country/:year": EditDebtStatsTable,
 
-        "/smi-stats": SmiStats,
+        "/smi_stats": SmiStats,        
+        "/smi_stats/:country/:year": EditSmiStatsTable,
 
     }
 

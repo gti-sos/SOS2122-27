@@ -3,7 +3,7 @@
 
 *   **Team**
     *   [Roque Fernandez Iglesias](https://github.com/roque-fernandez): public-expenditure-stats
-    *   [Fco Alexis Morales Vallado](https://github.com/famvcucu)
+    *   [Fco Alexis Morales Vallado](https://github.com/famvcucu): smi_stats
     *   [Jose Felipe Ramos](https://github.com/jfeliperamos)
 *   **Project description**: Análisis económico mundial donde observaremos las relaciones en las variaciones entre la inversión en Gasto Público y la Deuda Pública, así como descubrir como ámbos factores afectan al Salario Mínimo Interprofesional.
 *   **Repository**: [gti-sos/SOS2122-27](https://github.com/gti-sos/SOS2122-27)
