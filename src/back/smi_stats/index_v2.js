@@ -13,40 +13,103 @@
     
         }, 
         {
-            country: "spain",
-            year: 2012,
-            smi_local: 1166.70,
-            smi_euros: 1166.70,
-            smi_variation: 3.63
+            country: "germany",
+            year: 2022,
+            smi_local: 1621.0,
+            smi_euros: 1621.0,
+            smi_variation: 2.27
     
         }, 
         {
-            country: "china",
-            year: 2017,
-            smi_local: 2200.0,
-            smi_euros: 281.3,
-            smi_variation:  47.69
+            country: "france",
+            year: 2022,
+            smi_local: 1603.1,
+            smi_euros: 1603.1,
+            smi_variation:  3.12
         },
         {
-            country: "haiti",
+            country: "belice",
+            year: 2019,
+            smi_local: 643.5,
+            smi_euros: 283.3,
+            smi_variation:  4.38
+        },
+        {
+            country: "argelia",
             year: 2013,
-            smi_local: 578.0,
-            smi_euros: 131.3,
-            smi_variation:  7.62
+            smi_local: 18000.0,
+            smi_euros: 173.4,
+            smi_variation:  -5.27
         },
         {
-            country: "peru",
-            year: 2011,
-            smi_local: 798.0,
-            smi_euros: 233.3,
-            smi_variation:  1.43
+            country: "estonia",
+            year: 2022,
+            smi_local: 654.0,
+            smi_euros: 654.0,
+            smi_variation:  11.99
+        },  
+        {
+            country: "greece",
+            year: 2022,
+            smi_local: 773.5,
+            smi_euros: 773.5,
+            smi_variation:  2.00
         }, 
         {
-            country: "venezuela",
-            year: 2016,
-            smi_local: 23002.0,
-            smi_euros: 59.3,
-            smi_variation:  -57.23,
+            country: "turkey",
+            year: 2022,
+            smi_local: 5004.0,
+            smi_euros: 328.5,
+            smi_variation:  -16.32
+        }, 
+        {
+            country: "trinidad y tobago",
+            year: 2019,
+            smi_local: 3640.0,
+            smi_euros: 468.8,
+            smi_variation:  21.88
+        }, 
+        {
+            country: "ucraine",
+            year: 2020,
+            smi_local: 4723.0,
+            smi_euros: 178.8,
+            smi_variation:  33.79
+        }, 
+        {
+            country: "south korea",
+            year: 2021,
+            smi_local: 1822480.0,
+            smi_euros: 1364.1,
+            smi_variation:  -1.50
+        }, 
+        {
+            country: "luxembourg",
+            year: 2021,
+            smi_local: 2201.9,
+            smi_euros: 2201.9,
+            smi_variation:  2.80
+        }, 
+        {
+            country: "moldavia",
+            year: 2020,
+            smi_local: 1000.0,
+            smi_euros: 51.6,
+            smi_variation:  0.64
+        }, 
+        {
+            country: "montenegro",
+            year: 2021,
+            smi_local: 331.3,
+            smi_euros: 331.3,
+            smi_variation:  0
+        }, 
+        {
+            country: "chile",
+            year: 2021,
+            smi_local: 334250.0,
+            smi_euros: 383.9,
+            smi_variation:  0.72,
         },  
         {
             country: "china",
