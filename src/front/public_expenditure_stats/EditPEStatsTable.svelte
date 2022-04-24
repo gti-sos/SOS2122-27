@@ -41,9 +41,9 @@
 
     async function editStat(){
         console.log("Updating entry...."+updatedCountry);
-        newStat.public_expenditure = parseFloat(newStat.public_expenditure);
-		newStat.pe_on_defence = parseFloat(newStat.pe_on_defence);
-		newStat.pe_to_gdp = parseFloat(newStat.pe_to_gdp);
+        updatedPE = parseFloat(updatedPE);
+		updatedPEToGDP = parseFloat(updatedPEToGDP);
+		updatedPEOnDefence = parseFloat(updatedPEOnDefence);
         const res = await fetch("/api/v2/public-expenditure-stats/"+params.country+"/"+params.year,
 			{
 				method: "PUT",
