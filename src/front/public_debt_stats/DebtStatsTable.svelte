@@ -300,6 +300,20 @@ loading
 				<td><Button outline color="danger" on:click={deleteDebtStats}>
 					Borrar todo
 				</Button></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<td>Filtrado por años</td>
+				<td>desde</td>
+                <td><input bind:value="{from}"></td>
+				<td>hasta</td>
+                <td><input bind:value="{to}"></td>
+				<td colspan="2"><Button block outline color="success" on:click={getDebtStatsByYear}>
+					Filtrar
+				</Button></td>
 			</tr>
 		</tbody>
 	</Table>
