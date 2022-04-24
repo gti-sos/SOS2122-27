@@ -1,6 +1,6 @@
 <script>
 	import DebtStatsTable from './DebtStatsTable.svelte';
-	import EditStat from './DebtStatsTable.svelte'
+	import EditDebtStatsTable from './EditDebtStatsTable.svelte'
 </script>
 
 <main>

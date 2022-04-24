@@ -1,10 +1,9 @@
 <script>
 
-    import { onMount } from 'svelte';
     export let params = {};
-    import { pop } from "svelte-spa-router";
-    import Button from 'sveltestrap/src/Button.svelte';
-    import Table from 'sveltestrap/src/Table.svelte';    
+    import {pop} from "svelte-spa-router";
+    import { onMount } from 'svelte';
+    import {Table, Button, Alert } from "sveltestrap";  
     
     let stat = {};
     let updatedCountry;
@@ -12,11 +11,16 @@
     let updatedTotalDebt;
     let updatedDebtGdp;
     let updatedPerCapitaDebt;   
+
+    let visibleError = false;
+	let visibleMsg = false;
+	let errorMsg = "";
+	let msg = "";
     
     onMount(getEntries);
     
     async function getEntries(){
-        console.log("Fetching contacts....");
+        console.log("Fetching stats....");
         const res = await fetch("/api/v2/public-debt-stats/"+params.country+"/"+params.year); 
         if(res.ok){
             const data = await res.json();
@@ -24,8 +28,8 @@
             updatedCountry = stat.country;
             updatedYear = stat.year;
             updatedTotalDebt = stat.total_debt;
-            updatedDebtGdp = contact.debt_gdp;
-            updatedPerCapitaDebt = contact.per_capita_debt;
+            updatedDebtGdp = stat.debt_gdp;
+            updatedPerCapitaDebt = stat.per_capita_debt;
             
             console.log("Received stat.");
         }else{
@@ -36,20 +40,33 @@
 
     async function editEntry(){
         console.log("Updating entry...."+updatedCountry);
+        newStat.total_debt = parseFloat(newStat.total_debt);
+		newStat.debt_gdp = parseFloat(newStat.debt_gdp);
+		newStat.per_capita_debt = parseFloat(newStat.per_capita_debt);
         const res = await fetch("/api/v2/public-debt-stats/"+params.country+"/"+params.year,
 			{
 				method: "PUT",
 				body: JSON.stringify({
                     country: updatedCountry,
                     year: updatedYear,
-                    public_expenditure: updatupdatedTotalDebtedPE,
-                    pe_to_gdp: updatedDebtGdp,
-                    pe_on_defence: updatedPerCapitaDebt
+                    total_debt: updatedTotalDebt,
+                    debt_gdp: updatedDebtGdp,
+                    per_capita_debt: updatedPerCapitaDebt
                 }),
 				headers: {
 					"Content-Type": "application/json"
 				}
-			}); 
+			}).then(function (res){
+                if(res.ok){
+					visibleError = false;
+					visibleMsg = true;
+					msg = "Estadística modificada con éxito";
+				}
+				else{
+					errors(res.status);
+				}
+            }); 
+
     }
 
     async function errors(code,entrada){
@@ -77,7 +94,7 @@
 </script>
 
 <main>
-    <h1>Edit contact "{params.country}+"-"+{params.year}" </h1>
+    <h1>Editar estadística "{params.country}"/"{params.year}" </h1>
     {#await stat}
     loading
         {:then stat}        
