@@ -18,7 +18,10 @@ const app = express();
 var Datastore = require("nedb");
 var PE_DB = new Datastore({filename: path.join(__dirname,"./src/back/public_expenditure_stats/publicExpenditureDB.db"), autoload: true});
 var SMI_DB = new Datastore({filename: path.join(__dirname,"./src/back/smi_stats/smiDB.db"), autoload: true});
-var PD_DB = new Datastore({filename: path.join(__dirname,"./src/back/public_debt_stats/publicDebtDB.db"), autoload: true});
+
+//var PD_DB = new Datastore({filename: path.join(__dirname,"./src/back/public_debt_stats/publicDebtDB.db"), autoload: true});
+PD_DB = new Datastore();
+
 
 const port = process.env.PORT || 8090;
 const bodyParser = require("body-parser");
@@ -38,7 +41,8 @@ backend_roque_v2(app,PE_DB);
 backend_alexis_v1(app, SMI_DB);
 backend_alexis_v2(app, SMI_DB);
 backend_jf_v1(app,PD_DB);
-backend_jf_v2(app,PD_DB);
+//ServerAPI
+backend_jf_v2.register(app,PD_DB);
 
 app.use("/", express.static('public'));
 

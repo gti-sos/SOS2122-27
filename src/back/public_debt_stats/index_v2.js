@@ -1,4 +1,4 @@
-module.exports = (app,db) => {
+
 
     const JF_API_URL = "/api/v2/public-debt-stats";
     const API_DOC_PORTAL = "https://documenter.getpostman.com/view/14853996/UyrAGHgT";
@@ -49,6 +49,8 @@ module.exports = (app,db) => {
     ];
     
     var DebtStats = initial_DebtStat;
+
+module.exports.register = (app,db) => {
 
     //DOCUMENTACION DE LA API
     
@@ -245,8 +247,10 @@ module.exports = (app,db) => {
             res.sendStatus(400, "BAD REQUEST");
             return;
         }
+
         var countryR = req.params.country;
         var yearR = req.params.year;
+        var body = req.body;
 
         db.find({}, function (err, filteredList) {
             if (err) {
@@ -254,7 +258,7 @@ module.exports = (app,db) => {
                 return;
             }
 
-            //comprobamos que el elemento exista
+            //¿Existe el elemento?
             filteredList = filteredList.filter((reg) => {
                 return (reg.country == countryR && reg.year == yearR);
             });
@@ -264,13 +268,13 @@ module.exports = (app,db) => {
             }
 
             //comprobamos que los campos coincidan
-            if (countryR != req.body.country || yearR != req.body.year) {
+            if (countryR != body.country || yearR != body.year) {
                 res.sendStatus(400, "BAD REQUEST");
                 return;
             }
 
             //actualizamos valor
-            db.update({$and:[{country: String(countryR)}, {year: parseInt(yearR)}]}, {$set: req.body}, {},function(err) {
+            db.update({$and:[{country: String(countryR)}, {year: parseInt(yearR)}]}, {$set: body}, {},function(err, numUpdated) {
                 if (err) {
                     res.sendStatus(500, "ERROR EN CLIENTE");
                 }else{
@@ -405,12 +409,12 @@ module.exports = (app,db) => {
     //FUNCION PARA COMPROBAR LOS CAMPOS DE PETICION
 
     function checkBody(req) {
-        return (req.body.country == null ||
-            req.body.year == null ||
-            req.body.total_debt == null ||
-            req.body.debt_gdp == null ||
+        return (req.body.country == null |
+            req.body.year == null |
+            req.body.total_debt == null |
+            req.body.debt_gdp == null |
             req.body.per_capita_debt == null
-        )
+        );
     }
 
     //FUNCION PARA COMPROBAR LOS CAMPOS DEL OBJETO
