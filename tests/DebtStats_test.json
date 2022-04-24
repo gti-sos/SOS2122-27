@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "3e82f29f-c5d0-4ecd-9bfb-3b06a5c6bc7f",
-		"name": "PUBLIC-DEBT-STATS",
+		"_postman_id": "c271937f-ca89-4637-956b-2ad971dfa275",
+		"name": "PUBLIC-DEBT-STATS V2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -14,16 +14,7 @@
 						"exec": [
 							"pm.test(\"Status code is 200 OK\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"Response is an stats array\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(Array.isArray(jsonData)).to.eql(true);\r",
-							"});\r",
-							"pm.test(\"Response has stats\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.length).to.be.at.least(1);\r",
-							"});\r",
-							""
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -40,14 +31,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-debt-stats/loadInitialData",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/loadInitialData",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-debt-stats",
 						"loadInitialData"
 					]
@@ -90,14 +81,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-debt-stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-debt-stats"
 					]
 				}
@@ -113,6 +104,10 @@
 						"exec": [
 							"pm.test(\"Status code is 200 OK\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response isn't an stats array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(Array.isArray(jsonData)).to.eql(false);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -130,14 +125,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-debt-stats/espana/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/espana/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-debt-stats",
 						"espana",
 						"2020"
@@ -165,14 +160,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-debt-stats/espana/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/espana/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-debt-stats",
 						"espana",
 						"2020"
@@ -207,14 +202,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-debt-stats/espana/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/espana/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-debt-stats",
 						"espana",
 						"2020"
@@ -249,14 +244,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-debt-stats/taiwan/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/taiwan/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-debt-stats",
 						"taiwan",
 						"2020"
@@ -293,14 +288,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-debt-stats/espana/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/espana/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-debt-stats",
 						"espana",
 						"2020"
@@ -337,14 +332,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-debt-stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-debt-stats"
 					]
 				}
@@ -377,14 +372,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-debt-stats/taiwan/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/taiwan/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-debt-stats",
 						"taiwan",
 						"2020"
@@ -421,14 +416,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-debt-stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-debt-stats"
 					]
 				}
@@ -463,14 +458,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-debt-stats/taiwan/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/taiwan/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-debt-stats",
 						"taiwan",
 						"2020"
@@ -498,14 +493,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-debt-stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-debt-stats"
 					]
 				}
@@ -519,8 +514,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 404 NOT FOUND\", function () {\r",
-							"    pm.response.to.have.status(404);\r",
+							"pm.test(\"Response is EMPTY\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.be.at.least(0);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -531,14 +527,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/public-debt-stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"public-debt-stats"
 					]
 				}
@@ -549,7 +545,7 @@
 	"variable": [
 		{
 			"key": "Local Server",
-			"value": "http://localhost:8090"
+			"value": "http://localhost:8080"
 		}
 	]
 }

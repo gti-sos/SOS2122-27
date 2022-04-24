@@ -12,6 +12,14 @@ module.exports = (app,db) => {
             smi_euros: 1166.70,
             smi_variation: 3.63
     
+        }, 
+        {
+            country: "spain",
+            year: 2012,
+            smi_local: 1166.70,
+            smi_euros: 1166.70,
+            smi_variation: 3.63
+    
         },  
         {
             country: "china",
@@ -411,9 +419,9 @@ app.delete(FAMV_API+"/:country/:year",(req, res)=>{
  function checkBody(req) {
     return (req.body.country == null ||
         req.body.year == null ||
-        req.body.public_expenditure == null ||
-        req.body.pe_to_gdp == null ||
-        req.body.pe_on_defence == null
+        req.body.smi_local == null ||
+        req.body.smi_euros == null ||
+        req.body.smi_variation == null
     )
 }
 

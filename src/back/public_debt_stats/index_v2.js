@@ -1,132 +1,93 @@
-module.exports = (app,db) => {
 
-    const ROQUE_BASE_API_URL = "/api/v2/public-expenditure-stats";
-    const API_DOC_PORTAL = "https://documenter.getpostman.com/view/8975262/Uyr8nyWh";
 
-    var initialPEStats = [
+    const JF_API_URL = "/api/v2/public-debt-stats";
+    const API_DOC_PORTAL = "https://documenter.getpostman.com/view/14853996/UyrAGHgT";
+
+    var initial_DebtStat = [
         {
             country: "espana",
             year: 2020,
-            public_expenditure: 588279.0,
-            pe_to_gdp: 52.4,
-            pe_on_defence: 2.66
-    
-        },
-        {
-            country: "espana",
-            year: 2019,
-            public_expenditure: 524037.0,
-            pe_to_gdp: 42.1,
-            pe_on_defence: 2.94
-    
-        },
+            total_debt: 1345784,
+            debt_gdp: 120,
+            per_capita_debt: 28393    
+        },   
         {
             country: "alemania",
             year: 2020,
-            public_expenditure: 1712131.0,
-            pe_to_gdp: 50.8,
-            pe_on_defence: 2.6
-    
+            total_debt: 1345784,
+            debt_gdp: 68.7,
+            per_capita_debt: 27832    
+        }, 
+        {
+            country: "reino unido",
+            year: 2020,
+            total_debt: 2479993,
+            debt_gdp: 104.47,
+            per_capita_debt: 37001    
         },
         {
             country: "francia",
-            year: 2018,
-            public_expenditure: 1419593.0,
-            pe_to_gdp: 61.6,
-            pe_on_defence: 3.29
-    
-        },
+            year: 2020,
+            total_debt: 2649261,
+            debt_gdp: 115,
+            per_capita_debt: 28393    
+        }, 
         {
             country: "italia",
             year: 2020,
-            public_expenditure: 944486.0,
-            pe_to_gdp: 57.1,
-            pe_on_defence: 2.63
-    
-        },
+            total_debt: 2573468,
+            debt_gdp: 155.6,
+            per_capita_debt: 43429    
+        }, 
         {
             country: "portugal",
             year: 2020,
-            public_expenditure: 98725.0,
-            pe_to_gdp: 49.3,
-            pe_on_defence: 4.16
-    
-        },
-        {
-            country: "brasil",
-            year: 2020,
-            public_expenditure: 544871.3,
-            pe_to_gdp: 42.87,
-            pe_on_defence: 3.21
-    
-        },
-        {
-            country: "belgica",
-            year: 2020,
-            public_expenditure: 277969.3,
-            pe_to_gdp: 54.8,
-            pe_on_defence: 1.78
-    
-        },
-        {
-            country: "finlandia",
-            year: 2018,
-            public_expenditure: 124491.0,
-            pe_to_gdp: 53.3,
-            pe_on_defence: 2.66
-    
-        },
-        {
-            country: "grecia",
-            year: 2018,
-            public_expenditure: 87133.0,
-            pe_to_gdp: 48.5,
-            pe_on_defence: 5.23
-    
-        }
-
-
+            total_debt: 270491,
+            debt_gdp: 135.2,
+            per_capita_debt: 26266    
+        }, 
     ];
+    
+    var DebtStats = initial_DebtStat;
 
-    var PEStats = initialPEStats;
+module.exports.register = (app,db) => {
 
     //DOCUMENTACION DE LA API
     
-    app.get(ROQUE_BASE_API_URL+"/docs",(req,res)=>{
+    app.get(JF_API_URL+"/docs",(req,res)=>{
         res.redirect(API_DOC_PORTAL);
     });
 
     //LOAD INITIAL DATA
 
-    app.get(ROQUE_BASE_API_URL + "/loadInitialData", (req, res) => {
+    app.get(JF_API_URL + "/loadInitialData", (req, res) => {
 
         db.find({}, function (err, filteredList) {
             if (err) {
-                res.sendStatus(500, "ERROR EN CLIENTE");
+                res.sendStatus(500, "CLIENT ERROR");
                 return;
             }
             if (filteredList == 0) {
-                for (var i = 0; i < initialPEStats.length; i++) {
-                    db.insert(initialPEStats[i]);
+                for (var i = 0; i < initial_DebtStat.length; i++) {
+                    db.insert(initial_DebtStat[i]);
                 }
-                res.sendStatus(200, "OK.");
+                res.sendStatus(200, "OK: datos inicializados correctamente.");
                 return;
             }else{
-            res.sendStatus(200, "Ya inicializados")
+            res.sendStatus(200, "Aviso: datos ya inicializados anteriormente")
         }
         });
     })
 
     //GET GENERAL
     
-    app.get(ROQUE_BASE_API_URL, (req, res) => {
+    app.get(JF_API_URL, (req, res) => {
 
         var year = req.query.year;
         var from = req.query.from;
         var to = req.query.to;
 
         //Comprobamos query
-
         for (var i = 0; i < Object.keys(req.query).length; i++) {
             var element = Object.keys(req.query)[i];
             if (element != "year" && element != "from" && element != "to" && element != "limit" && element != "offset") {
@@ -135,7 +96,6 @@ module.exports = (app,db) => {
             }
         }
 
-
         //Comprobamos si from es mas pequeño o igual a to
         if (from > to) {
             res.sendStatus(400, "BAD REQUEST");
@@ -143,29 +103,31 @@ module.exports = (app,db) => {
         }
         db.find({}, function (err, filteredList) {
             if (err) {
-                res.sendStatus(500, "ERROR EN CLIENTE");
+                res.sendStatus(500, "CLIENT ERROR");
                 return;
             }
 
-            // Apartado para búsqueda por año
+            // Búsqueda por año
             if (year != null) {
                 var filteredList = filteredList.filter((reg) => {
                     return (reg.year == year);
                 });
-                
+                if (filteredList == 0) {
+                    res.sendStatus(404, "NOT FOUND");
+                    return;
+                }
             }
 
-            // Apartado para from y to
+            // From y To
             if (from != null && to != null) {
                 filteredList = filteredList.filter((reg) => {
                     return (reg.year >= from && reg.year <= to);
                 });
-            }
 
-            //comprobamos que haya elementos
-            if (filteredList == 0) {
-                res.sendStatus(404, "NOT FOUND");
-                return;
+                if (filteredList == 0) {
+                    res.sendStatus(404, "NOT FOUND");
+                    return;
+                }
             }
 
             // Resultado sin ID
@@ -196,7 +158,7 @@ module.exports = (app,db) => {
 
     //GET DE UN RECURSO CONCRETO
     
-    app.get(ROQUE_BASE_API_URL + "/:country/:year", (req, res) => {
+    app.get(JF_API_URL + "/:country/:year", (req, res) => {
 
         var country = req.params.country
         var year = req.params.year
@@ -230,7 +192,7 @@ module.exports = (app,db) => {
                 var listaFields = req.query.fields.split(",");
                 for(var i = 0; i<listaFields.length;i++){
                     var element = listaFields[i];
-                    if(element != "country" && element != "year" && element != "public_expenditure"  && element != "pe_on_defence" && element != "pe_to_gdp"){
+                    if(element != "country" && element != "year" && element != "total_debt"  && element != "debt_gdp" && element != "per_capita_debt"){
                         res.sendStatus(400, "BAD REQUEST");
                         return;
                     }
@@ -244,7 +206,7 @@ module.exports = (app,db) => {
 
     //POST CORRECTO
     
-    app.post(ROQUE_BASE_API_URL, (req, res) => {
+    app.post(JF_API_URL, (req, res) => {
 
         if (checkBody(req)) {
             res.sendStatus(400, "BAD REQUEST");
@@ -252,7 +214,7 @@ module.exports = (app,db) => {
             db.find({}, function (err, filteredList) {
 
                 if (err) {
-                    res.sendStatus(500, "ERROR EN CLIENTE");
+                    res.sendStatus(500, "CLIENT ERROR");
                     return;
                 }
 
@@ -272,30 +234,31 @@ module.exports = (app,db) => {
 
     //POST NO PERMITIDO
 
-    app.post(ROQUE_BASE_API_URL +"/:country/:year", (req,res) => {
+    app.post(JF_API_URL +"/:country/:year", (req,res) => {
         res.sendStatus(405,"METHOD NOT ALLOWED");
     });
 
     //PUT CORRECTO
 
-    app.put(ROQUE_BASE_API_URL + "/:country/:year", (req, res) => {
+    app.put(JF_API_URL + "/:country/:year", (req, res) => {
 
         //comprobamos body
-
         if (checkBody(req)) {
             res.sendStatus(400, "BAD REQUEST");
             return;
         }
+
         var countryR = req.params.country;
         var yearR = req.params.year;
+        var body = req.body;
 
         db.find({}, function (err, filteredList) {
             if (err) {
-                res.sendStatus(500, "ERROR EN CLIENTE");
+                res.sendStatus(500, "CLIENT ERROR");
                 return;
             }
 
-            //comprobamos que el elemento exista
+            //¿Existe el elemento?
             filteredList = filteredList.filter((reg) => {
                 return (reg.country == countryR && reg.year == yearR);
             });
@@ -305,13 +268,13 @@ module.exports = (app,db) => {
             }
 
             //comprobamos que los campos coincidan
-            if (countryR != req.body.country || yearR != req.body.year) {
+            if (countryR != body.country || yearR != body.year) {
                 res.sendStatus(400, "BAD REQUEST");
                 return;
             }
 
             //actualizamos valor
-            db.update({$and:[{country: String(countryR)}, {year: parseInt(yearR)}]}, {$set: req.body}, {},function(err) {
+            db.update({$and:[{country: String(countryR)}, {year: parseInt(yearR)}]}, {$set: body}, {},function(err, numUpdated) {
                 if (err) {
                     res.sendStatus(500, "ERROR EN CLIENTE");
                 }else{
@@ -323,13 +286,13 @@ module.exports = (app,db) => {
 
     //PUT NO PERMITIDO
 
-    app.put(ROQUE_BASE_API_URL, (req,res) => {
+    app.put(JF_API_URL, (req,res) => {
         res.sendStatus(405,"METHOD NOT ALLOWED");
     });
 
     //DELETE GENERAL
 
-    app.delete(ROQUE_BASE_API_URL,(req, res)=>{
+    app.delete(JF_API_URL,(req, res)=>{
         db.remove({}, { multi: true }, (err, numRemoved)=>{
             if (err){
                 res.sendStatus(500,"ERROR EN CLIENTE");
@@ -342,7 +305,7 @@ module.exports = (app,db) => {
 
     //DELETE DE UN RECURSO CONCRETO
     
-    app.delete(ROQUE_BASE_API_URL+"/:country/:year",(req, res)=>{
+    app.delete(JF_API_URL+"/:country/:year",(req, res)=>{
         var countryR = req.params.country;
         var yearR = req.params.year;
 
@@ -355,21 +318,19 @@ module.exports = (app,db) => {
                 res.sendStatus(404,"NOT FOUND");
                 return;
             }
-            db.remove({country: countryR, year: parseInt(yearR)}, {}, (err)=>{
+            db.remove({country: countryR, year: parseInt(yearR)}, {}, (err, numRemoved)=>{
                 if (err){
                     res.sendStatus(500,"ERROR EN CLIENTE");
                     return;
-                }
-            
+                }            
                 res.sendStatus(200,"DELETED");
-                return;
-                
+                return;                
             });
         });
-
     })
 
     //FUNCION DE FILTRADO
+
     function filterQuery(req,stats){
         filteredStats = stats.filter((stat)=>{
             
@@ -385,18 +346,18 @@ module.exports = (app,db) => {
                     flag = false;
                 }
             }
-            if(req.query.public_expenditure != undefined) {
-                if(stat.public_expenditure != req.query.public_expenditure)  {
+            if(req.query.total_debt != undefined) {
+                if(stat.total_debt != req.query.total_debt)  {
                     flag = false;
                 }
             }
-            if(req.query.pe_to_gdp != undefined) {
-                if(stat.pe_to_gdp != req.query.pe_to_gdp)  {
+            if(req.query.debt_gdp != undefined) {
+                if(stat.debt_gdp != req.query.debt_gdp)  {
                     flag = false;
                 }
             }
-            if(req.query.pe_on_defence != undefined) {
-                if(stat.pe_on_defence != req.query.pe_on_defence)  {
+            if(req.query.total_debt != undefined) {
+                if(stat.total_debt != req.query.total_debt)  {
                     flag = false;
                 }
             }
@@ -407,38 +368,53 @@ module.exports = (app,db) => {
 
     //FUNCION DE PAGINACION
 
-    function pagingMaker(req, list){
+    function pagingMaker(req, lista){
         var res = [];
         var limit = req.query.limit;
         var offset = req.query.offset;
         
-        if(limit < 1 || offset < 0 || offset > list.length){
+        if(limit < 1 || offset < 0 || offset > lista.length){
             res.push("ERROR EN PARAMETROS LIMIT Y/O OFFSET");
             return res;
         }
 
         //limit no definido
         if(limit == undefined && offset != undefined){
-            limit = list.length - offset;
+            limit = lista.length - offset;
         }
         //offset no definido
         else if(limit != undefined && offset == undefined){
             offset = 0;
         }
 
-        res = list.slice(offset,parseInt(limit)+parseInt(offset));
+        res = lista.slice(offset,parseInt(limit)+parseInt(offset));
+        return res;
+    }
+
+    function pagingMaker(req, stats) {
+        var res = [];
+        const offset = req.query.offset;
+        const limit = req.query.limit;
+    
+        if(limit < 0 || offset < 0 || offset > stats.length) {
+            console.error(`Error in pagination, you have exceded limits`);
+            res.push("ERROR");
+            return res;	
+        }    
+    
+        res = stats.slice(offset, limit+offset);
         return res;
     }
 
     //FUNCION PARA COMPROBAR LOS CAMPOS DE PETICION
 
     function checkBody(req) {
-        return (req.body.country == null ||
-            req.body.year == null ||
-            req.body.public_expenditure == null ||
-            req.body.pe_to_gdp == null ||
-            req.body.pe_on_defence == null
-        )
+        return (req.body.country == null |
+            req.body.year == null |
+            req.body.total_debt == null |
+            req.body.debt_gdp == null |
+            req.body.per_capita_debt == null
+        );
     }
 
     //FUNCION PARA COMPROBAR LOS CAMPOS DEL OBJETO
@@ -447,9 +423,9 @@ module.exports = (app,db) => {
         var fields = req.query.fields;
         var hasCountry = false;
         var hasYear = false;
-        var hasPE = false;
-        var hasPEToGDP = false;
-        var hasPEOnDefence = false;
+        var hasTotalDebt = false;
+        var hasDebtGdp = false;
+        var hasPCDebt = false;
         fields = fields.split(",");
 
         for(var i = 0; i<fields.length;i++){
@@ -460,14 +436,14 @@ module.exports = (app,db) => {
             if(element=='year'){
                 hasYear=true;
             }
-            if(element=='public_expenditure'){
-                hasPE=true;
+            if(element=='total_debt'){
+                hasTotalDebt=true;
             }
-            if(element=='pe_to_gdp'){
-                hasPEToGDP=true;
+            if(element=='debt_gdp'){
+                hasDebtGdp=true;
             }
-            if(element=='pe_on_defence'){
-                hasPEOnDefence=true;
+            if(element=='per_capita_debt'){
+                hasPCDebt=true;
             }
         }
 
@@ -485,24 +461,24 @@ module.exports = (app,db) => {
             })
         }
 
-        //PE
-        if(!hasPE){
+        //TotalDebt
+        if(!hasTotalDebt){
             lista.forEach((element)=>{
-                delete element.public_exxpenditure;
+                delete element.total_debt;
             })
         }
 
-        //PE_to_gdp
-        if(!hasPEToGDP){
+        //DebtGdp
+        if(!hasDebtGdp){
             lista.forEach((element)=>{
-                delete element.pe_to_gdp;
+                delete element.debt_gdp;
             })
         }
 
-        //PE_on_defence
-        if(!hasPEOnDefence){
+        //PerCapitaDebt
+        if(!hasPCDebt){
             lista.forEach((element)=>{
-                delete element.pe_on_defence;
+                delete element.per_capita_debt;
             })
         }
 
