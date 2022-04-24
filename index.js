@@ -16,7 +16,7 @@ const app = express();
 var Datastore = require("nedb");
 
 PD_DB = new Datastore();
-PE_DB = new Datastore();
+var PE_DB = new Datastore({filename: path.join(__dirname,"./src/back/public_expenditure_stats/publicExpenditureDB.db"), autoload: true});
 SMI_DB = new Datastore();
 
 
@@ -31,7 +31,7 @@ backend_alexis_v1(app, SMI_DB);
 backend_jf_v1(app,PD_DB);
 //ServerAPI
 backend_jf_v2.register(app,PD_DB);
-backend_roque_v2.register(app,PE_DB);
+backend_roque_v2(app,PE_DB);
 backend_alexis_v2.register(app, SMI_DB);
 
 app.use("/", express.static('public'));

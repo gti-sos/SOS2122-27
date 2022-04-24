@@ -3,8 +3,8 @@
     export let params = {};
     import {pop} from "svelte-spa-router";
     import { onMount } from 'svelte';
-    import Button from 'sveltestrap/src/Button.svelte';
-    import Table from 'sveltestrap/src/Table.svelte';
+    import {Table, Button, Alert } from "sveltestrap";
+
 
     let stat = {};
 
@@ -13,6 +13,12 @@
     let updatedPE;
     let updatedPEToGDP;
     let updatedPEOnDefence;
+
+    //vatiables para mostrar mensajes
+	let visibleError = false;
+	let visibleMsg = false;
+	let errorMsg = "";
+	let msg = "";
 
     onMount(getStats);
 
@@ -35,6 +41,9 @@
 
     async function editStat(){
         console.log("Updating entry...."+updatedCountry);
+        newStat.public_expenditure = parseFloat(newStat.public_expenditure);
+		newStat.pe_on_defence = parseFloat(newStat.pe_on_defence);
+		newStat.pe_to_gdp = parseFloat(newStat.pe_to_gdp);
         const res = await fetch("/api/v2/public-expenditure-stats/"+params.country+"/"+params.year,
 			{
 				method: "PUT",
@@ -48,7 +57,16 @@
 				headers: {
 					"Content-Type": "application/json"
 				}
-			}); 
+			}).then(function (res){
+                if(res.ok){
+					visibleError = false;
+					visibleMsg = true;
+					msg = "Estadística modificada con éxito";
+				}
+				else{
+					errors(res.status);
+				}
+            }); 
     }
 
     async function errors(code,entrada){
@@ -77,6 +95,18 @@
 
 <main>
     <h1>Editar estadística {params.country}/{params.year}</h1>
+
+    <Alert color="danger" isOpen={visibleError} toggle={() => (visibleError = false)}>
+		{#if errorMsg}
+			<p>ERROR: {errorMsg}</p>
+		   {/if}
+	</Alert>
+	<Alert color="success" isOpen={visibleMsg} toggle={() => (visibleMsg = false)}>
+		{#if msg}
+			<p>Correcto: {msg}</p>
+		{/if}
+	</Alert>
+
     {#await stat}
     loading
         {:then stat}

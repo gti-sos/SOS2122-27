@@ -124,7 +124,7 @@
     }
 
 	async function deleteStat(countryDelete, yearDelete){
-        console.log("Deleting entry....");
+        console.log("Deleting entry.... ");
         const res = await fetch("/api/v2/public-expenditure-stats/"+countryDelete+"/"+yearDelete,
 			{
 				method: "DELETE"
@@ -144,6 +144,11 @@
 	async function insertStat(){
 		console.log("Inserting stat...."+JSON.stringify(newStat));
 		if(!!newStat.country && !!newStat.year){
+			//parseamos los campos numericos
+			newStat.year = parseInt(newStat.year);
+			newStat.public_expenditure = parseFloat(newStat.public_expenditure);
+			newStat.pe_on_defence = parseFloat(newStat.pe_on_defence);
+			newStat.pe_to_gdp = parseFloat(newStat.pe_to_gdp);
 			const res = await fetch("/api/v2/public-expenditure-stats",
 			{
 				method: "POST",
@@ -170,6 +175,7 @@
 				}
 			});
 		}else{
+			visibleMsg = false;
 			visibleError = true;
 			errorMsg = "Faltan los campos país y año";
 		}
