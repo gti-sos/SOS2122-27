@@ -126,9 +126,9 @@
                 <tr>
                     <td>{updatedCountry}</td>
                     <td>{updatedYear}</td>
-                    <td><input bind:value="{updatedPE}"></td>
-                    <td><input bind:value="{updatedPEToGDP}"></td>
-                    <td><input bind:value="{updatedPEOnDefence}"></td>
+                    <td><input type="number" bind:value="{updatedPE}"></td>
+                    <td><input type="number" bind:value="{updatedPEToGDP}"></td>
+                    <td><input type="number" bind:value="{updatedPEOnDefence}"></td>
                     <td><Button outline color="primary" on:click="{editStat}">
                         Editar
                         </Button>
