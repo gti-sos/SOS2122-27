@@ -8,14 +8,12 @@
 	let errorMsg = "";
 	let msg = "";
 
-
 	//variables para la paginacion
-	let c_offset = 0;
     let offset = 0;
     let limit = 10;
-    let c_page = 1;
-    let lastPage = 1;
     let total = 0;
+	let maxPages = 0;
+	let numStats;
 
 	//variables para filtrar por año
 	let from = 2017;
@@ -36,28 +34,26 @@
 
     async function getDebtStats(){
         console.log("Fetching stats....");
+
+		let cadena = `/api/v2/public-debt-stats?limit=${limit}&&offset=${offset*10}&&`;
+		if (from != null) {
+			cadena = cadena + `from=${from}&&`
+		}
+		if (to != null) {
+			cadena = cadena + `to=${to}&&`
+		}
+
         const res = await fetch("/api/v2/public-debt-stats");
         if(res.ok){
-            const data = await res.json();
-            stats = data;
-            console.log("Received stats: "+stats.length);
-        }	
-    }
+			let cadenaPag = cadena.split(`limit=${limit}&&offset=${offset*10}`);
+			maxPagesFunction(cadenaPag[0]+cadenaPag[1]);
 
-	async function getDebtStatsPaging() {
-    	console.log("Fetching data...");
-   		const res = await fetch("/api/v2/public-debt-stats"+ "?limit=" + limit + "&offset=" + c_offset);
-		
-        if(res.ok){
-			console.log("getDebtStatsPaging Ok.");
-			const data = await res.json();
-			stats = data;
-			console.log("Estadísticas recibidas: "+stats.length);
-			update();
-		}else{
-			errors(res.status);
-		}
-  	}
+            const data = await res.json();
+            stats = data;			
+			numStats = stats.length
+            console.log("Estadísticas recibidas: "+stats.length);
+        }else{errors(res.status)}
+    }
 
 	async function getDebtStatsByYear(){
 		console.log("Fetching stats from ",from," to ",to," ......");
@@ -66,7 +62,6 @@
             const data = await res.json();
             stats = data;
 			total = data.length;
-			update();
             console.log("Estadísticas recibidas: "+stats.length);
         }else{
 			errors(res.status);
@@ -149,7 +144,6 @@
 					newStat.debt_gdp = "";
 					newStat.per_capita_debt = "";
 					getDebtStats();
-					getDebtStatsPaging();
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadística introducida con éxito";
@@ -193,37 +187,25 @@
         return;
     }
 
-	async function update() {
-      const res = await fetch("/api/v2/public-debt-stats");
-      if (res.status == 200) {
-        const json = await res.json();
-        total = json.length;
-        changePage(c_page, c_offset);
-      } 
-    }
+	async function maxPagesFunction(cadena){
+		let num;
+        const res = await fetch(cadena,{method:"GET"});
 
-	function range(size, start = 0) {
-      return [...Array(size).keys()].map((i) => i + start);
+		if(res.ok){
+			const data = await res.json();
+			maxPages = Math.floor(data.length/10);
+			if(maxPages === data.length/10){
+				maxPages = maxPages-1;
+			}
+		}	
 	}
-
-	function changePage(page, offset) {
-      
-      lastPage = Math.ceil(total/limit);
-      console.log("Last page = " + lastPage);
-      if (page !== c_page) {
-        c_offset = offset;
-        c_page = page;
-        getDebtStats();
-		getDebtStatsPaging();
-      }
-    } 
 
 </script>
 
 <style>
 
 thead{
-	background-color: #9381ff;
+	background-color: #23ac01;
 }
 tbody{
 	background-color: #f8f7ff;
@@ -293,49 +275,70 @@ loading
 					</td>
 				</tr>
 			{/each}
+			
+		</tbody>
+	</Table>
+	<br>
+
+	<h4>Búsqueda por años</h4>
+
+	<Table bordered>
+		<thead>
 			<tr>
-				<td><Button outline color="success" on:click={loadDebtStats}>
-					Cargar datos
-				</Button></td>
-				<td><Button outline color="danger" on:click={deleteDebtStats}>
-					Borrar todo
-				</Button></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td colspan="2"></td>
+				<th>Fecha inicio</th>
+				<th>Fecha fin</th>
 			</tr>
+		</thead>
+		<tbody>
 			<tr>
-				<td>Filtrado por años</td>
-				<td>desde</td>
-                <td><input bind:value="{from}"></td>
-				<td>hasta</td>
-                <td><input bind:value="{to}"></td>
-				<td colspan="2"><Button block outline color="success" on:click={getDebtStatsByYear}>
-					Filtrar
-				</Button></td>
+				<td><input type="number" min="2000" bind:value="{from}"></td>
+				<td><input type="number" min="2000" bind:value="{to}"></td>
+				<td align="center"><Button outline color="dark" on:click="{()=>{
+					if (from == null || to == null) {
+						window.alert('Los campos fecha inicio y fecha fin no pueden estar vacíos')
+					}else{
+						getDebtStatsByYear();
+					}
+				}}">
+					Buscar
+					</Button>
+				</td>
+				<td align="center"><Button outline color="info" on:click="{()=>{
+					from = null;
+					to = null;
+					getDebtStats();
+					
+				}}">
+					Limpiar Búsqueda
+					</Button>
+				</td>
 			</tr>
 		</tbody>
 	</Table>
 
-	<div>
-		<Pagination ariaLabel="Web pagination">
-		  <PaginationItem class = {c_page === 1 ? "disabled" : ""}>
-				<PaginationLink previous href="#/public-debt-stats" on:click={() => changePage(c_page - 1, c_offset - 10)}/>
-		  </PaginationItem>
-		  {#each range(lastPage, 1) as page}
-				<PaginationItem class = {c_page === page ? "active" : ""}>
-				  <PaginationLink previous href="#/public-debt-stats" on:click={() => changePage(page, (page - 1) * 10)}>
-					  {page}
-				  </PaginationLink>
-				</PaginationItem>
-		  {/each}
-		  <PaginationItem class = {c_page === lastPage ? "disabled" : ""}>
-				<PaginationLink next href="#/public-debt-stats" on:click={() => changePage(c_page + 1, c_offset + 10)}/>
-		  </PaginationItem>
-		</Pagination>
+	<div align="center">
+		{#each Array(maxPages+1) as _,page}
+		
+			<Button outline color="secondary" on:click={()=>{
+				offset = page;
+				getDebtStats();
+			}}>{page} </Button>&nbsp
+	
+		{/each}
+	</div>
 
-  </div>
+	<br>
+
+	<div align="center">
+		<Button outline color="success" on:click={loadDebtStats}>
+			Cargar datos
+		</Button>&nbsp
+		<Button outline color="danger" on:click={deleteDebtStats}>
+			Borrar todo
+		</Button>
+	</div>
+	<br>
+	<br>
 
 {/await}
 </main>
