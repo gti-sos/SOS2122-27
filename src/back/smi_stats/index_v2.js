@@ -19,6 +19,34 @@
             smi_euros: 1166.70,
             smi_variation: 3.63
     
+        }, 
+        {
+            country: "china",
+            year: 2017,
+            smi_local: 2200.0,
+            smi_euros: 281.3,
+            smi_variation:  47.69
+        },
+        {
+            country: "haiti",
+            year: 2013,
+            smi_local: 578.0,
+            smi_euros: 131.3,
+            smi_variation:  7.62
+        },
+        {
+            country: "peru",
+            year: 2011,
+            smi_local: 798.0,
+            smi_euros: 233.3,
+            smi_variation:  1.43
+        }, 
+        {
+            country: "venezuela",
+            year: 2016,
+            smi_local: 23002.0,
+            smi_euros: 59.3,
+            smi_variation:  -57.23,
         },  
         {
             country: "china",

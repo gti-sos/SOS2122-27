@@ -129,6 +129,11 @@
 	async function insertStat(){
 		console.log("Inserting stat...."+JSON.stringify(newStat));
 		if(!!newStat.country && !!newStat.year){
+			//parseamos los campos numericos
+			newStat.year = parseInt(newStat.year);
+			newStat.total_debt = parseFloat(newStat.total_debt);
+			newStat.debt_gdp = parseFloat(newStat.debt_gdp);
+			newStat.per_capita_debt = parseFloat(newStat.per_capita_debt);
 			const res = await fetch("/api/v2/public-debt-stats",
 			{
 				method: "POST",

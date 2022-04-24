@@ -3,59 +3,59 @@
     export let params = {};
     import {pop} from "svelte-spa-router";
     import { onMount } from 'svelte';
-    import {Table, Button, Alert } from "sveltestrap";  
-    
+    import {Table, Button, Alert } from "sveltestrap";
+
     let stat = {};
+
     let updatedCountry;
     let updatedYear;
-    let updatedTotalDebt;
-    let updatedDebtGdp;
-    let updatedPerCapitaDebt;   
+    let updatedLocal;
+    let updatedEuros;
+    let updatedVariation;
 
     let visibleError = false;
 	let visibleMsg = false;
 	let errorMsg = "";
 	let msg = "";
-    
-    onMount(getEntries);
-    
-    async function getEntries(){
-        console.log("Fetching stats....");
-        const res = await fetch("/api/v2/public-debt-stats/"+params.country+"/"+params.year); 
+
+    onMount(getStats);
+
+    async function getStats(){
+        console.log("Fetching entries....");
+        const res = await fetch("/api/v2/smi_stats/"+params.country+"/"+params.year); 
         if(res.ok){
             const data = await res.json();
             stat = data;
             updatedCountry = stat.country;
             updatedYear = stat.year;
-            updatedTotalDebt = stat.total_debt;
-            updatedDebtGdp = stat.debt_gdp;
-            updatedPerCapitaDebt = stat.per_capita_debt;            
-            console.log("Received stat.");
+            updatedLocal = stat.smi_local;
+            updatedEuros = stat.smi_euros;
+            updatedVariation = stat.smi_variation;
         }else{
             errors(res.status,params.country+"/"+params.year);
             pop();
         }
     }
 
-    async function editEntry(){
+    async function editStat(){
         console.log("Updating entry...."+updatedCountry);
-        updatedTotalDebt = parseFloat(updatedTotalDebt);
-		updatedDebtGdp = parseFloat(updatedDebtGdp);
-		updatedPerCapitaDebt = parseFloat(updatedPerCapitaDebt);
-        const res = await fetch("/api/v2/public-debt-stats/"+params.country+"/"+params.year,
+        updatedLocal = parseFloat(updatedLocal);
+		updatedEuros = parseFloat(updatedEuros);
+		updatedVariation = parseFloat(updatedVariation);
+        const res = await fetch("/api/v2/smi_stats/"+params.country+"/"+params.year,
 			{
 				method: "PUT",
 				body: JSON.stringify({
                     country: updatedCountry,
                     year: updatedYear,
-                    total_debt: updatedTotalDebt,
-                    debt_gdp: updatedDebtGdp,
-                    per_capita_debt: updatedPerCapitaDebt
+                    smi_local: updatedLocal,
+                    smi_euros: updatedEuros,
+                    smi_variation: updatedVariation
                 }),
 				headers: {
 					"Content-Type": "application/json"
 				}
-			}).then(function (res){
+            }).then(function (res){
                 if(res.ok){
 					visibleError = false;
 					visibleMsg = true;
@@ -64,8 +64,7 @@
 				else{
 					errors(res.status);
 				}
-            }); 
-
+			}); 
     }
 
     async function errors(code,entrada){
@@ -93,39 +92,49 @@
 </script>
 
 <main>
-    <h1>Editar estadística "{params.country}"/"{params.year}" </h1>
+    <h1>Editar estadística {params.country}/{params.year}</h1>
+
+    <Alert color="danger" isOpen={visibleError} toggle={() => (visibleError = false)}>
+		{#if errorMsg}
+			<p>ERROR: {errorMsg}</p>
+		   {/if}
+	</Alert>
+	<Alert color="success" isOpen={visibleMsg} toggle={() => (visibleMsg = false)}>
+		{#if msg}
+			<p>Correcto: {msg}</p>
+		{/if}
+	</Alert>
     {#await stat}
     loading
-        {:then stat}        
+        {:then stat}
+        
     
         <Table bordered>
             <thead>
                 <tr>
                     <th>País</th>
-                    <th>Año</th>
-                    <th>Deuda pública total</th>
-                    <th>% de deuda pública respecto al PIB</th>
-                    <th>Deuda pública per cápita</th>
+				    <th>Año</th>
+				    <th>Sueldo Mon. Local</th>
+                    <th>Sueldo en euros</th>
+                    <th>% Variación</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>{updatedCountry}</td>
                     <td>{updatedYear}</td>
-                    <td><input bind:value="{updatedTotalDebt}"></td>
-                    <td><input bind:value="{updatedDebtGdp}"></td>
-                    <td><input bind:value="{updatedPerCapitaDebt}"></td>
-                    <td><Button 
-                            outline 
-                            color="primary" 
-                            on:click="{editEntry}">
-                        Edit
+                    <td><input bind:value="{updatedLocal}"></td>
+                    <td><input bind:value="{updatedEuros}"></td>
+                    <td><input bind:value="{updatedVariation}"></td>
+                    <td><Button outline color="primary" on:click="{editStat}">
+                        Editar
                         </Button>
                     </td>
                 </tr>
             </tbody>
         </Table>
     {/await}
-    <Button outline color="secondary" on:click="{pop}">Back</Button>
+    
+    <Button outline color="secondary" on:click="{pop}">Volver</Button>
 
     </main>
