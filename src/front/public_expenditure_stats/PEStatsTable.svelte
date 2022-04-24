@@ -89,6 +89,8 @@
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadísticas cargadas con éxito";
+					printPagingEstate();
+
 				}
 				else{
 					errors(res.status);
@@ -107,6 +109,8 @@
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadísticas eliminadas con éxito";
+					printPagingEstate();
+
 				}
 				else{
 					errors(res.status);
@@ -115,7 +119,7 @@
     }
 
 	async function deleteStat(countryDelete, yearDelete){
-        console.log("Deleting entry....");
+        console.log("Deleting entry.... ");
         const res = await fetch("/api/v2/public-expenditure-stats/"+countryDelete+"/"+yearDelete,
 			{
 				method: "DELETE"
@@ -125,6 +129,8 @@
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Entrada eliminada con éxito";
+					total-=1;
+					printPagingEstate();
 				}
 				else{
 					errors(res.status);
@@ -135,6 +141,11 @@
 	async function insertStat(){
 		console.log("Inserting stat...."+JSON.stringify(newStat));
 		if(!!newStat.country && !!newStat.year){
+			//parseamos los campos numericos
+			newStat.year = parseInt(newStat.year);
+			newStat.public_expenditure = parseFloat(newStat.public_expenditure);
+			newStat.pe_on_defence = parseFloat(newStat.pe_on_defence);
+			newStat.pe_to_gdp = parseFloat(newStat.pe_to_gdp);
 			const res = await fetch("/api/v2/public-expenditure-stats",
 			{
 				method: "POST",
@@ -154,13 +165,15 @@
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadística introducida con éxito";
-					console.log("Total: ",total);
+					total+=1;
+					printPagingEstate();
 				}
 				else{
 					errors(res.status);
 				}
 			});
 		}else{
+			visibleMsg = false;
 			visibleError = true;
 			errorMsg = "Faltan los campos país y año";
 		}
@@ -217,7 +230,14 @@
         getPEStats();
 		getPEStatsPaging();
       }
-    } 
+    }
+	
+	function printPagingEstate(){
+		console.log("----------------------");
+		console.log("CPage: ",c_page," || LastPage: ",lastPage," || COffset: ",c_offset," || Total: ",total);
+		console.log("----------------------");
+
+	}
 
 </script>
 
@@ -275,7 +295,7 @@ loading
 				<td><input bind:value="{newStat.public_expenditure}"></td>
                 <td><input bind:value="{newStat.pe_to_gdp}"></td>
                 <td><input bind:value="{newStat.pe_on_defence}"></td>
-				<td><Button outline color="primary" on:click="{insertStat}">
+				<td colspan="2"><Button block outline color="primary" on:click="{insertStat}">
 					Añadir
 					</Button>
 				</td>
@@ -305,6 +325,11 @@ loading
 				<td><Button outline color="danger" on:click={deletePEStats}>
 					Borrar todo
 				</Button></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td colspan="2"></td>
+
 			</tr>
 
 			<tr>
@@ -313,7 +338,7 @@ loading
                 <td><input bind:value="{from}"></td>
 				<td>hasta</td>
                 <td><input bind:value="{to}"></td>
-				<td><Button outline color="success" on:click={getPEStatsByYear}>
+				<td colspan="2"><Button block outline color="success" on:click={getPEStatsByYear}>
 					Filtrar
 				</Button></td>
 			</tr>

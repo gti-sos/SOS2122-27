@@ -558,9 +558,16 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Status code is 404\", function () {\r",
-							"    pm.response.to.have.status(404);\r",
+							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							""
+							"pm.test(\"Response is an Array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(Array.isArray(jsonData)).to.eql(true);\r",
+							"});\r",
+							"pm.test(\"Response has NO data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.eql(0);\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
