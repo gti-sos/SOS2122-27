@@ -3,7 +3,7 @@
 <li><strong>Team</strong><ul>
 <li><a href="https://github.com/roque-fernandez">Roque Fernandez Iglesias</a>: public-expenditure-stats</li>
 <li><a href="https://github.com/famvcucu">Fco Alexis Morales Vallado</a>: smi_stats </li> 
-<li><a href="https://github.com/jfeliperamos">Jose Felipe Ramos</a></li>
+<li><a href="https://github.com/jfeliperamos">Jose Felipe Ramos</a>: public-debt-stats</li>
 </ul>
 </li>
 <li><strong>Project description</strong>: Análisis económico mundial donde     observaremos las relaciones en las variaciones entre la inversión en Gasto Público y la Deuda Pública, así como descubrir como ámbos factores afectan al Salario Mínimo Interprofesional.</li>
