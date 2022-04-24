@@ -1,4 +1,4 @@
-module.exports = (app,db) => {
+
 
     const ROQUE_BASE_API_URL = "/api/v2/public-expenditure-stats";
     const API_DOC_PORTAL = "https://documenter.getpostman.com/view/8975262/Uyr8nyWh";
@@ -89,6 +89,8 @@ module.exports = (app,db) => {
     ];
 
     var PEStats = initialPEStats;
+
+module.exports.register = (app,db) => {
 
     //DOCUMENTACION DE LA API
     
