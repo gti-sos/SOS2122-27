@@ -158,7 +158,13 @@ module.exports.register = (app,db) => {
             }
 
             // Apartado para from y to
-            if (from != null && to != null) {
+            if (from != undefined || to != undefined) {
+                if(from != undefined && to == undefined){
+                    to = 100000000;
+                }
+                else if(from == null && to != null){
+                    from = 0;
+                }
                 filteredList = filteredList.filter((reg) => {
                     return (reg.year >= from && reg.year <= to);
                 });
