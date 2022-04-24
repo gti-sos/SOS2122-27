@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "9bb21138-a3c9-4f50-a1f6-70cd593f0f5f",
-		"name": "smi_stats SOS2122-27",
+		"_postman_id": "8c59e10b-db5f-411b-994b-379a25730cca",
+		"name": "smi_stats SOS2122-27 v2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -25,14 +25,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/docs",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/docs",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"docs"
 					]
@@ -60,14 +60,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats"
 					]
 				}
@@ -101,14 +101,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/loadInitialData",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/loadInitialData",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"loadInitialData"
 					]
@@ -136,14 +136,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/chicago",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/chicago",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"chicago"
 					]
@@ -178,14 +178,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats?limit=3&&offset=1",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats?limit=3&&offset=1",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats"
 					],
 					"query": [
@@ -233,14 +233,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/china",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"china"
 					]
@@ -276,14 +276,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats"
 					]
 				}
@@ -318,14 +318,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats"
 					]
 				}
@@ -359,14 +359,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats"
 					]
 				}
@@ -392,14 +392,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china/2021",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/china/2021",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"china",
 						"2021"
@@ -427,14 +427,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china/2021",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/china/2021",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"china",
 						"2021"
@@ -471,14 +471,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/chicago/1998",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/chicago/1998",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"chicago",
 						"1998"
@@ -515,14 +515,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/chicago/1998",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/chicago/1998",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"chicago",
 						"1998"
@@ -559,14 +559,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/china/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"china",
 						"2020"
@@ -595,14 +595,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/china/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"china",
 						"2020"
@@ -630,14 +630,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats"
 					]
 				}
@@ -668,7 +668,7 @@
 	"variable": [
 		{
 			"key": "SERVER",
-			"value": "http://localhost:8090",
+			"value": "http://localhost:8080",
 			"type": "string"
 		}
 	]

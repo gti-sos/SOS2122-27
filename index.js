@@ -7,9 +7,7 @@ const backend_alexis_v1 = require("./src/back/smi_stats/index_v1");
 const backend_alexis_v2 = require("./src/back/smi_stats/index_v2");
 const backend_jf = require("./src/back/public_debt_stats/index");
 
-const API_ROQUE = "/api/v1/public-expenditure-stats"
-const JF_API = "/api/v1/public-debt-stats"
-const FA_API = "/api/v1/smi_stats"
+
 
 const app = express();
 
