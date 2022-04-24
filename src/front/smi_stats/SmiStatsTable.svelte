@@ -19,7 +19,7 @@
     let total = 0;
 
 	//variables para filtrar por año
-	let from = 2017;
+	let from = 2000;
 	let to = 2022;
     
     let stats = [];
@@ -137,6 +137,10 @@
 	async function insertStat(){
 		console.log("Inserting stat...."+JSON.stringify(newStat));
 		if(!!newStat.country && !!newStat.year){
+			newStat.year = parseInt(newStat.year);
+			newStat.smi_local = parseFloat(newStat.smi_local);
+			newStat.smi_euros = parseFloat(newStat.smi_euros);
+			newStat.smi_variation = parseFloat(newStat.smi_variation);
 			const res = await fetch("/api/v2/smi_stats",
 			{
 				method: "POST",
