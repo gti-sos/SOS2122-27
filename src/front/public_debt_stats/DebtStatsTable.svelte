@@ -18,7 +18,7 @@
 
     async function getDebtStats(){
         console.log("Fetching stats....");
-        const res = await fetch("/api/v1/public-debt-stats");
+        const res = await fetch("/api/v2/public-debt-stats");
         if(res.ok){
             const data = await res.json();
             stats = data;
@@ -28,7 +28,7 @@
 
 	async function loadDebtStats(){
         console.log("Loading stats....");
-        const res = await fetch("/api/v1/public-debt-stats/loadInitialData",
+        const res = await fetch("/api/v2/public-debt-stats/loadInitialData",
 			{
 				method: "GET"
 			}).then(function (res){
@@ -39,7 +39,7 @@
 
 	async function deleteDebtStats(){
         console.log("Deleting stats....");
-        const res = await fetch("/api/v1/public-debt-stats/",
+        const res = await fetch("/api/v2/public-debt-stats/",
 			{
 				method: "DELETE"
 			}).then(function (res){
@@ -50,7 +50,7 @@
 
 	async function deleteStat(countryDelete, yearDelete){
         console.log("Deleting entry....");
-        const res = await fetch("/api/v1/public-debt-stats/"+countryDelete+"/"+yearDelete,
+        const res = await fetch("/api/v2/public-debt-stats/"+countryDelete+"/"+yearDelete,
 			{
 				method: "DELETE"
 			}).then(function (res){
@@ -62,7 +62,7 @@
 	async function insertStat(){
 		console.log("Inserting stat...."+JSON.stringify(newStat));
 		if(!!newStat.country && !!newStat.year){
-			const res = await fetch("/api/v1/public-debt-stats",
+			const res = await fetch("/api/v2/public-debt-stats",
 			{
 				method: "POST",
 				body: JSON.stringify(newStat),
