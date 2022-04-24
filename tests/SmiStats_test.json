@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "9bb21138-a3c9-4f50-a1f6-70cd593f0f5f",
-		"name": "smi_stats SOS2122-27",
+		"_postman_id": "8c59e10b-db5f-411b-994b-379a25730cca",
+		"name": "smi_stats SOS2122-27 v2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -25,14 +25,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/docs",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/docs",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"docs"
 					]
@@ -41,14 +41,18 @@
 			"response": []
 		},
 		{
-			"name": "GET LISTA VACIA",
+			"name": "GET GENERAL",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"La lista está vacía\", function () {\r",
-							"    pm.response.to.have.status(404);\r",
+							"pm.test(\"Status is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an Array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(Array.isArray(jsonData)).to.eql(true);\r",
 							"});\r",
 							""
 						],
@@ -60,14 +64,47 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
+						"smi_stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE GENERAL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v2",
 						"smi_stats"
 					]
 				}
@@ -84,14 +121,7 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Response is an Array\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(Array.isArray(jsonData)).to.eql(true);\r",
-							"});\r",
-							"pm.test(\"Response has contacts\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.length).to.be.at.least(1);\r",
-							"});"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -101,14 +131,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/loadInitialData",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/loadInitialData",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"loadInitialData"
 					]
@@ -136,14 +166,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/chicago",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/chicago",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"chicago"
 					]
@@ -178,14 +208,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats?limit=3&&offset=1",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats?limit=3&&offset=1",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats"
 					],
 					"query": [
@@ -216,14 +246,7 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Response is an Array\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(Array.isArray(jsonData)).to.eql(true);\r",
-							"});\r",
-							"pm.test(\"Response has contacts\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.length).to.be.at.least(1);\r",
-							"});"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -233,14 +256,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/china",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"china"
 					]
@@ -276,14 +299,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats"
 					]
 				}
@@ -318,14 +341,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats"
 					]
 				}
@@ -359,14 +382,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats"
 					]
 				}
@@ -392,14 +415,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china/2021",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/china/2021",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"china",
 						"2021"
@@ -427,14 +450,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china/2021",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/china/2021",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"china",
 						"2021"
@@ -471,14 +494,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/chicago/1998",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/chicago/1998",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"chicago",
 						"1998"
@@ -515,14 +538,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/chicago/1998",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/chicago/1998",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"chicago",
 						"1998"
@@ -559,14 +582,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/china/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"china",
 						"2020"
@@ -595,14 +618,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats/china/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/china/2020",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats",
 						"china",
 						"2020"
@@ -630,14 +653,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v1/smi_stats",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats",
 					"host": [
 						"{{HOST}}"
 					],
 					"port": "{{PORT}}",
 					"path": [
 						"api",
-						"v1",
+						"v2",
 						"smi_stats"
 					]
 				}
@@ -668,7 +691,7 @@
 	"variable": [
 		{
 			"key": "SERVER",
-			"value": "http://localhost:8090",
+			"value": "http://localhost:8080",
 			"type": "string"
 		}
 	]

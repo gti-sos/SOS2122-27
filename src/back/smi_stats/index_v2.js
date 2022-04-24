@@ -1,13 +1,21 @@
 module.exports = (app,db) => {
 
     const FAMV_API = "/api/v2/smi_stats";
-    const API_DOC_PORTAL = "https://documenter.getpostman.com/view/19481651/UVyn3K1F";
+    const API_DOC_PORTAL2 = "https://documenter.getpostman.com/view/19481651/UyrAGHTC";
     
     var smi_stats = []
     var initial_smi_stats = [
         {
             country: "spain",
             year: 2022,
+            smi_local: 1166.70,
+            smi_euros: 1166.70,
+            smi_variation: 3.63
+    
+        }, 
+        {
+            country: "spain",
+            year: 2012,
             smi_local: 1166.70,
             smi_euros: 1166.70,
             smi_variation: 3.63
@@ -47,145 +55,142 @@ module.exports = (app,db) => {
     
 // GET Documentacion
     app.get(FAMV_API + "/docs", (req,res)=>{
-        res.redirect(API_DOC_PORTAL);
+        res.redirect(API_DOC_PORTAL2);
     });
 // GET DATOS INICIALES
-app.get(FAMV_API + "/loadInitialData", (req, res) => {
+    app.get(FAMV_API + "/loadInitialData", (req, res) => {
 
-    db.find({}, function (err, filteredList) {
-        if (err) {
-            res.sendStatus(500, "ERROR EN CLIENTE");
-            return;
-        }
-        if (filteredList == 0) {
-            for (var i = 0; i < initial_smi_stats.length; i++) {
-                db.insert(initial_smi_stats[i]);
+        db.find({}, function (err, filteredList) {
+            if (err) {
+                res.sendStatus(500, "ERROR EN CLIENTE");
+                return;
             }
-            res.sendStatus(200, "OK.");
-            return;
-        }else{
-        res.sendStatus(200, "Ya inicializados")
-    }
+            if (filteredList == 0) {
+                for (var i = 0; i < initial_smi_stats.length; i++) {
+                    db.insert(initial_smi_stats[i]);
+                }
+                res.sendStatus(200, "OK.");
+                return;
+            }else{
+            res.sendStatus(200, "Ya inicializados")
+        }
+        });
     });
-})
 
 
 //POST
-app.post(FAMV_API,(req,res)=>{
-    if(
-        req.body.country == null ||
-        req.body.year == null ||
-        req.body.smi_euros == null ||
-        req.body.smi_local == null ||
-        req.body.smi_variation == null
-    ){ 
-        res.sendStatus(400,"BAD REQUEST");  
-    }else{
-        filteredSMI = smi_stats.filter((stat)=>{
-            return (
-                stat.country == req.body.country && 
-                stat.year == req.body.year &&
-                stat.smi_euros == req.body.smi_euros &&
-                stat.smi_local == req.body.smi_local &&
-                stat.smi_variation == req.body.smi_variation
-                );
-        })
+    app.post(FAMV_API, (req, res) => {
 
-        if(filteredSMI.length === 0){
-            smi_stats.push(req.body);
-            res.sendStatus(201,"CREATED");
-        }else{
-            res.sendStatus(409,"CONFLICT");
+        if (checkBody(req)) {
+            res.sendStatus(400, "BAD REQUEST");
+        } else {
+            db.find({}, function (err, filteredList) {
+
+                if (err) {
+                    res.sendStatus(500, "ERROR EN CLIENTE");
+                    return;
+                }
+
+                filteredList = filteredList.filter((reg) => {
+                    return (req.body.country == reg.country && req.body.year == reg.year)
+                });
+
+                if (filteredList.length != 0) {
+                    res.sendStatus(409, "CONFLICT");
+                } else {
+                    db.insert(req.body);
+                    res.sendStatus(201, "CREATED");
+                }
+            });
         }
-    }
-});
+    });
 
 //POST ERROR
 
-app.post(FAMV_API +"/:country/:year", (req,res) => {
-    res.sendStatus(405,"METHOD NOT ALLOWED");
-});
+    app.post(FAMV_API +"/:country/:year", (req,res) => {
+        res.sendStatus(405,"METHOD NOT ALLOWED");
+    });
 
    
 //GET GENERAL
 
-app.get(FAMV_API, (req,res) => {
+    app.get(FAMV_API, (req,res) => {
 
-    var query = req.query;
-    var year = query.year;
-    var from = query.from;
-    var to = query.to;
-    
-    //Comprobamos query
+        var query = req.query;
+        var year = query.year;
+        var from = query.from;
+        var to = query.to;
+        
+        //Comprobamos query
 
-    for (var i = 0; i < Object.keys(req.query).length; i++) {
-        var element = Object.keys(req.query)[i];
-        if (element != "year" && element != "from" && element != "to" && element != "limit" && element != "offset") {
+        for (var i = 0; i < Object.keys(req.query).length; i++) {
+            var element = Object.keys(req.query)[i];
+            if (element != "year" && element != "from" && element != "to" && element != "limit" && element != "offset") {
+                res.sendStatus(400, "BAD REQUEST");
+                return;
+            }
+        }
+
+
+        //Comprobamos si from es mas pequeño o igual a to
+        if (from > to) {
             res.sendStatus(400, "BAD REQUEST");
             return;
         }
-    }
-
-
-    //Comprobamos si from es mas pequeño o igual a to
-    if (from > to) {
-        res.sendStatus(400, "BAD REQUEST");
-        return;
-    }
-    db.find({}, function (err, filteredList) {
-        if (err) {
-            res.sendStatus(500, "ERROR EN CLIENTE");
-            return;
-        }
-
-        // Apartado para búsqueda por año
-        if (year != null) {
-            var filteredList = filteredList.filter((reg) => {
-                return (reg.year == year);
-            });
-            if (filteredList == 0) {
-                res.sendStatus(404, "NOT FOUND");
+        db.find({}, function (err, filteredList) {
+            if (err) {
+                res.sendStatus(500, "ERROR EN CLIENTE");
                 return;
             }
-        }
 
-        // Apartado para from y to
-        if (from != null && to != null) {
-            filteredList = filteredList.filter((reg) => {
-                return (reg.year >= from && reg.year <= to);
-            });
-
-            if (filteredList == 0) {
-                res.sendStatus(404, "NOT FOUND");
-                return;
-            }
-        }
-
-        // Resultado sin ID
-        if (req.query.limit != undefined || req.query.offset != undefined) {
-            filteredList = paginationMaker(req, filteredList);
-        }
-        filteredList.forEach((element) => {
-            delete element._id;
-        });
-
-        //Comprobamos fields
-        if(req.query.fields!=null){
-            //Comprobamos si los campos son correctos
-            var listaFields = req.query.fields.split(",");
-            for(var i = 0; i<listaFields.length;i++){
-                var element = listaFields[i];
-                if(element != "country" && element != "year" && element != "smi_local"  && element != "smi_euros" && element != "smi_variation"){
-                    res.sendStatus(400, "BAD REQUEST");
+            // Apartado para búsqueda por año
+            if (year != null) {
+                var filteredList = filteredList.filter((reg) => {
+                    return (reg.year == year);
+                });
+                if (filteredList == 0) {
+                    res.sendStatus(404, "NOT FOUND");
                     return;
                 }
             }
-            //Escogemos los campos correspondientes
-            filteredList = checkFields(req,filteredList);
-        }
-        res.send(JSON.stringify(filteredList, null, 2));
-    })
-});
+
+            // Apartado para from y to
+            if (from != null && to != null) {
+                filteredList = filteredList.filter((reg) => {
+                    return (reg.year >= from && reg.year <= to);
+                });
+
+                if (filteredList == 0) {
+                    res.sendStatus(404, "NOT FOUND");
+                    return;
+                }
+            }
+
+            // Resultado sin ID
+            if (req.query.limit != undefined || req.query.offset != undefined) {
+                filteredList = paginationMaker(req, filteredList);
+            }
+            filteredList.forEach((element) => {
+                delete element._id;
+            });
+
+            //Comprobamos fields
+            if(req.query.fields!=null){
+                //Comprobamos si los campos son correctos
+                var listFields = req.query.fields.split(",");
+                for(var i = 0; i<listFields.length;i++){
+                    var element = listFields[i];
+                    if(element != "country" && element != "year" && element != "smi_local"  && element != "smi_euros" && element != "smi_variation"){
+                        res.sendStatus(400, "BAD REQUEST");
+                        return;
+                    }
+                }
+                //Escogemos los campos correspondientes
+                filteredList = checkFields(req,filteredList);
+            }
+            res.send(JSON.stringify(filteredList, null, 2));
+        })
+    });
     
 
 
@@ -193,66 +198,145 @@ app.get(FAMV_API, (req,res) => {
 
 //GET CONCRETO
 
-app.get(FAMV_API+"/:country",(req,res)=>{
-    filteredSMI = smi_stats.filter((stat)=>{
-        return (stat.country == req.params.country);
-    })
-    if(filteredSMI == 0){
-        res.sendStatus(404,"NOT FOUND");
-    }else{
-        res.send(JSON.stringify(filteredSMI, null, 2));
-    }
+app.get(FAMV_API + "/:country", (req, res) => {
 
+    var country = req.params.country
+    var year = req.params.year
+
+    db.find({}, function (err, filteredList) {
+        if (err) {
+            res.sendStatus(500, "ERROR EN CLIENTE");
+            return;
+        }
+        filteredList = filteredList.filter((reg) => {
+            return (reg.country == country);
+        });
+        if (filteredList == 0) {
+            res.sendStatus(404, "NOT FOUND");
+            return;
+        }
+
+        //RESULTADO
+
+        //Paginación
+        if (req.query.limit != undefined || req.query.offset != undefined) {
+            filteredList = paginationMaker(req, filteredList);
+            res.send(JSON.stringify(filteredList, null, 2));
+        }
+        filteredList.forEach((element) => {
+            delete element._id;
+        });
+        //Comprobamos fields
+        if(req.query.fields!=null){
+            //Comprobamos si los campos son correctos
+            var listFields = req.query.fields.split(",");
+            for(var i = 0; i<listFields.length;i++){
+                var element = listFields[i];
+                if(element != "country" && element != "year" && element != "smi_local"  && element != "smi_euros" && element != "smi_variation"){
+                    res.sendStatus(400, "BAD REQUEST");
+                    return;
+                }
+            }
+            //Escogemos los fields correspondientes
+            filteredList = checkFields(req,filteredList);
+        }
+        res.send(JSON.stringify(filteredList[0], null, 2));
+    });
 });
 
 //GET CONCRETO CON AÑO
 
-app.get(FAMV_API+"/:country/:year",(req,res)=>{
-    filteredSMI = smi_stats.filter((stat)=>{
-        return (stat.country == req.params.country && stat.year == req.params.year);
-    })
-    if(filteredSMI == 0){
-        res.sendStatus(404,"NOT FOUND");
-    }else{
-        res.send(JSON.stringify(filteredSMI[0], null, 2));
-    }
-});
+    app.get(FAMV_API + "/:country/:year", (req, res) => {
+
+        var country = req.params.country
+        var year = req.params.year
+
+        db.find({}, function (err, filteredList) {
+            if (err) {
+                res.sendStatus(500, "ERROR EN CLIENTE");
+                return;
+            }
+            filteredList = filteredList.filter((reg) => {
+                return (reg.country == country && reg.year == year);
+            });
+            if (filteredList == 0) {
+                res.sendStatus(404, "NOT FOUND");
+                return;
+            }
+
+            //RESULTADO
+
+            //Paginación
+            if (req.query.limit != undefined || req.query.offset != undefined) {
+                filteredList = paginationMaker(req, filteredList);
+                res.send(JSON.stringify(filteredList, null, 2));
+            }
+            filteredList.forEach((element) => {
+                delete element._id;
+            });
+            //Comprobamos fields
+            if(req.query.fields!=null){
+                //Comprobamos si los campos son correctos
+                var listFields = req.query.fields.split(",");
+                for(var i = 0; i<listFields.length;i++){
+                    var element = listFields[i];
+                    if(element != "country" && element != "year" && element != "smi_local"  && element != "smi_euros" && element != "smi_variation"){
+                        res.sendStatus(400, "BAD REQUEST");
+                        return;
+                    }
+                }
+                //Escogemos los fields correspondientes
+                filteredList = checkFields(req,filteredList);
+            }
+            res.send(JSON.stringify(filteredList[0], null, 2));
+        });
+    });
 
 
 
 //PUT
 
-app.put(FAMV_API +"/:country/:year", (req,res) => {
+app.put(FAMV_API + "/:country/:year", (req, res) => {
 
-    //comprobamos que los parametros del req existan
-    if(
-        req.body.country == null ||
-        req.body.year == null ||
-        req.body.smi_euros == null ||
-        req.body.smi_local == null ||
-        req.body.smi_variation == null
-    ){ 
-        res.sendStatus(400,"BAD REQUEST");  
-    }else{
-        existsStat = smi_stats.filter((stat)=>{
-            return (
-                stat.country == req.params.country && 
-                stat.year == req.params.year
-                );
-        })
+    //comprobamos body
 
-        var indice = smi_stats.indexOf(existsStat[0]);
+    if (checkBody(req)) {
+        res.sendStatus(400, "BAD REQUEST");
+        return;
+    }
+    var countryR = req.params.country;
+    var yearR = req.params.year;
 
-        if(existsStat.length === 0){
-            res.sendStatus(404,"NOT FOUND");
+    db.find({}, function (err, filteredList) {
+        if (err) {
+            res.sendStatus(500, "ERROR EN CLIENTE");
+            return;
         }
-        else{
-            smi_stats[indice].smi_euros = req.body.smi_euros;
-            smi_stats[indice].smi_local = req.body.smi_local;
-            smi_stats[indice].smi_variation = req.body.smi_variation;
-            res.sendStatus(200,"OK");
-        } 
-    }   
+
+        //comprobamos que el elemento exista
+        filteredList = filteredList.filter((reg) => {
+            return (reg.country == countryR && reg.year == yearR);
+        });
+        if (filteredList == 0) {
+            res.sendStatus(404, "NOT FOUND");
+            return;
+        }
+
+        //comprobamos que los campos coincidan
+        if (countryR != req.body.country || yearR != req.body.year) {
+            res.sendStatus(400, "BAD REQUEST");
+            return;
+        }
+
+        //actualizamos valor
+        db.update({$and:[{country: String(countryR)}, {year: parseInt(yearR)}]}, {$set: req.body}, {},function(err) {
+            if (err) {
+                res.sendStatus(500, "ERROR EN CLIENTE");
+            }else{
+                res.sendStatus(200,"UPDATED");
+            }
+        });
+    });
 });
 // PUT INVALIDO
 app.put(FAMV_API, (req,res) => {
@@ -260,67 +344,85 @@ app.put(FAMV_API, (req,res) => {
 });
 
 //DELETE
-app.delete(FAMV_API,(req,res)=>{
-    smi_stats = []
-    res.sendStatus(200,"OK");
+app.delete(FAMV_API,(req, res)=>{
+    db.remove({}, { multi: true }, (err, numRemoved)=>{
+        if (err){
+            res.sendStatus(500,"ERROR EN CLIENTE");
+            return;
+        }
+        res.sendStatus(200,"DELETED");
+        return;
+    });
 });
 
 
 //DELETE DE UN RECURSO CONCRETO
 
-app.delete(FAMV_API+"/:country",(req,res)=>{
-    var SMIcountry = req.params.country;
-    smi_stats.filter((stat)=>{
-        return (stat.country != SMIcountry);
-    })
-    res.sendStatus(200,"OK");
+app.delete(FAMV_API+"/:country/:year",(req, res)=>{
+    var countryR = req.params.country;
+    var yearR = req.params.year;
+
+    db.find({country: countryR, year: parseInt(yearR)}, {}, (err, filteredList)=>{
+        if (err){
+            res.sendStatus(500,"ERROR EN CLIENTE");
+            return;
+        }
+        if(filteredList==0){
+            res.sendStatus(404,"NOT FOUND");
+            return;
+        }
+        db.remove({country: countryR, year: parseInt(yearR)}, {}, (err)=>{
+            if (err){
+                res.sendStatus(500,"ERROR EN CLIENTE");
+                return;
+            }
+        
+            res.sendStatus(200,"DELETED");
+            return;
+            
+        });
+    });
 
 });
 
 //DELETE DE UN RECURSO CONCRETO CON AÑO
 
-app.delete(FAMV_API + "/:country/:year",(req,res)=>{
-    smi_stats = smi_stats.filter((stat)=>{
-        return (stat.country != req.params.country || stat.year != req.params.year);
-    })
-    res.sendStatus(200,"OK");
+app.delete(FAMV_API+"/:country/:year",(req, res)=>{
+    var country = req.params.country;
+    var year = req.params.year;
 
-});
-
- //FUNCION DE FILTRADO
- function filterQuery(req,stats){
-    filteredStats = stats.filter((stat)=>{
+    db.find({country: country, year: parseInt(year)}, {}, (err, filteredList)=>{
+        if (err){
+            res.sendStatus(500,"ERROR EN CLIENTE");
+            return;
+        }
+        if(filteredList==0){
+            res.sendStatus(404,"NOT FOUND");
+            return;
+        }
+        db.remove({country: country, year: parseInt(year)}, {}, (err)=>{
+            if (err){
+                res.sendStatus(500,"ERROR EN CLIENTE");
+                return;
+            }
         
-        var flag = true;
-
-        if(req.query.year != undefined) {
-            if(stat.year != req.query.year)  {
-                flag = false;
-            }
-        }
-        if(req.query.country != undefined) {
-            if(stat.country != req.query.country)  {
-                flag = false;
-            }
-        }
-        if(req.query.smi_euros != undefined) {
-            if(stat.smi_euros != req.query.smi_euros)  {
-                flag = false;
-            }
-        }
-        if(req.query.smi_local != undefined) {
-            if(stat.smi_local != req.query.smi_local)  {
-                flag = false;
-            }
-        }
-        if(req.query.smi_variation != undefined) {
-            if(stat.smi_variation != req.query.smi_variation)  {
-                flag = false;
-            }
-        }
-        return flag  
+            res.sendStatus(200,"DELETED");
+            return;
+            
+        });
     });
-    return filteredStats;
+
+})
+
+ //FUNCION PARA COMPROBAR LOS CAMPOS DE PETICION
+
+ function checkBody(req) {
+    return (req.body.country == null ||
+        req.body.year == null ||
+        req.body.smi_local == null ||
+        req.body.smi_euros == null ||
+        req.body.smi_variation == null
+    )
 }
 
 //FUNCION DE PAGINACION
@@ -347,7 +449,73 @@ function paginationMaker(req, stats) {
     res = stats.slice(offset,parseInt(limit)+parseInt(offset));
     return res;
 }
+//FUNCION PARA COMPROBAR LOS CAMPOS DEL OBJETO
 
-    
+function checkFields(req, data){
+    var fields = req.query.fields;
+    var hasCountry = false;
+    var hasYear = false;
+    var hasLocal = false;
+    var hasEuros = false;
+    var hasVariation = false;
+    fields = fields.split(",");
+
+    for(var i = 0; i<fields.length;i++){
+        var element = fields[i];
+        if(element=='country'){
+            hasCountry=true;
+        }
+        if(element=='year'){
+            hasYear=true;
+        }
+        if(element=='smi_local'){
+            hasLocal=true;
+        }
+        if(element=='smi_euros'){
+            hasEuros=true;
+        }
+        if(element=='smi_variation'){
+            hasVariation=true;
+        }
+    }
+
+    //Country
+    if(!hasCountry){
+        list.forEach((element)=>{
+            delete element.country;
+        })
+    }
+
+    //Year
+    if(!hasYear){
+        list.forEach((element)=>{
+            delete element.year;
+        })
+    }
+
+    //PE
+    if(!hasLocal){
+        list.forEach((element)=>{
+            delete element.smi_local;
+        })
+    }
+
+    //PE_to_gdp
+    if(!hasEuros){
+        list.forEach((element)=>{
+            delete element.smi_euros;
+        })
+    }
+
+    //PE_on_defence
+    if(!hasVariation){
+        list.forEach((element)=>{
+            delete element.smi_variation;
+        })
+    }
+
+    return list;
+
+}
 
 };

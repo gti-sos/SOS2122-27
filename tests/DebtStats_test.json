@@ -14,16 +14,7 @@
 						"exec": [
 							"pm.test(\"Status code is 200 OK\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"Response is an stats array\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(Array.isArray(jsonData)).to.eql(true);\r",
-							"});\r",
-							"pm.test(\"Response has stats\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.length).to.be.at.least(1);\r",
-							"});\r",
-							""
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -113,6 +104,10 @@
 						"exec": [
 							"pm.test(\"Status code is 200 OK\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response isn't an stats array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(Array.isArray(jsonData)).to.eql(false);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -519,8 +514,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 404 NOT FOUND\", function () {\r",
-							"    pm.response.to.have.status(404);\r",
+							"pm.test(\"Response is EMPTY\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.be.at.least(0);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -549,7 +545,7 @@
 	"variable": [
 		{
 			"key": "Local Server",
-			"value": "http://localhost:8090"
+			"value": "http://localhost:8080"
 		}
 	]
 }
