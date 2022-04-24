@@ -154,7 +154,12 @@ module.exports.register = (app,db) => {
                 var filteredList = filteredList.filter((reg) => {
                     return (reg.year == year);
                 });
-                
+                //comprobamos que haya elementos
+                if (filteredList == 0) {
+                    res.sendStatus(404, "NOT FOUND");
+                    return;
+                }
+                    
             }
 
             // Apartado para from y to
@@ -168,13 +173,15 @@ module.exports.register = (app,db) => {
                 filteredList = filteredList.filter((reg) => {
                     return (reg.year >= from && reg.year <= to);
                 });
+
+                //comprobamos que haya elementos
+                if (filteredList == 0) {
+                    res.sendStatus(404, "NOT FOUND");
+                    return;
+                }
             }
 
-            //comprobamos que haya elementos
-            if (filteredList == 0) {
-                res.sendStatus(404, "NOT FOUND");
-                return;
-            }
+            
 
             // Resultado sin ID
             if (req.query.limit != undefined || req.query.offset != undefined) {
