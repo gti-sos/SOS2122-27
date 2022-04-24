@@ -29,8 +29,7 @@
             updatedYear = stat.year;
             updatedTotalDebt = stat.total_debt;
             updatedDebtGdp = stat.debt_gdp;
-            updatedPerCapitaDebt = stat.per_capita_debt;
-            
+            updatedPerCapitaDebt = stat.per_capita_debt;            
             console.log("Received stat.");
         }else{
             errors(res.status,params.country+"/"+params.year);
@@ -40,9 +39,9 @@
 
     async function editEntry(){
         console.log("Updating entry...."+updatedCountry);
-        newStat.total_debt = parseFloat(newStat.total_debt);
-		newStat.debt_gdp = parseFloat(newStat.debt_gdp);
-		newStat.per_capita_debt = parseFloat(newStat.per_capita_debt);
+        updatedTotalDebt = parseFloat(updatedTotalDebt);
+		updatedDebtGdp = parseFloat(updatedDebtGdp);
+		updatedPerCapitaDebt = parseFloat(updatedPerCapitaDebt);
         const res = await fetch("/api/v2/public-debt-stats/"+params.country+"/"+params.year,
 			{
 				method: "PUT",
