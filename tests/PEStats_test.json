@@ -6,6 +6,39 @@
 	},
 	"item": [
 		{
+			"name": "DELETE /public-expenditures-stats",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v2",
+						"public-expenditure-stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Inicialización",
 			"event": [
 				{
