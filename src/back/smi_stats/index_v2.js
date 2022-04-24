@@ -1,9 +1,8 @@
-module.exports = (app,db) => {
 
-    const FAMV_API = "/api/v2/smi_stats";
-    const API_DOC_PORTAL2 = "https://documenter.getpostman.com/view/19481651/UyrAGHTC";
+
+    var FAMV_API = "/api/v2/smi_stats";
+    var API_DOC_PORTAL = "https://documenter.getpostman.com/view/19481651/UyrAGHTC";
     
-    var smi_stats = []
     var initial_smi_stats = [
         {
             country: "spain",
@@ -51,28 +50,27 @@ module.exports = (app,db) => {
         }
     ];
 
-   //var smi_stats = initial_smi_stats;
-    
+module.exports.register = (app,db) => {
 // GET Documentacion
     app.get(FAMV_API + "/docs", (req,res)=>{
-        res.redirect(API_DOC_PORTAL2);
+        res.redirect(API_DOC_PORTAL);
     });
 // GET DATOS INICIALES
     app.get(FAMV_API + "/loadInitialData", (req, res) => {
 
         db.find({}, function (err, filteredList) {
             if (err) {
-                res.sendStatus(500, "ERROR EN CLIENTE");
+                res.sendStatus(500, "CLIENT ERROR");
                 return;
             }
             if (filteredList == 0) {
                 for (var i = 0; i < initial_smi_stats.length; i++) {
                     db.insert(initial_smi_stats[i]);
                 }
-                res.sendStatus(200, "OK.");
+                res.sendStatus(200, "OK: Data loaded");
                 return;
             }else{
-            res.sendStatus(200, "Ya inicializados")
+            res.sendStatus(200, "OK: Data loaded previously")
         }
         });
     });
