@@ -3,7 +3,25 @@
 	import Table from 'sveltestrap/src/Table.svelte';
     import Button from 'sveltestrap/src/Button.svelte';
 
-	let loading = true;
+	//vatiables para mostrar mensajes
+	let visibleError = false;
+	let visibleMsg = false;
+	let errorMsg = "";
+	let msg = "";
+
+
+	//variables para la paginacion
+	let c_offset = 0;
+    let offset = 0;
+    let limit = 10;
+    let c_page = 1;
+    let lastPage = 1;
+    let total = 0;
+
+	//variables para filtrar por año
+	let from = 2017;
+	let to = 2022;
+    
     let stats = [];
     let newStat = 
 	{
@@ -19,14 +37,13 @@
 
     async function getSmiStats(){
         console.log("Fetching stats....");
-        const res = await fetch("/api/v1/smi_stats");
+        const res = await fetch("/api/v2/smi_stats");
         if(res.ok){
             const data = await res.json();
             stats = data;
             console.log("Received stats: "+stats.length);
         }	
     }
-
 	async function loadSmiStats(){
         console.log("Loading stats....");
         const res = await fetch("/api/v1/smi_stats/loadInitialData",
