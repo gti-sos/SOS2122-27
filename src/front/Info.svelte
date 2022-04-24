@@ -18,6 +18,7 @@
 <li><strong>APIs V2</strong>:
 <ul>
 <li><a href="https://sos2122-27.herokuapp.com/api/v2/public-expenditure-stats">https://sos2122-27.herokuapp.com/api/v2/public-expenditure-stats</a> (developed by <a href="https://github.com/roque-fernandez">Roque Fernandez Iglesias</a>)</li>
+<li><a href="https://sos2122-27.herokuapp.com/api/v2/smi_stats">https://sos2122-27.herokuapp.com/api/v2/smi_stats</a> (developed by <a href="https://github.com/famvcucu">Fco Alexis Morales Vallado</a>)</li>
 <li><a href="https://sos2122-27.herokuapp.com/api/v2/public-debt-stats">https://sos2122-27.herokuapp.com/api/v2/public-debt-stats</a> (developed by <a href="https://github.com/jfeliperamos">Jose Felipe Ramos</a>)</li>
 </ul>
 <li><strong>Frontends</strong>:<ul>
@@ -29,6 +30,8 @@
 <ul>
 <li><a href="https://documenter.getpostman.com/view/8975262/UVyn2yyn">https://sos2122-27.herokuapp.com/api/v1/public-expenditure-stats</a> (developed by <a href="https://github.com/roque-fernandez">Roque Fernandez Iglesias</a>)</li>
 <li><a href="https://documenter.getpostman.com/view/8975262/Uyr8nyWh">https://sos2122-27.herokuapp.com/api/v2/public-expenditure-stats</a> (developed by <a href="https://github.com/roque-fernandez">Roque Fernandez Iglesias</a>)</li>
+<li><a href="https://documenter.getpostman.com/view/19481651/UVyn3K1F">https://sos2122-27.herokuapp.com/api/v1/smi_stats</a> (developed by <a href="https://github.com/famvcucu">Fco Alexis Morales Vallado</a>)</li>
+<li><a href="https://documenter.getpostman.com/view/19481651/UyrAGHTC">https://sos2122-27.herokuapp.com/api/v2/smi_stats</a> (developed by <a href="https://github.com/famvcucu">Fco Alexis Morales Vallado</a>)</li>
 <li><a href="https://documenter.getpostman.com/view/14853996/UVypzxct">https://sos2122-27.herokuapp.com/api/v1/public-debt-stats</a> (developed by <a href="https://github.com/jfeliperamos">Jose Felipe Ramos</a>)</li>
 <li><a href="https://documenter.getpostman.com/view/14853996/UyrAGHgT">https://sos2122-27.herokuapp.com/api/v2/public-debt-stats</a> (developed by <a href="https://github.com/jfeliperamos">Jose Felipe Ramos</a>)</li>
 </ul>
