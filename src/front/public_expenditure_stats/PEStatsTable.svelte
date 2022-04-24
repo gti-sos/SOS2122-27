@@ -73,7 +73,7 @@
 			var toQuery = to;
 			console.log("Existe to");
 		}
-		console.log("Fetching stats from ",from," to ",to," ......");
+		console.log("Fetching stats from ",from," to ",toQuery," ......");
 		const res = await fetch("/api/v2/public-expenditure-stats"+"?from="+from+"&to="+toQuery);
 		
         if(res.ok){
@@ -107,7 +107,7 @@
 
 	async function deletePEStats(){
         console.log("Deleting stats....");
-        const res = await fetch("/api/v2/public-expenditure-stats/",
+        const res = await fetch("/api/v2/public-expenditure-stats",
 			{
 				method: "DELETE"
 			}).then(function (res){
