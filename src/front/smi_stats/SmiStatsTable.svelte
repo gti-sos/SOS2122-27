@@ -47,7 +47,7 @@
 
 	async function getSmiStatsPagination() {
     	console.log("Fetching data...");
-   		const res = await fetch("/api/v2/smi-stats"+ "?limit=" + limit + "&offset=" + c_offset);
+   		const res = await fetch("/api/v2/smi_stats"+ "?limit=" + limit + "&offset=" + c_offset);
 		
         if(res.ok){
 			console.log("getSmiStatsPagination Ok.");
@@ -70,7 +70,7 @@
 			console.log("Existe to");
 		}
 		console.log("Fetching stats from ",from," to ",to," ......");
-		const res = await fetch("/api/v2/smi-stats"+"?from="+from+"&to="+toQuery);
+		const res = await fetch("/api/v2/smi_stats"+"?from="+from+"&to="+toQuery);
 		
         if(res.ok){
             const data = await res.json();
@@ -196,7 +196,7 @@
     }
 
 	async function update() {
-      const res = await fetch("/api/v2/smi-stats");
+      const res = await fetch("/api/v2/smi_stats");
       if (res.status == 200) {
         const json = await res.json();
         total = json.length;
@@ -215,8 +215,8 @@
       if (page !== c_page) {
         c_offset = offset;
         c_page = page;
-        getPEStats();
-		getPEStatsPaging();
+        getSmiStats();
+		getSmiStatsPagination();
       }
     } 
 
@@ -274,7 +274,7 @@ loading
 				<td><input bind:value="{newStat.smi_local}"></td>
 				<td><input bind:value="{newStat.smi_euros}"></td>
 				<td><input bind:value="{newStat.smi_variation}"></td>
-				<td><Button outline color="primary" on:click="{insertStat}">
+				<td colspan="2"><Button block color="primary" on:click="{insertStat}">
 					Añadir
 					</Button>
 				</td>
@@ -286,36 +286,34 @@ loading
 					<td>{stat.smi_local}</td>
                     <td>{stat.smi_euros}</td>
                     <td>{stat.smi_variation}</td>
-					<td><Button outline color="warning" on:click={function (){
-						window.location.href = `/api/v2/smi_stats/frontend/${stat.country}/${stat.year}`
+					<td><Button  block color="warning" on:click={function (){
+						window.location.href = `#/smi_stats/${stat.country}/${stat.year}`
 					}}>
 						Editar
 					</Button></td>
-					<td><Button outline color="danger" on:click={deleteSmiStat(stat.country,stat.year)}>
+					<td><Button block color="danger" on:click={deleteSmiStat(stat.country,stat.year)}>
 						Borrar
 					</Button>
 					</td>
 				</tr>
 			{/each}
 			<tr>
-				<td><Button outline color="success" on:click={loadSmiStats}>
+				<td><Button block color="success" on:click={loadSmiStats}>
 					Cargar datos
 				</Button></td>
-				<td><Button outline color="danger" on:click={deleteSmiStats}>
+				<td><Button block color="danger" on:click={deleteSmiStats}>
 					Borrar todo
 				</Button></td>
-			</tr>
-
-			<tr>
-				<td>
-					<td>Filtrado por años</td>
-				<td>desde</td>
-                <td><input bind:value="{from}"></td>
-				<td>hasta</td>
-                <td><input bind:value="{to}"></td>
-				<td><Button outline color="success" on:click={getSmiStatsByYear}>
-					Filtrar
-				</Button></td>
+				
+					<td>desde</td>
+					<td><input bind:value="{from}"></td>
+					<td>hasta</td>
+					<td><input bind:value="{to}"></td>
+					<td><Button block color="success" on:click={getSmiStatsByYear}>
+						Filtrar
+					</Button></td>
+			
+				
 			</tr>
 		</tbody>
 	</Table>
@@ -327,13 +325,13 @@ loading
 		  </PaginationItem>
 		  {#each range(lastPage, 1) as page}
 				<PaginationItem class = {c_page === page ? "active" : ""}>
-				  <PaginationLink previous href="#/smi-stats" on:click={() => changePage(page, (page - 1) * 10)}>
+				  <PaginationLink previous href="#/smi_stats" on:click={() => changePage(page, (page - 1) * 10)}>
 					  {page}
 				  </PaginationLink>
 				</PaginationItem>
 		  {/each}
 		  <PaginationItem class = {c_page === lastPage ? "disabled" : ""}>
-				<PaginationLink next href="#/smie-stats" on:click={() => changePage(c_page + 1, c_offset + 10)}/>
+				<PaginationLink next href="#/smi_stats" on:click={() => changePage(c_page + 1, c_offset + 10)}/>
 		  </PaginationItem>
 		</Pagination>
 

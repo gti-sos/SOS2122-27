@@ -65,17 +65,8 @@
   	}
 
 	async function getPEStatsByYear(){
-		if(!!to == false){
-			var toQuery = 9999;
-			console.log("NO Existe to");
-		}
-		else{
-			var toQuery = to;
-			console.log("Existe to");
-		}
-		console.log("Fetching stats from ",from," to ",toQuery," ......");
-		const res = await fetch("/api/v2/public-expenditure-stats"+"?from="+from+"&to="+toQuery);
-		
+		console.log("Fetching stats from ",from," to ",to," ......");
+        const res = await fetch("/api/v2/public-expenditure-stats"+"?from="+from+"&to="+to);
         if(res.ok){
             const data = await res.json();
             stats = data;
@@ -107,7 +98,7 @@
 
 	async function deletePEStats(){
         console.log("Deleting stats....");
-        const res = await fetch("/api/v2/public-expenditure-stats",
+        const res = await fetch("/api/v2/public-expenditure-stats/",
 			{
 				method: "DELETE"
 			}).then(function (res){

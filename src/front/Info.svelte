@@ -2,7 +2,7 @@
 <ul>
 <li><strong>Team</strong><ul>
 <li><a href="https://github.com/roque-fernandez">Roque Fernandez Iglesias</a>: public-expenditure-stats</li>
-<li><a href="https://github.com/famvcucu">Fco Alexis Morales Vallado</a></li>
+<li><a href="https://github.com/famvcucu">Fco Alexis Morales Vallado</a>: smi_stats </li> 
 <li><a href="https://github.com/jfeliperamos">Jose Felipe Ramos</a></li>
 </ul>
 </li>
