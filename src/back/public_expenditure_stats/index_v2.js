@@ -83,6 +83,14 @@
             pe_to_gdp: 48.5,
             pe_on_defence: 5.23
     
+        },
+        {
+            country: "austria",
+            year: 2018,
+            public_expenditure: 40033.0,
+            pe_to_gdp: 47.5,
+            pe_on_defence: 2.23
+    
         }
 
 
