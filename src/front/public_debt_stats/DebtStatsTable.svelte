@@ -108,6 +108,7 @@
 			}).then(function (res){
 				if(res.ok){
 					getDebtStats();
+					getDebtStatsPagination();
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadísticas eliminadas con éxito";
