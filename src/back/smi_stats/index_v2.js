@@ -34,7 +34,7 @@
             smi_euros: 283.3,
             smi_variation:  4.38
         },
-        /*{
+        {
             country: "argelia",
             year: 2013,
             smi_local: 18000.0,
@@ -110,7 +110,7 @@
             smi_local: 334250.0,
             smi_euros: 383.9,
             smi_variation:  0.72,
-        },*/  
+        }, 
         {
             country: "china",
             year: 2020,

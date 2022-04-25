@@ -35,32 +35,19 @@
 
     onMount(getSmiStats);
 
+
+	//GETS
     async function getSmiStats(){
         console.log("Fetching stats....");
-        const res = await fetch("/api/v2/smi_stats");
+        const res = await fetch("/api/v2/smi_stats?limit=10");
         if(res.ok){
             const data = await res.json();
             stats = data;
+			update();
             console.log("Received stats: "+stats.length);
         }	
     }
-
-	async function getSmiStatsPagination() {
-    	console.log("Fetching data...");
-   		const res = await fetch("/api/v2/smi_stats"+ "?limit=" + limit + "&offset=" + c_offset);
-		
-        if(res.ok){
-			console.log("getSmiStatsPagination Ok.");
-			const data = await res.json();
-			stats = data;
-			console.log("Estadísticas recibidas: "+stats.length);
-			update();
-		}else{
-			errors(res.status);
-		}
-  	}
-
-	  async function getSmiStatsByYear(){
+	async function getSmiStatsByYear(){
 		if(!!to == false){
 			var toQuery = 9999;
 			console.log("NO Existe to");
@@ -82,14 +69,17 @@
 			errors(res.status);
 		}
 	}
+
+	//CARGA INICIAL
 	async function loadSmiStats(){
         console.log("Loading stats....");
-        const res = await fetch("/api/v2/smi_stats/loadInitialData",
+        const res = await fetch("/api/v2/smi_stats/loadInitialData?limit=10",
 			{
 				method: "GET"
 			}).then(function (res){
 				if(res.ok){
 					getSmiStats();
+					update(); //#
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadísticas cargadas con éxito";
@@ -99,6 +89,8 @@
 			});
     }
 
+
+	//DELETES
 	async function deleteSmiStats(){
         console.log("Deleting stats....");
         const res = await fetch("/api/v2/smi_stats/",
@@ -107,6 +99,7 @@
 			}).then(function (res){
 				if(res.ok){
 					getSmiStats();
+					getSmiStatsPagination(); //#
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadísticas eliminadas con éxito";
@@ -132,8 +125,48 @@
 				}
 			});
     }
+	//PAGINACION
+	async function getSmiStatsPagination() {
+    	console.log("Fetching data...");
+   		const res = await fetch("/api/v2/smi_stats"+ "?limit=" + limit + "&offset=" + c_offset);
+		
+        if(res.ok){
+			console.log("getSmiStatsPagination Ok.");
+			const data = await res.json();
+			stats = data;
+			console.log("Estadísticas recibidas: "+stats.length);
+			update();
+		}else{
+			errors(res.status);
+		}
+  	}
 
+	  async function update() {
+      const res = await fetch("/api/v2/smi_stats");
+      if (res.status == 200) {
+        const json = await res.json();
+        total = json.length;
+        changePage(c_page, c_offset);
+      } 
+    }
 
+	function range(size, start = 0) {
+      return [...Array(size).keys()].map((i) => i + start);
+	}
+
+	function changePage(page, offset) {
+      
+      lastPage = Math.ceil(total/limit);
+      console.log("Last page = " + lastPage);
+      if (page !== c_page) {
+        c_offset = offset;
+        c_page = page;
+        getSmiStats();
+		getSmiStatsPagination();
+      }
+    } 
+
+	//AÑADIR DATO
 	async function insertStat(){
 		console.log("Inserting stat...."+JSON.stringify(newStat));
 		if(!!newStat.country && !!newStat.year){
@@ -172,6 +205,7 @@
 		
 	}
 
+	//ERRORES
 	function errors(code){
         let msg;
 		switch (code) {
@@ -199,30 +233,7 @@
         return;
     }
 
-	async function update() {
-      const res = await fetch("/api/v2/smi_stats");
-      if (res.status == 200) {
-        const json = await res.json();
-        total = json.length;
-        changePage(c_page, c_offset);
-      } 
-    }
-
-	function range(size, start = 0) {
-      return [...Array(size).keys()].map((i) => i + start);
-	}
-
-	function changePage(page, offset) {
-      
-      lastPage = Math.ceil(total/limit);
-      console.log("Last page = " + lastPage);
-      if (page !== c_page) {
-        c_offset = offset;
-        c_page = page;
-        getSmiStats();
-		getSmiStatsPagination();
-      }
-    } 
+	
 
 </script>
 
