@@ -35,7 +35,7 @@
 
     async function getDebtStats(){
         console.log("Fetching stats....");
-        const res = await fetch("/api/v2/public-debt-stats");
+        const res = await fetch("/api/v2/public-debt-stats?limit=10");
         if(res.ok){
             const data = await res.json();
             stats = data;
@@ -44,12 +44,13 @@
 		}
     }
 
-	async function getDebtStatsPaging() {
+	//PAGINACION
+	async function getDebtStatsPagination() {
     	console.log("Fetching data...");
    		const res = await fetch("/api/v2/public-debt-stats"+ "?limit=" + limit + "&offset=" + c_offset);
 		
         if(res.ok){
-			console.log("getDebtStatsPaging Ok.");
+			console.log("getDebtStatsPagination Ok.");
 			const data = await res.json();
 			stats = data;
 			console.log("Estadísticas recibidas: "+stats.length);
@@ -83,7 +84,7 @@
 
 	async function loadDebtStats(){
         console.log("Loading stats....");
-        const res = await fetch("/api/v2/public-debt-stats/loadInitialData",
+        const res = await fetch("/api/v2/public-debt-stats/loadInitialData?limit=10",
 			{
 				method: "GET"
 			}).then(function (res){
@@ -93,7 +94,6 @@
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadísticas inicializadas con éxito";
-					printPagingEstate();
 				}else{
 					errors(res.status);
 				}
@@ -108,10 +108,10 @@
 			}).then(function (res){
 				if(res.ok){
 					getDebtStats();
+					getDebtStatsPagination();
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadísticas eliminadas con éxito";
-					printPagingEstate();
 				}
 				else{
 					errors(res.status);
@@ -131,7 +131,6 @@
 					visibleMsg = true;
 					msg = "Entrada eliminada con éxito";
 					total-=1;
-					printPagingEstate();
 				}
 				else{
 					errors(res.status);
@@ -161,7 +160,7 @@
 					newStat.debt_gdp = "";
 					newStat.per_capita_debt = "";
 					getDebtStats();
-					getDebtStatsPaging();
+					getDebtStatsPagination();
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadística introducida con éxito";
@@ -227,16 +226,9 @@
 			c_offset = offset;
 			c_page = page;
 			getDebtStats();
-			getDebtStatsPaging();
+			getDebtStatsPagination();
 		}
     }
-
-	function printPagingEstate(){
-		console.log("----------------------");
-		console.log("CPage: ",c_page," || LastPage: ",lastPage," || COffset: ",c_offset," || Total: ",total);
-		console.log("----------------------");
-
-	}
 
 </script>
 

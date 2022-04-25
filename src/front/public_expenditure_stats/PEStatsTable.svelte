@@ -37,7 +37,7 @@
 
     async function getPEStats(){
         console.log("Fetching stats....");
-        const res = await fetch("/api/v2/public-expenditure-stats");
+        const res = await fetch("/api/v2/public-expenditure-stats?limit="+limit);
         if(res.ok){
             const data = await res.json();
             stats = data;
@@ -191,7 +191,7 @@
 				error = "La petición no está correctamente formulada"
 				break;
 			case 409:
-				error = "El dato introducido ya existe"
+				error = "El dato " + newStat.country + "/" + newStat.year + " ya existe"
 				break;
 			case 401:
 				error = "No autorizado"
@@ -292,10 +292,10 @@ loading
 		<tbody>
 			<tr>
 				<td><input bind:value="{newStat.country}"></td>
-				<td><input bind:value="{newStat.year}"></td>
-				<td><input bind:value="{newStat.public_expenditure}"></td>
-                <td><input bind:value="{newStat.pe_to_gdp}"></td>
-                <td><input bind:value="{newStat.pe_on_defence}"></td>
+				<td><input type="number" bind:value="{newStat.year}"></td>
+				<td><input type="number" bind:value="{newStat.public_expenditure}"></td>
+                <td><input type="number" bind:value="{newStat.pe_to_gdp}"></td>
+                <td><input type="number" bind:value="{newStat.pe_on_defence}"></td>
 				<td colspan="2"><Button block outline color="primary" on:click="{insertStat}">
 					Añadir
 					</Button>
