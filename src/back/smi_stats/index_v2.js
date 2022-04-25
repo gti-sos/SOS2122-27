@@ -28,7 +28,7 @@
             smi_variation:  3.12
         },
         {
-            country: "belice",
+            country: "belize",
             year: 2019,
             smi_local: 643.5,
             smi_euros: 283.3,
@@ -63,7 +63,7 @@
             smi_variation:  -16.32
         }, 
         {
-            country: "trinidad y tobago",
+            country: "trinidad and tobago",
             year: 2019,
             smi_local: 3640.0,
             smi_euros: 468.8,
