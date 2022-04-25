@@ -35,7 +35,7 @@
 
     async function getDebtStats(){
         console.log("Fetching stats....");
-        const res = await fetch("/api/v2/public-debt-stats");
+        const res = await fetch("/api/v2/public-debt-stats?limit=10");
         if(res.ok){
             const data = await res.json();
             stats = data;
@@ -44,12 +44,13 @@
 		}
     }
 
-	async function getDebtStatsPaging() {
+	//PAGINACION
+	async function getDebtStatsPagination() {
     	console.log("Fetching data...");
    		const res = await fetch("/api/v2/public-debt-stats"+ "?limit=" + limit + "&offset=" + c_offset);
 		
         if(res.ok){
-			console.log("getDebtStatsPaging Ok.");
+			console.log("getDebtStatsPagination Ok.");
 			const data = await res.json();
 			stats = data;
 			console.log("Estadísticas recibidas: "+stats.length);
@@ -83,7 +84,7 @@
 
 	async function loadDebtStats(){
         console.log("Loading stats....");
-        const res = await fetch("/api/v2/public-debt-stats/loadInitialData",
+        const res = await fetch("/api/v2/public-debt-stats/loadInitialData?limit=10",
 			{
 				method: "GET"
 			}).then(function (res){
