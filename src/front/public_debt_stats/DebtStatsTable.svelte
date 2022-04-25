@@ -94,7 +94,6 @@
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadísticas inicializadas con éxito";
-					printPagingEstate();
 				}else{
 					errors(res.status);
 				}
@@ -112,7 +111,6 @@
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadísticas eliminadas con éxito";
-					printPagingEstate();
 				}
 				else{
 					errors(res.status);
@@ -132,7 +130,6 @@
 					visibleMsg = true;
 					msg = "Entrada eliminada con éxito";
 					total-=1;
-					printPagingEstate();
 				}
 				else{
 					errors(res.status);
@@ -162,7 +159,7 @@
 					newStat.debt_gdp = "";
 					newStat.per_capita_debt = "";
 					getDebtStats();
-					getDebtStatsPaging();
+					getDebtStatsPagination();
 					visibleError = false;
 					visibleMsg = true;
 					msg = "Estadística introducida con éxito";
@@ -228,16 +225,9 @@
 			c_offset = offset;
 			c_page = page;
 			getDebtStats();
-			getDebtStatsPaging();
+			getDebtStatsPagination();
 		}
     }
-
-	function printPagingEstate(){
-		console.log("----------------------");
-		console.log("CPage: ",c_page," || LastPage: ",lastPage," || COffset: ",c_offset," || Total: ",total);
-		console.log("----------------------");
-
-	}
 
 </script>
 
