@@ -131,7 +131,7 @@ module.exports.register = (app,db) => {
             }
         }
 
-        //Comprobamos si from es mas pequeño o igual a to
+        //¿from==to?
         if (from > to) {
             res.sendStatus(400, "BAD REQUEST");
             return;
@@ -154,7 +154,13 @@ module.exports.register = (app,db) => {
             }
 
             // From y To
-            if (from != null && to != null) {
+            if (from != undefined && to != undefined) {
+                if(from != undefined && to == undefined){
+                    to = 100000000;
+                }
+                else if(from == null && to != null){
+                    from = 0;
+                }
                 filteredList = filteredList.filter((reg) => {
                     return (reg.year >= from && reg.year <= to);
                 });
@@ -423,21 +429,6 @@ module.exports.register = (app,db) => {
         }
 
         res = lista.slice(offset,parseInt(limit)+parseInt(offset));
-        return res;
-    }
-
-    function pagingMaker(req, stats) {
-        var res = [];
-        const offset = req.query.offset;
-        const limit = req.query.limit;
-    
-        if(limit < 0 || offset < 0 || offset > stats.length) {
-            console.error(`Error in pagination, you have exceded limits`);
-            res.push("ERROR");
-            return res;	
-        }    
-    
-        res = stats.slice(offset, limit+offset);
         return res;
     }
 

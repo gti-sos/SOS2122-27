@@ -1,6 +1,8 @@
 <script>
     import { onMount } from 'svelte';
-	import {Pagination, PaginationItem, PaginationLink, Table, Button, Alert } from "sveltestrap";
+	import { Pagination,PaginationItem,PaginationLink,
+		Table,Button,Alert,NavLink,NavItem,Nav 
+	} from "sveltestrap";
 
 	//vatiables para mostrar mensajes
 	let visibleError = false;
@@ -63,11 +65,9 @@
 	async function getDebtStatsByYear(){
 		if(!!to == false){
 			var toQuery = 9999;
-			console.log("NO Existe to");
 		}
 		else{
 			var toQuery = to;
-			console.log("Existe to");
 		}
 		console.log("Fetching stats from ",from," to ",to," ......");
         const res = await fetch("/api/v2/public-debt-stats"+"?from="+from+"&to="+to);
@@ -79,6 +79,7 @@
             console.log("Estadísticas recibidas: "+stats.length);
         }else{
 			errors(res.status);
+
 		}
 	}
 
@@ -247,9 +248,34 @@ th, td {
    border: 1px solid #000;
    border-spacing: 0;
 }
+h3, h4{
+	text-align: center;
+}
+
 </style>
 
+<svelte:head>
+	<title>Deuda Pública</title>
+</svelte:head>
+
 <main>
+
+	<br>
+
+	<Nav class="bg-light">
+        <NavItem>
+            <NavLink id="nav-home" href="/" style="text-decoration:none">Home</NavLink>
+        </NavItem>
+        <NavItem>
+            <NavLink id="nav-info" href="/#/info" style="text-decoration:none">Info</NavLink>
+        </NavItem>
+		<NavItem>
+            <NavLink id="nav-info" href="#" style="text-decoration:none" on:click={deleteDebtStats}>Eliminar Todo</NavLink>
+        </NavItem>
+		<NavItem>
+            <NavLink id="nav-info" href="#" style="text-decoration:none" class="text-succcess" on:click={loadDebtStats}>Iniciar Datos</NavLink>
+        </NavItem>
+    </Nav>
 
 	<Alert color="danger" isOpen={visibleError} toggle={() => (visibleError = false)}>
 		{#if errorMsg}
@@ -265,6 +291,48 @@ th, td {
 {#await stats}
 loading
 	{:then stats}
+	<br>
+	<h4>Búsqueda por intervalo temporal</h4>	
+	<Table bordered class="w-50 text-center mx-auto">
+		<thead>
+			<tr class="bg-light">
+				<th>Fecha inicio</th>
+				<th>Fecha fin</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><input type="number" min="2000" bind:value="{from}"></td>
+				<td><input type="number" min="2000" bind:value="{to}"></td>
+				<td>
+					<Button outline color="primary" on:click="{()=>{
+						if (from == null || to == null) {
+							visibleMsg = false;
+							visibleError = true;
+							errorMsg = "Los campos fecha inicio y fecha fin no pueden estar vacíos";
+						}else{
+							getDebtStatsByYear();
+						}
+					}}">Buscar
+					</Button>
+				</td>
+				<td align="center"><Button outline color="info" on:click="{()=>{
+					from = 2017;
+					to = 2022;
+					getDebtStats();				
+				}}">
+					Limpiar Búsqueda
+					</Button>
+				</td>
+			</tr>
+		</tbody>
+			
+	</Table>
+
+	<br>
+
+	<h3>Archivo de estadísticas</h3>
+
 	<Table bordered>
 		<thead>
 			<tr>
@@ -326,54 +394,6 @@ loading
 			</PaginationItem>
 		  </Pagination>
 	</div>	
-
-	<br>
-
-	<div align="center">
-		<Button outline color="success" on:click={loadDebtStats}>
-			Cargar datos
-		</Button>&nbsp
-		<Button outline color="danger" on:click={deleteDebtStats}>
-			Borrar todo
-		</Button>
-	</div>
-	<br>
-	<br>
-
-	<h4>Búsqueda por años</h4>
-
-	<Table bordered>
-		<thead>
-			<tr>
-				<th>Fecha inicio</th>
-				<th>Fecha fin</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><input type="number" min="2000" bind:value="{from}"></td>
-				<td><input type="number" min="2000" bind:value="{to}"></td>
-				<td align="center"><Button outline color="dark" on:click="{()=>{
-					if (from == null || to == null) {
-						window.alert('Los campos fecha inicio y fecha fin no pueden estar vacíos')
-					}else{
-						getDebtStatsByYear();
-					}
-				}}">
-					Buscar
-					</Button>
-				</td>
-				<td align="center"><Button outline color="info" on:click="{()=>{
-					from = null;
-					to = null;
-					getDebtStats();					
-				}}">
-					Limpiar Búsqueda
-					</Button>
-				</td>
-			</tr>
-		</tbody>
-	</Table>	
 
 {/await}
 </main>
