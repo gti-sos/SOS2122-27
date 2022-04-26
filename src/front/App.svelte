@@ -7,6 +7,7 @@
     //Elementos de Roque
     import PEStats from './public_expenditure_stats/PEStats.svelte';
     import EditPEStatsTable from './public_expenditure_stats/EditPEStatsTable.svelte';
+    import PeGraphV1 from './public_expenditure_stats/PEGraph_v1.svelte';
 
     //Elementos de Felipe
     import DebtStats from './public_debt_stats/DebtStats.svelte';
@@ -23,6 +24,8 @@
 
         "/public-expenditure-stats": PEStats,
         "/public-expenditure-stats/:country/:year": EditPEStatsTable,
+        "/public-expenditure-stats/graph-v1": PeGraphV1,
+
 
         "/public-debt-stats": DebtStats,
         "/public-debt-stats/:country/:year": EditDebtStatsTable,
