@@ -3,6 +3,6 @@
 </script>
 
 <main>
-	<h1>Estadísticas de deuda pública</h1>	
+	<h1 align="center">Estadísticas de deuda pública</h1>	
 	<DebtStatsTable />
 </main>

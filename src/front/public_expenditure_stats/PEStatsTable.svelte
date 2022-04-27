@@ -42,7 +42,7 @@
             const data = await res.json();
             stats = data;
 			total = data.length;
-			update();
+			getPEStatsPaging();
             console.log("Estadísticas recibidas: "+stats.length);
         }else{
 			errors(res.status);
