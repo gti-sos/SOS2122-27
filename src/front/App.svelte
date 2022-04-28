@@ -2,6 +2,7 @@
     import Router from 'svelte-spa-router';
     import Home from "./Home.svelte";
     import Info from "./Info.svelte";
+    import JointGraph from './JointGraph.svelte';
    
 
     //Elementos de Roque
@@ -21,6 +22,7 @@
     const routes = {
         "/": Home,
         "/info": Info,
+        "/graph": JointGraph,
 
         "/public-expenditure-stats": PEStats,
         "/public-expenditure-stats/:country/:year": EditPEStatsTable,
