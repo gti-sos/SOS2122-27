@@ -3,21 +3,26 @@
 
     const delay = ms => new Promise(res => setTimeout(res,ms));
 
-    let stats = [];
+    //arrays de ROQUE
+    let PEStats = [];
     let stats_country_date = [];
     let stats_public_expenditure = [];
     let stats_PE_on_defence = [];
     let stats_PE_to_gdp = []; 
+
+    async function getChart(){
+        getPEStats();
+    }
 
     async function getPEStats(){
         console.log("Fetching stats....");
         const res = await fetch("/api/v2/public-expenditure-stats");
         if(res.ok){
             const data = await res.json();
-            stats = data;
-            console.log("Estadísticas recibidas: "+stats.length);
+            PEStats = data;
+            console.log("Estadísticas recibidas: "+PEStats.length);
             //inicializamos los arrays para mostrar los datos
-            stats.forEach(stat => {
+            PEStats.forEach(stat => {
                 stats_country_date.push(stat.country+"-"+stat.year);
                 stats_public_expenditure.push(stat["public_expenditure"]);
                 stats_PE_to_gdp.push(stat["pe_to_gdp"]);
@@ -31,16 +36,12 @@
     async function loadGraph(){
         Highcharts.chart('container', {
 
-            chart: {
-                type: 'area'
-            },
-
             title: {
                 text: 'Public expenditure stats by country and year'
             },
 
             subtitle: {
-                text: 'Source: https://datosmacro.expansion.com/estado/gasto'
+                text: 'Source: https://datosmacro.expansion.com'
             },
 
             yAxis: {
@@ -97,7 +98,7 @@
 
     }
 
-    onMount(getPEStats);
+    onMount(getChart);
 
 
     
