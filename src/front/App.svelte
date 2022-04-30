@@ -3,12 +3,16 @@
     import Home from "./Home.svelte";
     import Info from "./Info.svelte";
     import JointGraph from './JointGraph.svelte';
+    import Integrations from './Integrations.svelte';
+    import Charts from './Charts.svelte';
+    import NewHome from './NewHome.svelte';
    
 
     //Elementos de Roque
     import PEStats from './public_expenditure_stats/PEStats.svelte';
     import EditPEStatsTable from './public_expenditure_stats/EditPEStatsTable.svelte';
     import PeGraphV1 from './public_expenditure_stats/PEGraph_v1.svelte';
+    import PeGraphV2 from './public_expenditure_stats/PEGraph_v2.svelte';
 
     //Elementos de Felipe
     import DebtStats from './public_debt_stats/DebtStats.svelte';
@@ -20,13 +24,17 @@
 
 
     const routes = {
+        "/home": NewHome,
         "/": Home,
         "/info": Info,
-        "/graph": JointGraph,
+        "/analytics": JointGraph,
+        "/integrations": Integrations,
+        "/charts": Charts,
 
         "/public-expenditure-stats": PEStats,
         "/public-expenditure-stats/:country/:year": EditPEStatsTable,
         "/public-expenditure-stats/graph-v1": PeGraphV1,
+        "/public-expenditure-stats/graph-v2": PeGraphV2,
 
 
         "/public-debt-stats": DebtStats,
