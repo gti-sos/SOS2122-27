@@ -24,8 +24,8 @@
 
 
     const routes = {
-        "/home": NewHome,
-        "/": Home,
+        "/": NewHome,
+        "/home": Home,
         "/info": Info,
         "/analytics": JointGraph,
         "/integrations": Integrations,

@@ -29,21 +29,30 @@
     }
 
     async function loadGraph(){
-        var trace1 = {
-            x: [1, 2, 3, 4],
-            y: [10, 15, 13, 17],
-            type: 'scatter'
+        var trace_pe_to_gdp = {
+            x: stats_country_date,
+            y: stats_PE_to_gdp,
+            type: 'scatter',
+            name: 'PE to GDP (%)'
         };
 
-        var trace2 = {
-             x: [1, 2, 3, 4],
-            y: [16, 5, 11, 9],
-            type: 'scatter'
+        var trace_pe_on_defence = {
+            x: stats_country_date,
+            y: stats_PE_on_defence,
+            type: 'scatter',
+            name: 'PE on Defence (%)'
         };
 
-        var data = [trace1, trace2];
+        var trace_PE = {
+            x: stats_country_date,
+            y: stats_public_expenditure,
+            type: 'scatter',
+            name: 'Public expenditure'
+        };
 
-        Plotly.newPlot('myDiv', data);
+        var dataPlot = [trace_pe_on_defence, trace_pe_to_gdp, trace_PE];
+
+        Plotly.newPlot('myDiv', dataPlot);
         
  
     }
@@ -59,5 +68,16 @@
 </svelte:head>
 
 <main>
+    <h2>Public expenditure stats by country and year</h2>
+    <h4>Biblioteca: Plotly</h4>
     <div id='myDiv'><!-- Plotly chart will be drawn inside this DIV --></div>
 </main>
+
+<style>
+    h2{
+        text-align: center;
+    }
+    h4{
+        text-align: center;
+    }
+</style>
