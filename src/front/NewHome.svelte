@@ -32,9 +32,7 @@
     <p />
     <h2>Descripción del proyecto</h2>
     <p>
-        Análisis económico mundial donde observaremos las relaciones en las variaciones 
-        entre la inversión en Gasto Público y la Deuda Pública, así como descubrir como 
-        ambos factores afectan al Salario Mínimo Interprofesional.
+        Análisis económico mundial donde observaremos las relaciones en las variaciones entre la inversión en Gasto Público y la Deuda Pública, <br> así como descubrir cómo ambos factores influyen sobre el Salario Mínimo Interprofesional.
     </p>
   
     <Container>
@@ -112,35 +110,35 @@
       <Col xs="auto">
         <Card class="mb-3">
           <CardHeader>
-            <CardTitle><h5>Public expenditure stats</h5></CardTitle>
+            <CardTitle><h5>Public debt stats</h5></CardTitle>
           </CardHeader>
           <CardBody>
             <CardSubtitle />
             <CardText>
-               Estadísticas sobre el gasto público en diferentes países,
-               así como % relativos al gasto en defensa o al PIB.
+               Estadísticas sobre la deuda públic en diferentes países,
+               así como % relativo PIB y la deuda per cápita para cada uno.
                </CardText>
 
-            <a href="https://sos2122-27.herokuapp.com/api/v1/public-expenditure-stats">
+            <a href="https://sos2122-27.herokuapp.com/api/v1/public-debt-stats">
               <Button color="primary">API v1</Button></a>
 
-              <a href="https://sos2122-27.herokuapp.com/api/v2/public-expenditure-stats">
+              <a href="https://sos2122-27.herokuapp.com/api/v2/public-debt-stats">
                 <Button color="primary">API v2</Button></a>
 
-            <a href="/#/public-expenditure-stats">
+            <a href="/#/public-debt-stats">
               <Button color="primary">Interfaz</Button>
             </a>
-            <a href="https://documenter.getpostman.com/view/8975262/UVyn2yyn"
+            <a href="https://documenter.getpostman.com/view/14853996/UVypzxct"
               ><Button color="info">Documentación v1</Button></a>
 
-            <a href="https://documenter.getpostman.com/view/8975262/Uyr8nyWh"
+            <a href="https://documenter.getpostman.com/view/14853996/UyrAGHgT"
               ><Button color="info">Documentación v2</Button></a>
 
             </CardBody>
 
           <CardFooter
             >desarrollado por
-            <a href="https://github.com/roque-fernandez">Roque Fernandez Iglesias</a>
+            <a href="https://github.com/jfeliperamos">Jose Felipe Ramos</a>
           </CardFooter>
         </Card>
 
