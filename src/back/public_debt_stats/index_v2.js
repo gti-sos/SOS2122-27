@@ -245,6 +245,104 @@ module.exports.register = (app,db) => {
         });
     })
 
+    //CARGAR DATOS DE ESPAÑA EN LA GRAFICA
+
+    app.get(JF_API_URL + "/graph-espana", (req, res) => {
+
+        var year = req.query.year;
+        var from = req.query.from;
+        var to = req.query.to;
+
+        //Comprobamos query
+
+        for (var i = 0; i < Object.keys(req.query).length; i++) {
+            var element = Object.keys(req.query)[i];
+            if (element != "year" && element != "from" && element != "to" && element != "limit" && element != "offset") {
+                res.sendStatus(400, "BAD REQUEST");
+                return;
+            }
+        }
+
+        //Comprobamos si from es mas pequeño o igual a to
+        if (from > to) {
+            res.sendStatus(400, "BAD REQUEST");
+            return;
+        }
+        db.find({}, function (err, filteredList) {
+            if (err) {
+                res.sendStatus(500, "ERROR EN CLIENTE");
+                return;
+            }
+
+            // Apartado para búsqueda por año
+            if (year != null) {
+                var filteredList = filteredList.filter((reg) => {
+                    return (reg.year == year);
+                });
+                //comprobamos que haya elementos
+                if (filteredList == 0) {
+                    res.sendStatus(404, "NOT FOUND");
+                    return;
+                }
+
+            }
+
+            // Apartado para from y to
+            if (from != undefined || to != undefined) {
+                if(from != undefined && to == undefined){
+                    to = 100000000;
+                }
+                else if(from == null && to != null){
+                    from = 0;
+                }
+                filteredList = filteredList.filter((reg) => {
+                    return (reg.year >= from && reg.year <= to);
+                });
+
+                //comprobamos que haya elementos
+                if (filteredList == 0) {
+                    res.sendStatus(404, "NOT FOUND");
+                    return;
+                }
+            }
+
+
+            // Resultado sin ID
+            if (req.query.limit != undefined || req.query.offset != undefined) {
+                filteredList = pagingMaker(req, filteredList);
+            }
+            filteredList.forEach((element) => {
+                delete element._id;
+            });
+
+            //Comprobamos fields
+            if(req.query.fields!=null){
+                //Comprobamos si los campos son correctos
+                var listaFields = req.query.fields.split(",");
+                for(var i = 0; i<listaFields.length;i++){
+                    var element = listaFields[i];
+                    if(element != "country" && element != "year" && element != "public_expenditure"  && element != "pe_on_defence" && element != "pe_to_gdp"){
+                        res.sendStatus(400, "BAD REQUEST");
+                        return;
+                    }
+                }
+                //Escogemos los campos correspondientes
+                filteredList = checkFields(req,filteredList);
+            }
+            var espana = [];
+            filteredList.forEach(stat =>{
+                if(stat.country === "espana" && stat.year >= 2016){
+                    espana.push(stat.public_expenditure);
+                }
+            })
+            //console.log("Filtered list->",JSON.stringify(filteredList))
+            console.log("Array Espana-> ",JSON.stringify(espana))
+            res.send(JSON.stringify(espana, null, 2));
+            //res.send(JSON.stringify([43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]));
+        })
+
+    });
+
     //POST CORRECTO
     
     app.post(JF_API_URL, (req, res) => {

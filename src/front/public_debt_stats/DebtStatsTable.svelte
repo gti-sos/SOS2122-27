@@ -41,7 +41,7 @@
         if(res.ok){
             const data = await res.json();
             stats = data;
-			update();
+			getDebtStatsPagination();
             console.log("Estadísticas recibidas: "+stats.length);
 		}
     }

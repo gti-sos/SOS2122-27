@@ -31,11 +31,13 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/loadInitialData",
+					"raw": "https://sos2122-27.herokuapp.com/api/v2/public-debt-stats/loadInitialData",
+					"protocol": "https",
 					"host": [
-						"{{HOST}}"
+						"sos2122-27",
+						"herokuapp",
+						"com"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -81,11 +83,13 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
+					"raw": "https://sos2122-27.herokuapp.com/api/v2/public-debt-stats",
+					"protocol": "https",
 					"host": [
-						"{{HOST}}"
+						"sos2122-27",
+						"herokuapp",
+						"com"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -125,11 +129,13 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/espana/2020",
+					"raw": "https://sos2122-27.herokuapp.com/api/v2/public-debt-stats/espana/2020",
+					"protocol": "https",
 					"host": [
-						"{{HOST}}"
+						"sos2122-27",
+						"herokuapp",
+						"com"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -160,11 +166,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/espana/2020",
+					"raw": "https://sos2122-27.herokuapp.com/api/v2/public-debt-stats/espana/2020",
+					"protocol": "https",
 					"host": [
-						"{{HOST}}"
+						"sos2122-27",
+						"herokuapp",
+						"com"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -202,11 +210,13 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/espana/2020",
+					"raw": "https://sos2122-27.herokuapp.com/api/v2/public-debt-stats/espana/2020",
+					"protocol": "https",
 					"host": [
-						"{{HOST}}"
+						"sos2122-27",
+						"herokuapp",
+						"com"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -244,11 +254,13 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/taiwan/2020",
+					"raw": "https://sos2122-27.herokuapp.com/api/v2/public-debt-stats/taiwan/2020",
+					"protocol": "https",
 					"host": [
-						"{{HOST}}"
+						"sos2122-27",
+						"herokuapp",
+						"com"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -288,11 +300,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/espana/2020",
+					"raw": "https://sos2122-27.herokuapp.com/api/v2/public-debt-stats/espana/2020",
+					"protocol": "https",
 					"host": [
-						"{{HOST}}"
+						"sos2122-27",
+						"herokuapp",
+						"com"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -332,11 +346,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
+					"raw": "https://sos2122-27.herokuapp.com/api/v2/public-debt-stats",
+					"protocol": "https",
 					"host": [
-						"{{HOST}}"
+						"sos2122-27",
+						"herokuapp",
+						"com"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -372,11 +388,13 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/taiwan/2020",
+					"raw": "https://sos2122-27.herokuapp.com/api/v2/public-debt-stats/taiwan/2020",
+					"protocol": "https",
 					"host": [
-						"{{HOST}}"
+						"sos2122-27",
+						"herokuapp",
+						"com"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -416,11 +434,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
+					"raw": "https://sos2122-27.herokuapp.com/api/v2/public-debt-stats",
+					"protocol": "https",
 					"host": [
-						"{{HOST}}"
+						"sos2122-27",
+						"herokuapp",
+						"com"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -458,11 +478,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/taiwan/2020",
+					"raw": "https://sos2122-27.herokuapp.com/api/v2/public-debt-stats/taiwan/2020",
+					"protocol": "https",
 					"host": [
-						"{{HOST}}"
+						"sos2122-27",
+						"herokuapp",
+						"com"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -493,11 +515,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
+					"raw": "https://sos2122-27.herokuapp.com/api/v2/public-debt-stats",
+					"protocol": "https",
 					"host": [
-						"{{HOST}}"
+						"sos2122-27",
+						"herokuapp",
+						"com"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -527,11 +551,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
+					"raw": "https://sos2122-27.herokuapp.com/api/v2/public-debt-stats",
+					"protocol": "https",
 					"host": [
-						"{{HOST}}"
+						"sos2122-27",
+						"herokuapp",
+						"com"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",

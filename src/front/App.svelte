@@ -17,6 +17,7 @@
     //Elementos de Felipe
     import DebtStats from './public_debt_stats/DebtStats.svelte';
     import EditDebtStatsTable from './public_debt_stats/EditDebtStatsTable.svelte';
+    import DsGraph from './public_debt_stats/DSGraph.svelte';
 
     //Elementos de Alexis
     import SmiStats from './smi_stats/SmiStats.svelte';
@@ -39,6 +40,7 @@
 
         "/public-debt-stats": DebtStats,
         "/public-debt-stats/:country/:year": EditDebtStatsTable,
+        "/public-debt-stats/graph": DsGraph,
 
         "/smi_stats": SmiStats,        
         "/smi_stats/:country/:year": EditSmiStatsTable,
