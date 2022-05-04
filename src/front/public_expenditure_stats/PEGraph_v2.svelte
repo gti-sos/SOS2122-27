@@ -22,6 +22,8 @@
                 stats_PE_to_gdp.push(stat["pe_to_gdp"]);
                 stats_PE_on_defence.push(stat["pe_on_defence"]);            
             });
+            //esperamos a que se carguen 
+            await delay(500);
             loadGraph();
         }else{
             console.log("Error cargando los datos");
@@ -64,7 +66,7 @@
 </script>
 
 <svelte:head>
-    <script src='https://cdn.plot.ly/plotly-2.11.1.min.js' on:load="{loadGraph}"></script>
+    <script src='https://cdn.plot.ly/plotly-2.11.1.min.js'></script>
 </svelte:head>
 
 <main>
