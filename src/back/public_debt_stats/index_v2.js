@@ -5,56 +5,56 @@
 
     var initial_DebtStat = [
         {
-            country: "espana",
+            country: "España",
             year: 2021,
-            total_debt: 1345784,
-            debt_gdp: 120,
-            per_capita_debt: 28393    
+            total_debt: 1427235,
+            debt_gdp: 118.40,
+            per_capita_debt: 30157    
         },
         {
-            country: "espana",
+            country: "España",
             year: 2020,
-            total_debt: 1345784,
+            total_debt: 1345783,
             debt_gdp: 120,
             per_capita_debt: 28393    
         },
         {
-            country: "espana",
+            country: "España",
             year: 2019,
-            total_debt: 1154831,
-            debt_gdp: 116.2,
-            per_capita_debt: 26194    
+            total_debt: 1223355,
+            debt_gdp: 98.3,
+            per_capita_debt: 25846    
         },   
         {
-            country: "alemania",
+            country: "Alemania",
             year: 2020,
             total_debt: 1345784,
             debt_gdp: 68.7,
             per_capita_debt: 27832    
         },
         {
-            country: "alemania",
+            country: "Alemania",
             year: 2019,
             total_debt: 1345784,
             debt_gdp: 68.7,
             per_capita_debt: 27832    
         },  
         {
-            country: "alemania",
+            country: "Alemania",
             year: 2018,
             total_debt: 1021031,
             debt_gdp: 66.4,
             per_capita_debt: 25194    
         },
         {
-            country: "reino unido",
+            country: "Reino Unido",
             year: 2020,
             total_debt: 2479993,
             debt_gdp: 104.47,
             per_capita_debt: 37001    
         },
         {
-            country: "reino unido",
+            country: "Reino Unido",
             year: 2019,
             total_debt: 2479993,
             debt_gdp: 104.47,
