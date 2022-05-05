@@ -61,21 +61,21 @@
             per_capita_debt: 37001    
         },
         {
-            country: "francia",
+            country: "Francia",
             year: 2020,
             total_debt: 2649261,
             debt_gdp: 115,
             per_capita_debt: 28393    
         }, 
         {
-            country: "italia",
+            country: "Italia",
             year: 2020,
             total_debt: 2573468,
             debt_gdp: 155.6,
             per_capita_debt: 43429    
         }, 
         {
-            country: "portugal",
+            country: "Portugal",
             year: 2020,
             total_debt: 270491,
             debt_gdp: 135.2,
