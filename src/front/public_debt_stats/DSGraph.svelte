@@ -32,7 +32,7 @@
         Highcharts.chart('container', {
 
             chart: {
-                type: 'area'
+                type: 'bar'
             },
 
             title: {
