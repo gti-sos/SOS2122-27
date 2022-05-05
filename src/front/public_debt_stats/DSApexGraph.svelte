@@ -35,13 +35,13 @@
       var options = {
         
         series: [{
-          name: 'Total debt',
+          name: 'Total debt (M.€)',
           data: stats_total_debt
         }, {
           name: 'Total debt to GDP (%)',
           data: stats_debt_gdp
         }, {
-          name: 'Per capita debt (%)',
+          name: 'Per capita debt (€)',
           data: stats_per_capita_debt
         }],
 

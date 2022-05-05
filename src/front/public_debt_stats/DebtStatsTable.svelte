@@ -341,9 +341,9 @@ loading
 			<tr>
 				<th>País</th>
 				<th>Año</th>
-				<th>Deuda pública total</th>
+				<th>Deuda pública total (M.€)</th>
 				<th>% de deuda pública respecto al PIB</th>
-				<th>Deuda pública per cápita</th>
+				<th>Deuda pública per cápita (€)</th>
 			</tr>
 		</thead>
 		<tbody>

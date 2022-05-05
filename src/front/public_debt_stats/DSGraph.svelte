@@ -1,5 +1,7 @@
 <script>
+
     import {onMount} from 'svelte';
+    import {NavLink,NavItem,Nav} from 'sveltestrap';
 
     const delay = ms => new Promise(res => setTimeout(res,ms));
 
@@ -60,21 +62,19 @@
                 layout: 'vertical',
                 align: 'right',
                 verticalAlign: 'middle'
-            },
-
-            
+            },            
 
             series: [
                 {
-                name: 'Total debt',
+                name: 'Total debt (M.€)',
                 data: stats_total_debt
                 },
                 {
                 name: 'Total debt to GDP (%)',
-                data: stats_debt_gdp
+                data: stats_debt_gdp,
                 },
                 {
-                name: 'Per capita debt (%)',
+                name: 'Per capita debt (€)',
                 data: stats_per_capita_debt
                 }
             ],
@@ -98,8 +98,6 @@
     }
 
     onMount(getDebtStats);
-
-
     
 </script>
 
@@ -109,17 +107,26 @@
     <script src="https://code.highcharts.com/modules/exporting.js" on:load="{loadGraph}"></script>
     <script src="https://code.highcharts.com/modules/export-data.js" on:load="{loadGraph}"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js" on:load="{loadGraph}"></script>
-
     
 </svelte:head>
 
 <main>
+    <h1 align="center">Gráfico de barras</h1>	
+    <Nav class="bg-light">
+        <NavItem>
+            <NavLink id="nav-info" href="/#/public-debt-stats" style="text-decoration:none">Volver</NavLink>
+        </NavItem>
+        <NavItem>
+            <NavLink id="nav-home" href="/" style="text-decoration:none">Home</NavLink>
+        </NavItem>        
+    </Nav>
+
     <figure class="highcharts-figure">
         <div id="container"></div>
         <p class="highcharts-description">
-            Basic line chart showing trends in a dataset. This chart includes the
-            <code>series-label</code> module, which adds a label to each line for
-            enhanced readability.
+            <code>-> Total debt:</code> Deuda pública total<br>
+            <code>-> Total debt to GDP:</code> Deuda total en proporción al PIB<br>
+            <code>-> Per cápida debt:</code> Deuda pública por persona<br>
         </p>
     </figure>
 </main>
