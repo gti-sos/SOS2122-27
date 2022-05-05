@@ -5,8 +5,7 @@
     import JointGraph from './JointGraph.svelte';
     import Integrations from './Integrations.svelte';
     import Charts from './Charts.svelte';
-    import NewHome from './NewHome.svelte';
-   
+    import NewHome from './NewHome.svelte'; 
 
     //Elementos de Roque
     import PEStats from './public_expenditure_stats/PEStats.svelte';
@@ -22,6 +21,7 @@
     //Elementos de Alexis
     import SmiStats from './smi_stats/SmiStats.svelte';
     import EditSmiStatsTable from './smi_stats/EditSmiStatsTable.svelte';
+    import DsApexGraph from './public_debt_stats/DSApexGraph.svelte';
 
 
     const routes = {
@@ -41,6 +41,7 @@
         "/public-debt-stats": DebtStats,
         "/public-debt-stats/:country/:year": EditDebtStatsTable,
         "/public-debt-stats/graph": DsGraph,
+        "/public-debt-stats/apexGraph": DsApexGraph,
 
         "/smi_stats": SmiStats,        
         "/smi_stats/:country/:year": EditSmiStatsTable,

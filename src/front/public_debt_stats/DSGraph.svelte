@@ -76,7 +76,7 @@
                 {
                 name: 'Per capita debt (%)',
                 data: stats_per_capita_debt
-                },
+                }
             ],
 
             responsive: {
