@@ -119,6 +119,28 @@
             smi_variation:  47.69
         },
         {
+            country: "china",
+            year: 2019,
+            smi_local: 1500.0,
+            smi_euros: 190.5,
+            smi_variation:  3.98
+        },
+        {
+            country: "china",
+            year: 2018,
+            smi_local: 1430.0,
+            smi_euros: 183.2,
+            smi_variation:  -4.23
+        },
+        {
+            country: "china",
+            year: 2017,
+            smi_local: 1400.0,
+            smi_euros: 191.3,
+            smi_variation:  6.34
+        },
+
+        {
             country: "UK",
             year: 2021,
             smi_local: 1536.2,
@@ -382,6 +404,104 @@ app.get(FAMV_API + "/:country", (req, res) => {
     });
 
 
+//GET GRAFICA
+app.get(FAMV_API + "/graph", (req, res) => {
+
+    var year = req.query.year;
+    var from = req.query.from;
+    var to = req.query.to;
+
+    //Comprobamos query
+
+    for (var i = 0; i < Object.keys(req.query).length; i++) {
+        var element = Object.keys(req.query)[i];
+        if (element != "year" && element != "from" && element != "to" && element != "limit" && element != "offset") {
+            res.sendStatus(400, "BAD REQUEST");
+            return;
+        }
+    }
+
+
+    //Comprobamos si from es mas pequeño o igual a to
+    if (from > to) {
+        res.sendStatus(400, "BAD REQUEST");
+        return;
+    }
+    db.find({}, function (err, filteredList) {
+        if (err) {
+            res.sendStatus(500, "ERROR EN CLIENTE");
+            return;
+        }
+
+        // Apartado para búsqueda por año
+        if (year != null) {
+            var filteredList = filteredList.filter((reg) => {
+                return (reg.year == year);
+            });
+            //comprobamos que haya elementos
+            if (filteredList == 0) {
+                res.sendStatus(404, "NOT FOUND");
+                return;
+            }
+
+        }
+
+        // Apartado para from y to
+        if (from != undefined || to != undefined) {
+            if(from != undefined && to == undefined){
+                to = 9999;
+            }
+            else if(from == null && to != null){
+                from = 0;
+            }
+            filteredList = filteredList.filter((reg) => {
+                return (reg.year >= from && reg.year <= to);
+            });
+
+            //comprobamos que haya elementos
+            if (filteredList == 0) {
+                res.sendStatus(404, "NOT FOUND");
+                return;
+            }
+        }
+
+
+
+        // Resultado sin ID
+        if (req.query.limit != undefined || req.query.offset != undefined) {
+            filteredList = paginationMaker(req, filteredList);
+        }
+        filteredList.forEach((element) => {
+            delete element._id;
+        });
+
+        //Comprobamos fields
+        if(req.query.fields!=null){
+            //Comprobamos si los campos son correctos
+            var listFields = req.query.fields.split(",");
+            for(var i = 0; i<listFields.length;i++){
+                var element = listFields[i];
+                if(element != "country" && element != "year" && element != "smi_local"  && element != "smi_euros" && element != "smi_variation"){
+                    res.sendStatus(400, "BAD REQUEST");
+                    return;
+                }
+            }
+            //Escogemos los campos correspondientes
+            filteredList = checkFields(req,filteredList);
+        }
+        var china = [];
+        filteredList.forEach(stat =>{
+            if(stat.country === "china" && stat.year >= 2020){
+                china.push(stat.smi_local);
+            }
+        });
+        //console.log("Filtered list->",JSON.stringify(filteredList))
+        console.log("Array China-> ",JSON.stringify(china))
+        res.send(JSON.stringify(china, null, 2));
+        //res.send(JSON.stringify([43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]));
+    });
+});
+    
 
 //PUT
 

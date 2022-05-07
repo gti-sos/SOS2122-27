@@ -17,6 +17,7 @@
     //Elementos de Alexis
     import SmiStats from './smi_stats/SmiStats.svelte';
     import EditSmiStatsTable from './smi_stats/EditSmiStatsTable.svelte';
+    import SmiGraphV1 from './smi_stats/SmiGraph_v1.svelte';
 
 
     const routes = {
@@ -34,6 +35,7 @@
 
         "/smi_stats": SmiStats,        
         "/smi_stats/:country/:year": EditSmiStatsTable,
+        "/smi_stats/graph-v1": SmiGraphV1
 
     }
 

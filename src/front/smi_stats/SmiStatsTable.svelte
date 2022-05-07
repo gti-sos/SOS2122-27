@@ -63,7 +63,8 @@
             const data = await res.json();
             stats = data;
 			total = data.length;
-			update();
+			//update();
+			getSmiStatsPagination();
             console.log("Estadísticas recibidas: "+stats.length);
         }else{
 			errors(res.status);
