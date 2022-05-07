@@ -5,77 +5,77 @@
 
     var initial_DebtStat = [
         {
-            country: "espana",
+            country: "España",
             year: 2021,
-            total_debt: 1345784,
-            debt_gdp: 120,
-            per_capita_debt: 28393    
+            total_debt: 1427235,
+            debt_gdp: 118.40,
+            per_capita_debt: 30157    
         },
         {
-            country: "espana",
+            country: "España",
             year: 2020,
-            total_debt: 1345784,
+            total_debt: 1345783,
             debt_gdp: 120,
             per_capita_debt: 28393    
         },
         {
-            country: "espana",
+            country: "España",
             year: 2019,
-            total_debt: 1154831,
-            debt_gdp: 116.2,
-            per_capita_debt: 26194    
+            total_debt: 1223355,
+            debt_gdp: 98.3,
+            per_capita_debt: 25846    
         },   
         {
-            country: "alemania",
+            country: "Alemania",
             year: 2020,
             total_debt: 1345784,
             debt_gdp: 68.7,
             per_capita_debt: 27832    
         },
         {
-            country: "alemania",
+            country: "Alemania",
             year: 2019,
             total_debt: 1345784,
             debt_gdp: 68.7,
             per_capita_debt: 27832    
         },  
         {
-            country: "alemania",
+            country: "Alemania",
             year: 2018,
             total_debt: 1021031,
             debt_gdp: 66.4,
             per_capita_debt: 25194    
         },
         {
-            country: "reino unido",
+            country: "Reino Unido",
             year: 2020,
             total_debt: 2479993,
             debt_gdp: 104.47,
             per_capita_debt: 37001    
         },
         {
-            country: "reino unido",
+            country: "Reino Unido",
             year: 2019,
             total_debt: 2479993,
             debt_gdp: 104.47,
             per_capita_debt: 37001    
         },
         {
-            country: "francia",
+            country: "Francia",
             year: 2020,
             total_debt: 2649261,
             debt_gdp: 115,
             per_capita_debt: 28393    
         }, 
         {
-            country: "italia",
+            country: "Italia",
             year: 2020,
             total_debt: 2573468,
             debt_gdp: 155.6,
             per_capita_debt: 43429    
         }, 
         {
-            country: "portugal",
+            country: "Portugal",
             year: 2020,
             total_debt: 270491,
             debt_gdp: 135.2,
@@ -244,6 +244,104 @@ module.exports.register = (app,db) => {
             res.send(JSON.stringify(filteredList[0], null, 2));
         });
     })
+
+    //CARGAR DATOS DE ESPAÑA EN LA GRAFICA
+
+    app.get(JF_API_URL + "/graph-espana", (req, res) => {
+
+        var year = req.query.year;
+        var from = req.query.from;
+        var to = req.query.to;
+
+        //Comprobamos query
+
+        for (var i = 0; i < Object.keys(req.query).length; i++) {
+            var element = Object.keys(req.query)[i];
+            if (element != "year" && element != "from" && element != "to" && element != "limit" && element != "offset") {
+                res.sendStatus(400, "BAD REQUEST");
+                return;
+            }
+        }
+
+        //Comprobamos si from es mas pequeño o igual a to
+        if (from > to) {
+            res.sendStatus(400, "BAD REQUEST");
+            return;
+        }
+        db.find({}, function (err, filteredList) {
+            if (err) {
+                res.sendStatus(500, "ERROR EN CLIENTE");
+                return;
+            }
+
+            // Apartado para búsqueda por año
+            if (year != null) {
+                var filteredList = filteredList.filter((reg) => {
+                    return (reg.year == year);
+                });
+                //comprobamos que haya elementos
+                if (filteredList == 0) {
+                    res.sendStatus(404, "NOT FOUND");
+                    return;
+                }
+
+            }
+
+            // Apartado para from y to
+            if (from != undefined || to != undefined) {
+                if(from != undefined && to == undefined){
+                    to = 100000000;
+                }
+                else if(from == null && to != null){
+                    from = 0;
+                }
+                filteredList = filteredList.filter((reg) => {
+                    return (reg.year >= from && reg.year <= to);
+                });
+
+                //comprobamos que haya elementos
+                if (filteredList == 0) {
+                    res.sendStatus(404, "NOT FOUND");
+                    return;
+                }
+            }
+
+
+            // Resultado sin ID
+            if (req.query.limit != undefined || req.query.offset != undefined) {
+                filteredList = pagingMaker(req, filteredList);
+            }
+            filteredList.forEach((element) => {
+                delete element._id;
+            });
+
+            //Comprobamos fields
+            if(req.query.fields!=null){
+                //Comprobamos si los campos son correctos
+                var listaFields = req.query.fields.split(",");
+                for(var i = 0; i<listaFields.length;i++){
+                    var element = listaFields[i];
+                    if(element != "country" && element != "year" && element != "public_expenditure"  && element != "pe_on_defence" && element != "pe_to_gdp"){
+                        res.sendStatus(400, "BAD REQUEST");
+                        return;
+                    }
+                }
+                //Escogemos los campos correspondientes
+                filteredList = checkFields(req,filteredList);
+            }
+            var espana = [];
+            filteredList.forEach(stat =>{
+                if(stat.country === "espana" && stat.year >= 2016){
+                    espana.push(stat.public_expenditure);
+                }
+            })
+            //console.log("Filtered list->",JSON.stringify(filteredList))
+            console.log("Array Espana-> ",JSON.stringify(espana))
+            res.send(JSON.stringify(espana, null, 2));
+            //res.send(JSON.stringify([43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]));
+        })
+
+    });
 
     //POST CORRECTO
     

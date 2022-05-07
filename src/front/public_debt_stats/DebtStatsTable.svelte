@@ -41,7 +41,7 @@
         if(res.ok){
             const data = await res.json();
             stats = data;
-			update();
+			getDebtStatsPagination();
             console.log("Estadísticas recibidas: "+stats.length);
 		}
     }
@@ -273,7 +273,10 @@ h3, h4{
             <NavLink id="nav-info" href="#" style="text-decoration:none" on:click={deleteDebtStats}>Eliminar Todo</NavLink>
         </NavItem>
 		<NavItem>
-            <NavLink id="nav-info" href="#" style="text-decoration:none" class="text-succcess" on:click={loadDebtStats}>Iniciar Datos</NavLink>
+            <NavLink id="nav-info" href="#" style="text-decoration:none" class="text-succcess" on:click={loadDebtStats}>Cargar Datos</NavLink>
+        </NavItem>
+		<NavItem>
+            <NavLink id="nav-info" href="/#/public-debt-stats/graph" style="text-decoration:none">Gráfico de barras</NavLink>
         </NavItem>
     </Nav>
 
@@ -338,9 +341,9 @@ loading
 			<tr>
 				<th>País</th>
 				<th>Año</th>
-				<th>Deuda pública total</th>
+				<th>Deuda pública total (M.€)</th>
 				<th>% de deuda pública respecto al PIB</th>
-				<th>Deuda pública per cápita</th>
+				<th>Deuda pública per cápita (€)</th>
 			</tr>
 		</thead>
 		<tbody>

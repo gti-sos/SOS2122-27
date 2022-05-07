@@ -30,73 +30,69 @@
 
     async function loadGraph(){
         Highcharts.chart('container', {
-
-            title: {
-                text: 'SmiStats'
+            chart: {
+                type: 'bar'
             },
-
+            title: {
+                text:  'SmiStats'
+            },
             subtitle: {
                 text: 'Fuente: https://datosmacro.expansion.com/smi'
             },
-
-            yAxis: {
+            xAxis: {
+                categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
                 title: {
-                    text: 'Salario en euros'
+                    text: null
                 }
             },
-
-            xAxis: {
+            yAxis: {
+                min: 0,
                 title: {
-                    text: "País-Año",
+                    text: 'Salario en euros',
+                    align: 'high'
                 },
-                categories: stats_country_year,
+                labels: {
+                    overflow: 'justify'
+                }
             },
-
+            tooltip: {
+                valueSuffix: ' millions'
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
             legend: {
                 layout: 'vertical',
                 align: 'right',
-                verticalAlign: 'middle'
+                verticalAlign: 'top',
+                x: -40,
+                y: 80,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor:
+                    Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+                shadow: true
             },
-
-            plotOptions: {
-                series: {
-                    label: {
-                        connectorAllowed: false
-                    },
-                    pointStart: 2017
-                }
+            credits: {
+                enabled: false
             },
-
             series: [{
-
-                name: 'SMI moneda local',
-                data: stats_smi_local,
-            },{
-
-                name: 'SMI en euros',
-                data: stats_smi_euros,
-            },
-            {
-
-                name: 'SMI variacion',
-                data: stats_smi_variation,
-            }],
-
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 500
-                    },
-                    chartOptions: {
-                        legend: {
-                            layout: 'horizontal',
-                            align: 'center',
-                            verticalAlign: 'bottom'
-                        }
-                    }
-                }]
-            }
-
+                name: 'Year 1800',
+                data: [107, 31, 635, 203, 2]
+            }, {
+                name: 'Year 1900',
+                data: [133, 156, 947, 408, 6]
+            }, {
+                name: 'Year 2000',
+                data: [814, 841, 3714, 727, 31]
+            }, {
+                name: 'Year 2016',
+                data: [1216, 1001, 4436, 738, 40]
+            }]
         });
     }
 
@@ -105,15 +101,18 @@
 
 <svelte:head>
     <script src="https://code.highcharts.com/highcharts.js" on:load="{loadGraph}"></script>
-    <script src="https://code.highcharts.com/modules/series-label.js" on:load="{loadGraph}"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js}" on:load="{loadGraph}"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js" on:load="{loadGraph}"></script>
     <script src="https://code.highcharts.com/modules/export-data.js" on:load="{loadGraph}"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"  on:load="{loadGraph}"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js" on:load="{loadGraph}"></script>
 </svelte:head>
 
 <main>
     <figure class="highcharts-figure">
         <div id="container"></div>
-        
+        <p class="highcharts-description">
+            Bar chart showing horizontal columns. This chart type is often
+            beneficial for smaller screens, as the user can scroll through the data
+            vertically, and axis labels are easy to read.
+        </p>
     </figure>
 </main>

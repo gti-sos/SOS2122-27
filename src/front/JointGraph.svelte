@@ -1,5 +1,6 @@
 <script>
-    import {onMount} from 'svelte';
+    import {onMount} from 'svelte';    
+    import {Button} from 'sveltestrap';
 
     const delay = ms => new Promise(res => setTimeout(res,ms));
 
@@ -10,9 +11,12 @@
     let stats_PE_on_defence = [];
     let stats_PE_to_gdp = []; 
 
-    async function getChart(){
-        getPEStats();
-    }
+    //DEBT STATS
+    let debtStats = [];
+    let ds_country_date = [];
+    let ds_total_debt = [];
+    let ds_debt_gdp = [];
+    let ds_per_capita_debt = []; 
 
     async function getPEStats(){
         console.log("Fetching stats....");
@@ -28,13 +32,38 @@
                 stats_PE_to_gdp.push(stat["pe_to_gdp"]);
                 stats_PE_on_defence.push(stat["pe_on_defence"]);            
             });
+            await delay(500);
         }else{
             console.log("Error cargando los datos");
 		}
     }
 
+    async function getDebtStats(){
+        console.log("Fetching stats....");
+        const res = await fetch("/api/v2/public-debt-stats");
+        if(res.ok){
+            const data = await res.json();
+            debtStats = data;
+            console.log("Estadísticas recibidas: "+debtStats.length);
+            //inicializamos los arrays para mostrar los datos
+            debtStats.forEach(stat => {
+                ds_country_date.push(stat.country+"-"+stat.year);
+                ds_total_debt.push(stat["total_debt"]);
+                ds_debt_gdp.push(stat["debt_gdp"]);
+                ds_per_capita_debt.push(stat["per_capita_debt"]);            
+            });
+            await delay(500);
+        }else{
+            console.log("Error cargando los datos");
+        }
+    }
+
     async function loadGraph(){
         Highcharts.chart('container', {
+
+            chart: {
+                type: 'line'
+            },
 
             title: {
                 text: 'Public expenditure stats by country and year'
@@ -61,9 +90,7 @@
                 layout: 'vertical',
                 align: 'right',
                 verticalAlign: 'middle'
-            },
-
-            
+            },            
 
             series: [
                 {
@@ -78,6 +105,20 @@
                 name: 'PE on defence (%)',
                 data: stats_PE_on_defence
                 },
+
+                //DEBT STATS
+                {
+                name: 'total_debt (M.€)',
+                data: ds_total_debt
+                },
+                {
+                name: 'debt_to_gdp (%)',
+                data: ds_debt_gdp,
+                },
+                {
+                name: 'per_capita_debt (€)',
+                data: ds_per_capita_debt
+                }
             ],
 
             responsive: {
@@ -98,9 +139,8 @@
 
     }
 
-    onMount(getChart);
-
-
+    onMount(getPEStats);
+    onMount(getDebtStats)
     
 </script>
 
@@ -109,18 +149,16 @@
     <script src="https://code.highcharts.com/modules/series-label.js" on:load="{loadGraph}"></script>
     <script src="https://code.highcharts.com/modules/exporting.js" on:load="{loadGraph}"></script>
     <script src="https://code.highcharts.com/modules/export-data.js" on:load="{loadGraph}"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js" on:load="{loadGraph}"></script>
-
-    
+    <script src="https://code.highcharts.com/modules/accessibility.js" on:load="{loadGraph}"></script>    
 </svelte:head>
 
 <main>
     <figure class="highcharts-figure">
         <div id="container"></div>
         <p class="highcharts-description">
-            Basic line chart showing trends in a dataset. This chart includes the
-            <code>series-label</code> module, which adds a label to each line for
-            enhanced readability.
+            
         </p>
     </figure>
+
+    <Button outline color="secondary" href="/">Volver</Button>
 </main>

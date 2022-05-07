@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/gti-sos/SOS2122-27#readme",
   "dependencies": {
+    "apexcharts": "^3.35.0",
     "body-parser": "^1.19.2",
     "bootstrap": "^5.1.3",
     "cool-ascii-faces": "^1.3.4",
