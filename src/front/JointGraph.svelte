@@ -18,6 +18,13 @@
     let ds_debt_gdp = [];
     let ds_per_capita_debt = []; 
 
+    //SMI STATS
+    let smi_stats=[];
+    let smi_country_date = [];
+    let smi_local = [];
+    let smi_euros = [];
+    let smi_variation = [];
+
     async function getPEStats(){
         console.log("Fetching stats....");
         const res = await fetch("/api/v2/public-expenditure-stats");
@@ -58,6 +65,21 @@
         }
     }
 
+    async function getSmiStats() {
+        console.log("Fetching data...");
+        const res = await fetch("/api/v2/smi_stats");
+        smi_stats = await res.json();
+        if (res.ok) {
+          smi_stats.forEach(stat => {
+            smi_country_date.push(stat.country+"-"+stat.year);
+            smi_local.push(parseFloat(stat.smi_local));
+            smi_euros.push(parseFloat(stat.smi_euros));
+            smi_variation.push(parseFloat(stat.smi_variation));
+            });
+            cargados=true;
+            }
+    }
+
     async function loadGraph(){
         Highcharts.chart('container', {
 
@@ -93,6 +115,7 @@
             },            
 
             series: [
+                //PE STATS
                 {
                 name: 'Public expenditure',
                 data: stats_public_expenditure
@@ -118,6 +141,18 @@
                 {
                 name: 'per_capita_debt (€)',
                 data: ds_per_capita_debt
+                },
+
+                //SMI STATS
+                {
+                name: 'SMI Mon. Local',
+                data: smi_local
+                }, {
+                name: 'SMI Euros',
+                data: smi_euros
+                }, {
+                name: 'SMI % Variación',
+                data: smi_variation
                 }
             ],
 
@@ -140,7 +175,8 @@
     }
 
     onMount(getPEStats);
-    onMount(getDebtStats)
+    onMount(getDebtStats);
+    onMount(getSmiStats);
     
 </script>
 

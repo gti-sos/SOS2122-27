@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-	
+	import{Nav, NavItem, NavLink } from "sveltestrap";
 	import {Pagination, PaginationItem, PaginationLink, Table, Button, Alert } from "sveltestrap";
 
 	//vatiables para mostrar mensajes
@@ -63,7 +63,8 @@
             const data = await res.json();
             stats = data;
 			total = data.length;
-			update();
+			//update();
+			getSmiStatsPagination();
             console.log("Estadísticas recibidas: "+stats.length);
         }else{
 			errors(res.status);
@@ -258,6 +259,18 @@ th, td {
 </style>
 
 <main>
+
+	<Nav>
+        <NavItem>
+          <NavLink href="/">Página Principal</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink href="#/charts">Gráfica conjunta</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink href="#/smi_stats/graph-v1">Gráfica SMI</NavLink>
+        </NavItem>
+    </Nav>
 	<Alert color="danger" isOpen={visibleError} toggle={() => (visibleError = false)}>
 		{#if errorMsg}
 			<p>ERROR: {errorMsg}</p>
