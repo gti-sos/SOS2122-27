@@ -7,3 +7,12 @@
 </ul>
 </li>
 
+<br>
+
+<li><strong>Public debt stats</strong>:
+<ul>
+<li><a href="https://sos2122-27.herokuapp.com/#/public-debt-stats/graph">Highcharts</a> </li>
+<li><a href="https://sos2122-27.herokuapp.com/#/public-debt-stats/apexGraph">ApexChart.js</a> </li>
+</ul>
+</li>
+
