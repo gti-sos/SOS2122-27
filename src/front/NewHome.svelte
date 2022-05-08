@@ -143,6 +143,43 @@
         </Card>
 
       </Col>
+
+      <Col xs="auto">
+        <Card class="mb-3">
+          <CardHeader>
+            <CardTitle><h5>Smi Stats</h5></CardTitle>
+          </CardHeader>
+          <CardBody>
+            <CardSubtitle />
+            <CardText>
+               Estadísticas sobre el sueldo mínimo en diferentes países,
+               así como la variación respecto al año anterior y la conversión a euros para cada uno.
+               </CardText>
+
+            <a href="https://sos2122-27.herokuapp.com/api/v1/smi_stats">
+              <Button color="primary">API v1</Button></a>
+
+              <a href="https://sos2122-27.herokuapp.com/api/v2/smi_stats">
+                <Button color="primary">API v2</Button></a>
+
+            <a href="/#/smi_stats">
+              <Button color="primary">Interfaz</Button>
+            </a>
+            <a href="https://documenter.getpostman.com/view/19481651/UVyn3K1F"
+              ><Button color="info">Documentación v1</Button></a>
+
+            <a href="https://documenter.getpostman.com/view/19481651/UyrAGHTC"
+              ><Button color="info">Documentación v2</Button></a>
+
+            </CardBody>
+
+          <CardFooter
+            >desarrollado por
+            <a href="https://github.com/famvcucu">Fco Alexis Morales Vallado</a>
+          </CardFooter>
+        </Card>
+
+      </Col>
       
     </Container>
   </main>

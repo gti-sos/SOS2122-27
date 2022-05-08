@@ -65,7 +65,7 @@
         }
     }
 
-    async function loadChart() {
+    async function getSmiStats() {
         console.log("Fetching data...");
         const res = await fetch("/api/v2/smi_stats");
         smi_stats = await res.json();
@@ -176,7 +176,7 @@
 
     onMount(getPEStats);
     onMount(getDebtStats);
-    onMount(loadChart);
+    onMount(getSmiStats);
     
 </script>
 

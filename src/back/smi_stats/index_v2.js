@@ -5,7 +5,7 @@
     
     var initial_smi_stats = [
         {
-            country: "spain",
+            country: "espana",
             year: 2022,
             smi_local: 1166.70,
             smi_euros: 1166.70,
@@ -13,7 +13,7 @@
     
         }, 
         {
-            country: "germany",
+            country: "alemania",
             year: 2022,
             smi_local: 1621.0,
             smi_euros: 1621.0,
@@ -21,14 +21,14 @@
     
         }, 
         {
-            country: "france",
+            country: "francia",
             year: 2022,
             smi_local: 1603.1,
             smi_euros: 1603.1,
             smi_variation:  3.12
         },
         {
-            country: "belize",
+            country: "belice",
             year: 2019,
             smi_local: 643.5,
             smi_euros: 283.3,
@@ -49,42 +49,42 @@
             smi_variation:  11.99
         },  
         {
-            country: "greece",
+            country: "grecia",
             year: 2022,
             smi_local: 773.5,
             smi_euros: 773.5,
             smi_variation:  2.00
         }, 
         {
-            country: "turkey",
+            country: "turquia",
             year: 2022,
             smi_local: 5004.0,
             smi_euros: 328.5,
             smi_variation:  -16.32
         }, 
         {
-            country: "trinidad and tobago",
+            country: "trinidad y tobago",
             year: 2019,
             smi_local: 3640.0,
             smi_euros: 468.8,
             smi_variation:  21.88
         }, 
         {
-            country: "ucraine",
+            country: "ucrania",
             year: 2020,
             smi_local: 4723.0,
             smi_euros: 178.8,
             smi_variation:  33.79
         }, 
         {
-            country: "south korea",
+            country: "corea del sur",
             year: 2021,
             smi_local: 1822480.0,
             smi_euros: 1364.1,
             smi_variation:  -1.50
         }, 
         {
-            country: "luxembourg",
+            country: "luxemburgo",
             year: 2021,
             smi_local: 2201.9,
             smi_euros: 2201.9,
@@ -141,7 +141,7 @@
         },
 
         {
-            country: "UK",
+            country: "reino unido",
             year: 2021,
             smi_local: 1536.2,
             smi_euros: 1708.7,
@@ -155,7 +155,7 @@
             smi_variation:  7.49
         },
         {
-            country: "brazil",
+            country: "brasil",
             year: 2022,
             smi_local: 1212.0,
             smi_euros: 192.1,
