@@ -7,8 +7,9 @@
     let smi_euros = [];
     let smi_variation = [];
  
-		let errorMsg="Tiene que cargar los datos para visualizar las analíticas.";
+	let errorMsg="Tiene que cargar los datos para visualizar las analíticas.";
     let cargados = false;
+
     async function loadChart() {
         console.log("Fetching data...");
         const res = await fetch(BASE_API_PATH);
@@ -21,7 +22,7 @@
             smi_variation.push(parseFloat(stat.smi_variation));
             });
             cargados=true;
-        }
+    }
         
     console.log("smi chart data: " + smi_stats);
             
@@ -30,7 +31,7 @@
           type: 'column'
       },
       title: {
-          text: 'Porcentajes de de desigualdad Recogidas por la UNDP'
+          text: 'Salario Mínimo Interprofesional medio en diferentes países'
       },
       xAxis: {
           categories: smi_country_year,
@@ -39,13 +40,13 @@
       yAxis: {
           min: 0,
           title: {
-              text: 'Rainfall (mm)'
+              text: 'Unidades Monetarias'
           }
       },
       tooltip: {
           headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
           pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-              '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+              '<td style="padding:0"><b>{point.y:.1f} U.M</b></td></tr>',
           footerFormat: '</table>',
           shared: true,
           useHTML: true
@@ -57,13 +58,13 @@
           }
       },
       series: [{
-          name: 'Coefficients',
+          name: 'SMI Mon. Local',
           data: smi_local
       }, {
-          name: 'Educations',
+          name: 'SMI Euros',
           data: smi_euros
       }, {
-          name: 'Lifes',
+          name: 'SMI % Variación',
           data: smi_variation
       }]
   });
@@ -83,19 +84,19 @@
   <main>
     <Nav>
         <NavItem>
-          <NavLink href="#/info">Página Principal</NavLink>
+          <NavLink href="/">Página Principal</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#/integrations">Integrations</NavLink>
+          <NavLink href="#/charts">Gráfica conjunta</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#/smi-stats">Datos</NavLink>
+          <NavLink href="#/smi_stats">Datos</NavLink>
         </NavItem>
     </Nav>
   
     <div>
         <h2>
-          Análiticas
+          Gráfica SMI_STATS
         </h2>
       </div>
   
@@ -103,7 +104,7 @@
         <figure class="highcharts-figure">
           <div id="container" />
           <p class="highcharts-description">
-            Gráfico de columnas que muestran los porcentajes de desigualdad.
+            Gráfico de columnas que muestran datos del SMI por países.
           </p>
         </figure>
     </div>
