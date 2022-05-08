@@ -1,118 +1,132 @@
 <script>
-    import {onMount} from 'svelte';
-
-    const delay = ms => new Promise(res => setTimeout(res,ms));
-    let stats = [];
-    let stats_country_year = [];
-    let stats_smi_local = [];
-    let stats_smi_euros = [];
-    let stats_smi_variation = [];
-
-
-    async function getSmiStats(){
-        console.log("Fetching stats....");
-        const res = await fetch("/api/v2/smi-stats");
-        if(res.ok){
-            const data = await res.json();
-            stats = data;
-            console.log("Estadísticas recibidas: "+stats.length);
-
-            stats.forEach(stat => {
-                stats_country_year.push(stat.stats_country+"-"+stat.year);
-                stats_smi_local.push(stat["smi_local"]);
-                stats_smi_euros.push(stat["smi_euros"]);
-                stats_smi_variation.push(stat["smi_variation"]);            
+    import{Nav, NavItem, NavLink } from "sveltestrap";
+    const BASE_API_PATH = "/api/v2/smi_stats";
+    let smi_stats=[];
+    let smi_country_year = [];
+    let smi_local = [];
+    let smi_euros = [];
+    let smi_variation = [];
+ 
+		let errorMsg="Tiene que cargar los datos para visualizar las analíticas.";
+    let cargados = false;
+    async function loadChart() {
+        console.log("Fetching data...");
+        const res = await fetch(BASE_API_PATH);
+        smi_stats = await res.json();
+        if (res.ok) {
+          smi_stats.forEach(stat => {
+            smi_country_year.push(stat.country+"-"+stat.year);
+            smi_local.push(parseFloat(stat.smi_local));
+            smi_euros.push(parseFloat(stat.smi_euros));
+            smi_variation.push(parseFloat(stat.smi_variation));
             });
-        }else{
-            console.log("Error cargando los datos");
-		}
+            cargados=true;
+        }
+        
+    console.log("smi chart data: " + smi_stats);
+            
+    Highcharts.chart('container', {
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: 'Porcentajes de de desigualdad Recogidas por la UNDP'
+      },
+      xAxis: {
+          categories: smi_country_year,
+          crosshair: true
+      },
+      yAxis: {
+          min: 0,
+          title: {
+              text: 'Rainfall (mm)'
+          }
+      },
+      tooltip: {
+          headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+          pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+              '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+          footerFormat: '</table>',
+          shared: true,
+          useHTML: true
+      },
+      plotOptions: {
+          column: {
+              pointPadding: 0.2,
+              borderWidth: 0
+          }
+      },
+      series: [{
+          name: 'Coefficients',
+          data: smi_local
+      }, {
+          name: 'Educations',
+          data: smi_euros
+      }, {
+          name: 'Lifes',
+          data: smi_variation
+      }]
+  });
     }
-
-    async function loadGraph(){
-        Highcharts.chart('container', {
-            chart: {
-                type: 'bar'
-            },
-            title: {
-                text:  'SmiStats'
-            },
-            subtitle: {
-                text: 'Fuente: https://datosmacro.expansion.com/smi'
-            },
-            xAxis: {
-                categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
-                title: {
-                    text: null
-                }
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Salario en euros',
-                    align: 'high'
-                },
-                labels: {
-                    overflow: 'justify'
-                }
-            },
-            tooltip: {
-                valueSuffix: ' millions'
-            },
-            plotOptions: {
-                bar: {
-                    dataLabels: {
-                        enabled: true
-                    }
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'top',
-                x: -40,
-                y: 80,
-                floating: true,
-                borderWidth: 1,
-                backgroundColor:
-                    Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
-                shadow: true
-            },
-            credits: {
-                enabled: false
-            },
-            series: [{
-                name: 'Year 1800',
-                data: [107, 31, 635, 203, 2]
-            }, {
-                name: 'Year 1900',
-                data: [133, 156, 947, 408, 6]
-            }, {
-                name: 'Year 2000',
-                data: [814, 841, 3714, 727, 31]
-            }, {
-                name: 'Year 2016',
-                data: [1216, 1001, 4436, 738, 40]
-            }]
-        });
+  </script>
+  
+  <svelte:head>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script
+    src="https://code.highcharts.com/modules/accessibility.js"
+    on:load={loadChart}></script>
+  </svelte:head>
+  
+  <main>
+    <Nav>
+        <NavItem>
+          <NavLink href="#/info">Página Principal</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink href="#/integrations">Integrations</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink href="#/smi-stats">Datos</NavLink>
+        </NavItem>
+    </Nav>
+  
+    <div>
+        <h2>
+          Análiticas
+        </h2>
+      </div>
+  
+    <div>
+        <figure class="highcharts-figure">
+          <div id="container" />
+          <p class="highcharts-description">
+            Gráfico de columnas que muestran los porcentajes de desigualdad.
+          </p>
+        </figure>
+    </div>
+    
+  
+    <div>
+      {#if !cargados}
+        <p class="error">{errorMsg}</p>
+      {/if}
+    </div>
+  </main>
+  
+  <style>
+    main {
+        text-align: center;
+        padding: 30px;       
     }
-
-    onMount(getSmiStats);
-</script>
-
-<svelte:head>
-    <script src="https://code.highcharts.com/highcharts.js" on:load="{loadGraph}"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js" on:load="{loadGraph}"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js" on:load="{loadGraph}"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js" on:load="{loadGraph}"></script>
-</svelte:head>
-
-<main>
-    <figure class="highcharts-figure">
-        <div id="container"></div>
-        <p class="highcharts-description">
-            Bar chart showing horizontal columns. This chart type is often
-            beneficial for smaller screens, as the user can scroll through the data
-            vertically, and axis labels are easy to read.
-        </p>
-    </figure>
-</main>
+    p.error{
+      color: red; 
+      text-align:center;
+      font-size: 20px;
+      margin-top:80px;
+    }
+    
+   
+  </style>
