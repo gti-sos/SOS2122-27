@@ -87,7 +87,7 @@
           <NavLink href="/">Página Principal</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#/charts">Gráfica conjunta</NavLink>
+          <NavLink href="#/analytics">Gráfica conjunta</NavLink>
         </NavItem>
         <NavItem>
           <NavLink href="#/smi_stats">Datos</NavLink>

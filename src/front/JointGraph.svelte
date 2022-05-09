@@ -141,7 +141,7 @@
             },
 
             title: {
-                text: 'Public expenditure stats by country and year'
+                text: 'Gráficas conjuntas'
             },
 
             subtitle: {
