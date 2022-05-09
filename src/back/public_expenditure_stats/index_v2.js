@@ -122,7 +122,19 @@
 
     var PEStats = initialPEStats;
 
+    var extPathV1='/remoteAPI';
+    var extApiServerHostV1 = 'https://sos2122-pfm.herokuapp.com/api/v1/contacts';
+
+
 module.exports.register = (app,db) => {
+
+    //Integracion de API externa
+
+    app.use(extPathV1, function(req, res) {
+        var url = extApiServerHostV1 + req.url;
+        console.log('piped: ' + req.url);
+        req.pipe(request(url)).pipe(res);
+    });
 
     //DOCUMENTACION DE LA API
     

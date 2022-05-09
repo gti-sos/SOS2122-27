@@ -12,6 +12,8 @@
     import EditPEStatsTable from './public_expenditure_stats/EditPEStatsTable.svelte';
     import PeGraphV1 from './public_expenditure_stats/PEGraph_v1.svelte';
     import PeGraphV2 from './public_expenditure_stats/PEGraph_v2.svelte';
+    import IntegrationV1 from './public_expenditure_stats/Integration_v1.svelte';
+    import IntegrationV2 from './public_expenditure_stats/Integration_v2.svelte';
 
     //Elementos de Felipe
     import DebtStats from './public_debt_stats/DebtStats.svelte';
@@ -37,6 +39,8 @@
         "/public-expenditure-stats/:country/:year": EditPEStatsTable,
         "/public-expenditure-stats/graph-v1": PeGraphV1,
         "/public-expenditure-stats/graph-v2": PeGraphV2,
+        "/public-expenditure-stats/int-v1": IntegrationV1,
+        "/public-expenditure-stats/int-v2": IntegrationV2,
 
 
         "/public-debt-stats": DebtStats,
