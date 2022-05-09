@@ -4,6 +4,7 @@
 
     const delay = ms => new Promise(res => setTimeout(res,ms));
 
+    let xLabel = [];
     //arrays de ROQUE
     let PEStats = [];
     let stats_country_date = [];
@@ -24,6 +25,7 @@
     let smi_local = [];
     let smi_euros = [];
     let smi_variation = [];
+
 
     async function getPEStats(){
         console.log("Fetching stats....");
@@ -80,6 +82,56 @@
             }
     }
 
+    async function getData(){
+        const smiData = await fetch("/api/v2/smi_stats");
+        const pdData = await fetch("/api/v2/public-debt-stats");
+        const peData = await fetch("/api/v2/public-expenditure-stats");
+
+        if (smiData.ok && pdData.ok && peData.ok){
+            smi_stats = await smiData.json();
+            PEStats = await peData.json();
+            debtStats = await pdData.json();
+
+            smi_stats.forEach(element =>{
+                xLabel.push(element.country+","+parseInt(element.year));
+            });
+            PEStats.forEach(element =>{
+                xLabel.push(element.country+","+parseInt(element.year));
+            });
+            debtStats.forEach(element =>{
+                xLabel.push(element.country+","+parseInt(element.year));
+            });
+            //smi
+            smi_stats.sort((a,b) => (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0));
+            smi_stats.sort((a,b) => (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0));
+            smi_stats.forEach(element=>{
+                smi_local.push(parseFloat(element.smi_local));
+                smi_euros.push(parseFloat(element.smi_euros));
+                smi_variation.push(parseFloat(element.smi_variation));
+            });
+            //PE
+            PEStats.sort((a,b) => (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0));
+            PEStats.sort((a,b) => (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0));
+            PEStats.forEach(element=>{
+                stats_public_expenditure.push(parseFloat(element.public_expenditure));
+                stats_PE_on_defence.push(parseFloat(element.pe_on_defence));
+                stats_PE_to_gdp.push(parseFloat(element.pe_to_gdp));
+            });
+            //PD
+            debtStats.sort((a,b) => (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0));
+            debtStats.sort((a,b) => (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0));
+            debtStats.forEach(element=>{
+                ds_total_debt.push(parseFloat(element.total_debt));
+                ds_per_capita_debt.push(parseFloat(element.per_capita_debt));
+                ds_debt_gdp.push(parseFloat(element.debt_gdp));
+            });
+
+            xLabel=new Set(xLabel);
+            xLabel=Array.from(xLabel);
+            xLabel.sort();
+        }   
+    }
+
     async function loadGraph(){
         Highcharts.chart('container', {
 
@@ -105,7 +157,8 @@
                 title: {
                     text: "País-Año",
                 },
-                categories: stats_country_date,
+               // categories: stats_country_date,
+               categories: xLabel,
             },
 
             legend: {
@@ -174,9 +227,10 @@
 
     }
 
-    onMount(getPEStats);
+    /*onMount(getPEStats);
     onMount(getDebtStats);
-    onMount(getSmiStats);
+    onMount(getSmiStats);*/
+    onMount(getData);
     
 </script>
 
