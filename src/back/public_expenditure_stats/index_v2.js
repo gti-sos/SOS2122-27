@@ -126,7 +126,7 @@
     //VARIABLES PARA LAS INTEGRACIONES
 
     var extPathV1='/remoteAPIV1';
-    var extApiServerHostV1 = 'https://sos2122-pfm.herokuapp.com/api/v1/contacts';
+    var extApiServerHostV1 = 'https://countriesnow.space/api/v0.1/countries/population/cities';
 
 
 module.exports.register = (app,db) => {
@@ -138,7 +138,6 @@ module.exports.register = (app,db) => {
         console.log('piped: ' + req.baseUrl + req.url);
         req.pipe(request(url)).pipe(res);
     });
-
     
 
     //DOCUMENTACION DE LA API
