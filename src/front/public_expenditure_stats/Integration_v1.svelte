@@ -1,13 +1,11 @@
 <script>
     import {onMount} from 'svelte';
 
-    const delay = ms => new Promise(res => setTimeout(res,ms));
-
     let data = [];
 
     async function getData(){
         console.log("Fetching data....");
-        const res = await fetch("/remoteApi");
+        const res = await fetch("/remoteApiV1");
         if(res.ok){
             const data = await res.json();
             console.log("Estadísticas recibidas: "+data.length);
@@ -18,11 +16,7 @@
 		}
     }
 
-    
-
     onMount(getData);
-
-
     
 </script>
 
@@ -38,6 +32,5 @@
                 Nombre: {d.name}
             {/each}
     {/await}
-    
     
 </main>

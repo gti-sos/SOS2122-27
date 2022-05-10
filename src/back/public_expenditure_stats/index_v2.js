@@ -1,3 +1,4 @@
+    const request = require('request');
 
 
     const ROQUE_BASE_API_URL = "/api/v2/public-expenditure-stats";
@@ -122,19 +123,23 @@
 
     var PEStats = initialPEStats;
 
-    var extPathV1='/remoteAPI';
+    //VARIABLES PARA LAS INTEGRACIONES
+
+    var extPathV1='/remoteAPIV1';
     var extApiServerHostV1 = 'https://sos2122-pfm.herokuapp.com/api/v1/contacts';
 
 
 module.exports.register = (app,db) => {
 
-    //Integracion de API externa
+    //INTEGRACIONES
 
     app.use(extPathV1, function(req, res) {
         var url = extApiServerHostV1 + req.url;
-        console.log('piped: ' + req.url);
+        console.log('piped: ' + req.baseUrl + req.url);
         req.pipe(request(url)).pipe(res);
     });
+
+    
 
     //DOCUMENTACION DE LA API
     
