@@ -15,6 +15,11 @@
     import IntegrationV1 from './public_expenditure_stats/Integration_v1.svelte';
     import IntegrationV2 from './public_expenditure_stats/Integration_v2.svelte';
     import IntegrationV3 from './public_expenditure_stats/Integration_v3.svelte';
+    import IntegrationV4 from './public_expenditure_stats/Integration_v4.svelte';
+    import IntegrationV5 from './public_expenditure_stats/Integration_v5.svelte';
+    import IntegrationV6 from './public_expenditure_stats/Integration_v6.svelte';
+
+
 
 
     //Elementos de Felipe
@@ -44,6 +49,10 @@
         "/public-expenditure-stats/int-v1": IntegrationV1,
         "/public-expenditure-stats/int-v2": IntegrationV2,
         "/public-expenditure-stats/int-v3": IntegrationV3,
+        "/public-expenditure-stats/int-v4": IntegrationV4,
+        "/public-expenditure-stats/int-v5": IntegrationV5,
+        "/public-expenditure-stats/int-v6": IntegrationV6,
+
 
 
 

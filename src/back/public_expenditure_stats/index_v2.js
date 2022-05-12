@@ -6,15 +6,15 @@
 
     var initialPEStats = [
         {
-            country: "espana",
+            country: "españa",
             year: 2020,
-            public_expenditure: 588279.0,
-            pe_to_gdp: 52.4,
-            pe_on_defence: 2.66
+            public_expenditure: 580699.0,
+            pe_to_gdp: 51.8,
+            pe_on_defence: 1.91
     
         },
         {
-            country: "espana",
+            country: "españa",
             year: 2019,
             public_expenditure: 526613.0,
             pe_to_gdp: 42.1,
@@ -22,27 +22,11 @@
     
         },
         {
-            country: "espana",
+            country: "españa",
             year: 2018,
             public_expenditure: 503308.0,
             pe_to_gdp: 41.8,
             pe_on_defence: 2.23
-    
-        },
-        {
-            country: "espana",
-            year: 2017,
-            public_expenditure: 480036.0,
-            pe_to_gdp: 41.3,
-            pe_on_defence: 2.2
-    
-        },
-        {
-            country: "espana",
-            year: 2016,
-            public_expenditure: 473145.0,
-            pe_to_gdp: 42.5,
-            pe_on_defence: 1.91
     
         },
         {
@@ -54,11 +38,43 @@
     
         },
         {
+            country: "alemania",
+            year: 2019,
+            public_expenditure: 1558090.0,
+            pe_to_gdp: 45.2,
+            pe_on_defence: 3
+    
+        },
+        {
+            country: "alemania",
+            year: 2018,
+            public_expenditure: 1492201.0,
+            pe_to_gdp: 44.5,
+            pe_on_defence: 2.2
+    
+        },
+        {
+            country: "francia",
+            year: 2020,
+            public_expenditure: 1418602.0,
+            pe_to_gdp: 61.4,
+            pe_on_defence: 3.24
+    
+        },
+        {
+            country: "francia",
+            year: 2019,
+            public_expenditure: 1349275.0,
+            pe_to_gdp: 55.4,
+            pe_on_defence: 3.29
+    
+        },
+        {
             country: "francia",
             year: 2018,
-            public_expenditure: 1419593.0,
-            pe_to_gdp: 61.6,
-            pe_on_defence: 3.29
+            public_expenditure: 1315051.0,
+            pe_to_gdp: 55.6,
+            pe_on_defence: 3.25
     
         },
         {
@@ -70,55 +86,22 @@
     
         },
         {
-            country: "portugal",
-            year: 2020,
-            public_expenditure: 98725.0,
-            pe_to_gdp: 49.3,
-            pe_on_defence: 4.16
-    
-        },
-        {
-            country: "brasil",
-            year: 2020,
-            public_expenditure: 544871.3,
-            pe_to_gdp: 42.87,
-            pe_on_defence: 3.21
-    
-        },
-        {
-            country: "belgica",
-            year: 2020,
-            public_expenditure: 277969.3,
-            pe_to_gdp: 54.8,
-            pe_on_defence: 1.78
-    
-        },
-        {
-            country: "finlandia",
-            year: 2018,
-            public_expenditure: 124491.0,
-            pe_to_gdp: 53.3,
-            pe_on_defence: 2.66
-    
-        },
-        {
-            country: "grecia",
-            year: 2018,
-            public_expenditure: 87133.0,
+            country: "italia",
+            year: 2019,
+            public_expenditure: 870888.0,
             pe_to_gdp: 48.5,
-            pe_on_defence: 5.23
+            pe_on_defence: 2.43
     
         },
         {
-            country: "austria",
+            country: "italia",
             year: 2018,
-            public_expenditure: 40033.0,
-            pe_to_gdp: 47.5,
-            pe_on_defence: 2.23
+            public_expenditure: 857247.0,
+            pe_to_gdp: 48.4,
+            pe_on_defence: 2.53
     
         }
-
-
+        
     ];
 
     var PEStats = initialPEStats;
@@ -128,6 +111,19 @@
     var extPathV1='/remoteAPIV1';
     var extApiServerHostV1 = 'https://countriesnow.space/api/v0.1/countries/population/cities';
 
+    var sosPathV4='/remoteAPIV4';
+    //var sosApiServerHostV4 = 'https://sos2122-22.herokuapp.com/api/v2/co2-stats/';
+    //var sosApiServerHostV4 = 'https://sos2122-27.herokuapp.com/api/v2/public-debt-stats';
+    var sosApiServerHostV4 = 'https://sos2122-11.herokuapp.com/api/v2/inequality-stats';
+    
+    //var sosApiServerHostV4 = 'https://sos2122-pfm.herokuapp.com/api/v1/contacts';
+
+    
+
+    var extPathV6='/remoteAPIV6';
+    var extApiServerHostV6 = 'https://corona.lmao.ninja/v2/states?sort&yesterday';
+    
+
 
 module.exports.register = (app,db) => {
 
@@ -135,6 +131,18 @@ module.exports.register = (app,db) => {
 
     app.use(extPathV1, function(req, res) {
         var url = extApiServerHostV1 + req.url;
+        console.log('piped: ' + req.baseUrl + req.url);
+        req.pipe(request(url)).pipe(res);
+    });
+
+    app.use(sosPathV4, function(req, res) {
+        var url = sosApiServerHostV4 + req.url;
+        console.log('piped: ' + req.baseUrl + req.url);
+        req.pipe(request(url)).pipe(res);
+    });
+
+    app.use(extPathV6, function(req, res) {
+        var url = extApiServerHostV6 + req.url;
         console.log('piped: ' + req.baseUrl + req.url);
         req.pipe(request(url)).pipe(res);
     });
