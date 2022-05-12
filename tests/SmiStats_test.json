@@ -574,7 +574,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n            \"country\": \"china\",\r\n            \"year\": 2020,\r\n            \"smi_local\": 2222.70,\r\n            \"smi_euros\": 1166.70,\r\n            \"smi_variation\": 3.63 \r\n        }",
+					"raw": "{\r\n            \"country\": \"alemania\",\r\n            \"year\": 2020,\r\n            \"smi_local\": 2222.70,\r\n            \"smi_euros\": 1166.70,\r\n            \"smi_variation\": 3.63 \r\n        }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -618,7 +618,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/china/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/alemania/2020",
 					"host": [
 						"{{HOST}}"
 					],
@@ -627,7 +627,7 @@
 						"api",
 						"v2",
 						"smi_stats",
-						"china",
+						"alemania",
 						"2020"
 					]
 				}
