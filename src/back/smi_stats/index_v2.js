@@ -4,7 +4,7 @@
     var API_DOC_PORTAL = "https://documenter.getpostman.com/view/19481651/UyrAGHTC";
     
     var initial_smi_stats = [
-        {
+        /*{
             country: "espana",
             year: 2022,
             smi_local: 1166.70,
@@ -160,6 +160,90 @@
             smi_local: 1212.0,
             smi_euros: 192.1,
             smi_variation:  11.29
+        }*/
+        {
+            country: "alemania",
+            year: 2018,
+            smi_local: 1506.0,
+            smi_euros: 1506.0,
+            smi_variation:  0
+        },
+        {
+            country: "alemania",
+            year: 2019,
+            smi_local: 1561.0,
+            smi_euros: 1561.0,
+            smi_variation:  3.65
+        },
+        {
+            country: "alemania",
+            year: 2020,
+            smi_local: 1544.0,
+            smi_euros: 1544.0,
+            smi_variation:  -1.09
+        },
+        {
+            country: "reino unido",
+            year: 2018,
+            smi_local: 1242.0,
+            smi_euros: 1399.9,
+            smi_variation:  4.11
+        },
+        {
+            country: "reino unido",
+            year: 2019,
+            smi_local: 1300.0,
+            smi_euros: 1453.3,
+            smi_variation:  4.67
+        },
+        {
+            country: "reino unido",
+            year: 2020,
+            smi_local: 1360.2,
+            smi_euros: 1598.7,
+            smi_variation:  4.63
+        },
+        {
+            country: "españa",
+            year: 2018,
+            smi_local: 858.6,
+            smi_euros: 858.6,
+            smi_variation:  3.98
+        },
+        {
+            country: "españa",
+            year: 2019,
+            smi_local: 1050.0,
+            smi_euros: 1050.0,
+            smi_variation:  22.29
+        },
+        {
+            country: "españa",
+            year: 2020,
+            smi_local: 1108.3,
+            smi_euros: 1108.3,
+            smi_variation:  5.55
+        },
+        {
+            country: "francia",
+            year: 2018,
+            smi_local: 1498.5,
+            smi_euros: 1498.5,
+            smi_variation:  1.23
+        },
+        {
+            country: "francia",
+            year: 2019,
+            smi_local: 1521.2,
+            smi_euros: 1521.2,
+            smi_variation:  1.51
+        },
+        {
+            country: "francia",
+            year: 2020,
+            smi_local: 1539.4,
+            smi_euros: 1539.4,
+            smi_variation:  1.20
         }
     ];
 

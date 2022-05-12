@@ -237,7 +237,7 @@
 			"response": []
 		},
 		{
-			"name": "GET CHINA",
+			"name": "GET ALEMANIA",
 			"event": [
 				{
 					"listen": "test",
@@ -256,7 +256,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/china",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/alemania",
 					"host": [
 						"{{HOST}}"
 					],
@@ -265,14 +265,14 @@
 						"api",
 						"v2",
 						"smi_stats",
-						"china"
+						"alemania"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "POST China 2021",
+			"name": "POST ALEMANIA 2021",
 			"event": [
 				{
 					"listen": "test",
@@ -291,7 +291,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n            \"country\": \"china\",\r\n            \"year\": 2021,\r\n            \"smi_local\": 1166.70,\r\n            \"smi_euros\": 1166.70,\r\n            \"smi_variation\": 3.63 \r\n        }",
+					"raw": "{\r\n            \"country\": \"alemania\",\r\n            \"year\": 2021,\r\n            \"smi_local\": 1166.70,\r\n            \"smi_euros\": 1166.70,\r\n            \"smi_variation\": 3.63 \r\n        }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -397,7 +397,7 @@
 			"response": []
 		},
 		{
-			"name": "DELETE CHINA 2021",
+			"name": "DELETE ALEMANIA 2021",
 			"event": [
 				{
 					"listen": "test",
@@ -415,7 +415,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/china/2021",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/alemania/2021",
 					"host": [
 						"{{HOST}}"
 					],
@@ -424,7 +424,7 @@
 						"api",
 						"v2",
 						"smi_stats",
-						"china",
+						"alemania",
 						"2021"
 					]
 				}
@@ -555,7 +555,7 @@
 			"response": []
 		},
 		{
-			"name": "PUT CHINA 2020",
+			"name": "PUT ALEMANIA 2020",
 			"event": [
 				{
 					"listen": "test",
@@ -582,7 +582,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/china/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/smi_stats/alemania/2020",
 					"host": [
 						"{{HOST}}"
 					],
@@ -591,7 +591,7 @@
 						"api",
 						"v2",
 						"smi_stats",
-						"china",
+						"alemania",
 						"2020"
 					]
 				}
