@@ -31,9 +31,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HEROKU}}/api/v2/public-debt-stats/loadInitialData",
+					"raw": "{{Server}}/api/v2/public-debt-stats/loadInitialData",
 					"host": [
-						"{{HEROKU}}"
+						"{{Server}}"
 					],
 					"path": [
 						"api",
@@ -80,9 +80,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HEROKU}}/api/v2/public-debt-stats",
+					"raw": "{{Server}}/api/v2/public-debt-stats",
 					"host": [
-						"{{HEROKU}}"
+						"{{Server}}"
 					],
 					"path": [
 						"api",
@@ -120,9 +120,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HEROKU}}/api/v2/public-debt-stats/españa/2020",
+					"raw": "{{Server}}/api/v2/public-debt-stats/españa/2020",
 					"host": [
-						"{{HEROKU}}"
+						"{{Server}}"
 					],
 					"path": [
 						"api",
@@ -154,9 +154,9 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HEROKU}}/api/v2/public-debt-stats/españa/2020",
+					"raw": "{{Server}}/api/v2/public-debt-stats/españa/2020",
 					"host": [
-						"{{HEROKU}}"
+						"{{Server}}"
 					],
 					"path": [
 						"api",
@@ -195,9 +195,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HEROKU}}/api/v2/public-debt-stats/españa/2020",
+					"raw": "{{Server}}/api/v2/public-debt-stats/españa/2020",
 					"host": [
-						"{{HEROKU}}"
+						"{{Server}}"
 					],
 					"path": [
 						"api",
@@ -236,9 +236,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HEROKU}}/api/v2/public-debt-stats/taiwan/2020",
+					"raw": "{{Server}}/api/v2/public-debt-stats/taiwan/2020",
 					"host": [
-						"{{HEROKU}}"
+						"{{Server}}"
 					],
 					"path": [
 						"api",
@@ -279,9 +279,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{HEROKU}}/api/v2/public-debt-stats/españa/2020",
+					"raw": "{{Server}}/api/v2/public-debt-stats/españa/2020",
 					"host": [
-						"{{HEROKU}}"
+						"{{Server}}"
 					],
 					"path": [
 						"api",
@@ -322,9 +322,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{HEROKU}}/api/v2/public-debt-stats",
+					"raw": "{{Server}}/api/v2/public-debt-stats",
 					"host": [
-						"{{HEROKU}}"
+						"{{Server}}"
 					],
 					"path": [
 						"api",
@@ -361,9 +361,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HEROKU}}/api/v2/public-debt-stats/taiwan/2020",
+					"raw": "{{Server}}/api/v2/public-debt-stats/taiwan/2020",
 					"host": [
-						"{{HEROKU}}"
+						"{{Server}}"
 					],
 					"path": [
 						"api",
@@ -404,9 +404,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{HEROKU}}/api/v2/public-debt-stats",
+					"raw": "{{Server}}/api/v2/public-debt-stats",
 					"host": [
-						"{{HEROKU}}"
+						"{{Server}}"
 					],
 					"path": [
 						"api",
@@ -445,9 +445,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{HEROKU}}/api/v2/public-debt-stats/taiwan/2020",
+					"raw": "{{Server}}/api/v2/public-debt-stats/taiwan/2020",
 					"host": [
-						"{{HEROKU}}"
+						"{{Server}}"
 					],
 					"path": [
 						"api",
@@ -479,9 +479,9 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HEROKU}}/api/v2/public-debt-stats",
+					"raw": "{{Server}}/api/v2/public-debt-stats",
 					"host": [
-						"{{HEROKU}}"
+						"{{Server}}"
 					],
 					"path": [
 						"api",
@@ -512,9 +512,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HEROKU}}/api/v2/public-debt-stats",
+					"raw": "{{Server}}/api/v2/public-debt-stats",
 					"host": [
-						"{{HEROKU}}"
+						"{{Server}}"
 					],
 					"path": [
 						"api",
