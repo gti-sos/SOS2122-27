@@ -6,21 +6,21 @@
     var initial_DebtStat = [
         {
             country: "espana",
-            year: 2021,
+            year: 2020,
             total_debt: 1427235,
             debt_gdp: 118.40,
             per_capita_debt: 30157    
         },
         {
             country: "espana",
-            year: 2020,
+            year: 2019,
             total_debt: 1345783,
             debt_gdp: 120,
             per_capita_debt: 28393    
         },
         {
             country: "espana",
-            year: 2019,
+            year: 2018,
             total_debt: 1223355,
             debt_gdp: 98.3,
             per_capita_debt: 25846    
@@ -47,39 +47,46 @@
             per_capita_debt: 25194    
         },
         {
-            country: "reino unido",
+            country: "francia",
             year: 2020,
-            total_debt: 2479993,
-            debt_gdp: 104.47,
-            per_capita_debt: 37001    
-        },
+            total_debt: 2648147,
+            debt_gdp: 114.6,
+            per_capita_debt: 41579    
+        }, 
         {
-            country: "reino unido",
+            country: "francia",
             year: 2019,
-            total_debt: 2479993,
-            debt_gdp: 104.47,
-            per_capita_debt: 37001    
+            total_debt: 2374942,
+            debt_gdp: 97.4,
+            per_capita_debt: 35192    
         },
         {
             country: "francia",
-            year: 2020,
-            total_debt: 2649261,
-            debt_gdp: 115,
-            per_capita_debt: 28393    
-        }, 
+            year: 2018,
+            total_debt: 2310877,
+            debt_gdp: 97.8,
+            per_capita_debt: 34342    
+        },        
         {
             country: "italia",
             year: 2020,
-            total_debt: 2573468,
-            debt_gdp: 155.6,
-            per_capita_debt: 43429    
+            total_debt: 2572727,
+            debt_gdp: 155.3,
+            per_capita_debt: 43432    
         }, 
         {
-            country: "portugal",
-            year: 2020,
-            total_debt: 270491,
-            debt_gdp: 135.2,
-            per_capita_debt: 26266    
+            country: "italia",
+            year: 2019,
+            total_debt: 2410004,
+            debt_gdp: 134.1,
+            per_capita_debt: 40408    
+        }, 
+        {
+            country: "italia",
+            year: 2018,
+            total_debt: 2381509,
+            debt_gdp: 134.4,
+            per_capita_debt: 39813    
         }, 
     ];
     
