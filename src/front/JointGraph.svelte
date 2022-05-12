@@ -92,15 +92,6 @@
             PEStats = await peData.json();
             debtStats = await pdData.json();
 
-            smi_stats.forEach(element =>{
-                xLabel.push(element.country+","+parseInt(element.year));
-            });
-            PEStats.forEach(element =>{
-                xLabel.push(element.country+","+parseInt(element.year));
-            });
-            debtStats.forEach(element =>{
-                xLabel.push(element.country+","+parseInt(element.year));
-            });
             //smi
             smi_stats.sort((a,b) => (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0));
             smi_stats.sort((a,b) => (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0));
@@ -126,9 +117,20 @@
                 ds_debt_gdp.push(parseFloat(element.debt_gdp));
             });
 
+            smi_stats.forEach(element =>{
+                xLabel.push(element.country+","+parseInt(element.year));
+            });
+            PEStats.forEach(element =>{
+                xLabel.push(element.country+","+parseInt(element.year));
+            });
+            debtStats.forEach(element =>{
+                xLabel.push(element.country+","+parseInt(element.year));
+            });
+
             xLabel=new Set(xLabel);
             xLabel=Array.from(xLabel);
             xLabel.sort();
+            await delay(500);
             loadGraph();
         }   
     }

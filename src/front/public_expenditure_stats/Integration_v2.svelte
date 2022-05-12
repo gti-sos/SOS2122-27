@@ -16,7 +16,7 @@
 
     async function getData(){
         console.log("Fetching data....");
-        const res = await fetch("http://www.randomnumberapi.com/api/v1.0/random?min=100&max=1000&count=50");
+        const res = await fetch("https://www.randomnumberapi.com/api/v1.0/random?min=100&max=1000&count=50");
         if(res.ok){
             const info = await res.json();
 

@@ -78,27 +78,27 @@
     
         },
         {
-            country: "italia",
+            country: "reino unido",
             year: 2020,
-            public_expenditure: 944486.0,
-            pe_to_gdp: 57.1,
-            pe_on_defence: 2.63
+            public_expenditure: 1184301.9,
+            pe_to_gdp: 48.9,
+            pe_on_defence: 4.23
     
         },
         {
-            country: "italia",
+            country: "reino unido",
             year: 2019,
-            public_expenditure: 870888.0,
-            pe_to_gdp: 48.5,
-            pe_on_defence: 2.43
+            public_expenditure: 1038013.0,
+            pe_to_gdp: 41.1,
+            pe_on_defence: 5.21
     
         },
         {
-            country: "italia",
+            country: "reino unido",
             year: 2018,
-            public_expenditure: 857247.0,
-            pe_to_gdp: 48.4,
-            pe_on_defence: 2.53
+            public_expenditure: 993978.8,
+            pe_to_gdp: 41.1,
+            pe_on_defence: 5.09
     
         }
         
@@ -112,13 +112,7 @@
     var extApiServerHostV1 = 'https://countriesnow.space/api/v0.1/countries/population/cities';
 
     var sosPathV4='/remoteAPIV4';
-    //var sosApiServerHostV4 = 'https://sos2122-22.herokuapp.com/api/v2/co2-stats/';
-    //var sosApiServerHostV4 = 'https://sos2122-27.herokuapp.com/api/v2/public-debt-stats';
     var sosApiServerHostV4 = 'https://sos2122-11.herokuapp.com/api/v2/inequality-stats';
-    
-    //var sosApiServerHostV4 = 'https://sos2122-pfm.herokuapp.com/api/v1/contacts';
-
-    
 
     var extPathV6='/remoteAPIV6';
     var extApiServerHostV6 = 'https://corona.lmao.ninja/v2/states?sort&yesterday';

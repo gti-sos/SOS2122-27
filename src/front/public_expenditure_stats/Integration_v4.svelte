@@ -3,27 +3,48 @@
 
     const delay = ms => new Promise(res => setTimeout(res,ms));
 
-    let data = [];    
+    let PEStats = [];    
+    let inequalityStats = [];    
 
     async function getData(){
-        console.log("Fetching data....");
-        const res = await fetch("/remoteAPIV4");
-        if(res.ok){
-            const info = await res.json();
-            //informacion de CO2 de paises
-            data = info;
+        const inequalityData = await fetch("/remoteAPIV4");
+        const PEData = await fetch("/api/v2/public-expenditure-stats");
+
+        if (inequalityData.ok && PEData.ok){
+            inequalityStats = await inequalityData.json();
+            PEStats = await PEData.json();
+            debtStats = await pdData.json();
+
+            inequalityStats.forEach(element =>{
+                xLabel.push(element.country.toLowerCase() +","+parseInt(element.year));
+            });
+            PEStats.forEach(element =>{
+                xLabel.push(element.countrytoLowerCase() +","+parseInt(element.year));
+            });
             
+            //inequality
+            inequalityStats.sort((a,b) => (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0));
+            inequalityStats.sort((a,b) => (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0));
+            inequalityStats.forEach(element=>{
+                inequality_local.push(parseFloat(element.inequality_local));
+                inequality_euros.push(parseFloat(element.inequality_euros));
+                inequality_variation.push(parseFloat(element.inequality_variation));
+            });
+            //PE
+            PEStats.sort((a,b) => (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0));
+            PEStats.sort((a,b) => (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0));
+            PEStats.forEach(element=>{
+                stats_public_expenditure.push(parseFloat(element.public_expenditure));
+                stats_PE_on_defence.push(parseFloat(element.pe_on_defence));
+                stats_PE_to_gdp.push(parseFloat(element.pe_to_gdp));
+            });
             
-            console.log("Data:", data);
-            
-            //esperamos a que se carguen 
-            await delay(1000);
+
+            xLabel=new Set(xLabel);
+            xLabel=Array.from(xLabel);
+            xLabel.sort();
             loadGraph();
-                      
-                  
-        }else{
-            console.log("Error cargando los datos");
-		}
+        }   
     }
 
     function loadGraph(){
