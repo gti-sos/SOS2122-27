@@ -114,6 +114,9 @@
     var sosPathV4='/remoteAPIV4';
     var sosApiServerHostV4 = 'https://sos2122-11.herokuapp.com/api/v2/inequality-stats';
 
+    var sosPathV5='/remoteAPIV5';
+    var sosApiServerHostV5 = 'https://sos2122-11.herokuapp.com/api/v2/inequality-stats';
+
     var extPathV6='/remoteAPIV6';
     var extApiServerHostV6 = 'https://corona.lmao.ninja/v2/states?sort&yesterday';
     
@@ -131,6 +134,12 @@ module.exports.register = (app,db) => {
 
     app.use(sosPathV4, function(req, res) {
         var url = sosApiServerHostV4 + req.url;
+        console.log('piped: ' + req.baseUrl + req.url);
+        req.pipe(request(url)).pipe(res);
+    });
+
+    app.use(sosPathV5, function(req, res) {
+        var url = sosApiServerHostV5 + req.url;
         console.log('piped: ' + req.baseUrl + req.url);
         req.pipe(request(url)).pipe(res);
     });

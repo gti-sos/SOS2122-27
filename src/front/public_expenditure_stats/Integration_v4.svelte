@@ -62,9 +62,8 @@
             console.log("Paises PEStats: ",stats_PE_on_defence.length);
             console.log("Paises inequality: ",inequality_coefficients.length);
 
-            
-
-            
+            //esperamos a que se carguen 
+             await delay(500);
             loadGraph();
         }   
     }
