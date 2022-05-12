@@ -160,7 +160,7 @@
             smi_local: 1212.0,
             smi_euros: 192.1,
             smi_variation:  11.29
-        }*/
+        },*/
         {
             country: "alemania",
             year: 2018,
