@@ -179,10 +179,6 @@
 							"pm.test(\"Response is an Array\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(Array.isArray(jsonData)).to.eql(true);\r",
-							"});\r",
-							"pm.test(\"Response has one element\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.length).to.eql(1);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -232,7 +228,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/espana/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/españa/2020",
 					"host": [
 						"{{HOST}}"
 					],
@@ -241,7 +237,7 @@
 						"api",
 						"v2",
 						"public-expenditure-stats",
-						"espana",
+						"españa",
 						"2020"
 					]
 				}
@@ -267,7 +263,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/espana/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/españa/2020",
 					"host": [
 						"{{HOST}}"
 					],
@@ -276,7 +272,7 @@
 						"api",
 						"v2",
 						"public-expenditure-stats",
-						"espana",
+						"españa",
 						"2020"
 					]
 				}
@@ -302,7 +298,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/espana/2020",
+					"raw": "{{HOST}}:{{PORT}}/api/v2/public-expenditure-stats/españa/2020",
 					"host": [
 						"{{HOST}}"
 					],
@@ -311,7 +307,7 @@
 						"api",
 						"v2",
 						"public-expenditure-stats",
-						"espana",
+						"españa",
 						"2020"
 					]
 				}
