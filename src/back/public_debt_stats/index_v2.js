@@ -68,21 +68,21 @@
             per_capita_debt: 34342    
         },        
         {
-            country: "italia",
+            country: "reino unido",
             year: 2020,
             total_debt: 2572727,
             debt_gdp: 155.3,
             per_capita_debt: 43432    
         }, 
         {
-            country: "italia",
+            country: "reino unido",
             year: 2019,
             total_debt: 2410004,
             debt_gdp: 134.1,
             per_capita_debt: 40408    
         }, 
         {
-            country: "italia",
+            country: "reino unido",
             year: 2018,
             total_debt: 2381509,
             debt_gdp: 134.4,
