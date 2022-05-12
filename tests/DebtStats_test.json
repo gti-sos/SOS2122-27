@@ -31,11 +31,10 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/loadInitialData",
+					"raw": "{{Server}}/api/v2/public-debt-stats/loadInitialData",
 					"host": [
-						"{{HOST}}"
+						"{{Server}}"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -81,11 +80,10 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
+					"raw": "{{Server}}/api/v2/public-debt-stats",
 					"host": [
-						"{{HOST}}"
+						"{{Server}}"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -96,7 +94,7 @@
 			"response": []
 		},
 		{
-			"name": "GET /public-debt-stats/espana/2020",
+			"name": "GET /public-debt-stats/españa/2020",
 			"event": [
 				{
 					"listen": "test",
@@ -104,7 +102,8 @@
 						"exec": [
 							"pm.test(\"Status code is 200 OK\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});"
+							"});\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -121,16 +120,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/espana/2020",
+					"raw": "{{Server}}/api/v2/public-debt-stats/españa/2020",
 					"host": [
-						"{{HOST}}"
+						"{{Server}}"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
 						"public-debt-stats",
-						"espana",
+						"españa",
 						"2020"
 					]
 				}
@@ -138,7 +136,7 @@
 			"response": []
 		},
 		{
-			"name": "DELETE /public-debt-stats/espana/2020",
+			"name": "DELETE /public-debt-stats/españa/2020",
 			"event": [
 				{
 					"listen": "test",
@@ -156,16 +154,15 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/espana/2020",
+					"raw": "{{Server}}/api/v2/public-debt-stats/españa/2020",
 					"host": [
-						"{{HOST}}"
+						"{{Server}}"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
 						"public-debt-stats",
-						"espana",
+						"españa",
 						"2020"
 					]
 				}
@@ -173,7 +170,7 @@
 			"response": []
 		},
 		{
-			"name": "GET /public-debt-stats/espana FAILED",
+			"name": "GET /public-debt-stats/españa FAILED",
 			"event": [
 				{
 					"listen": "test",
@@ -198,16 +195,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/espana/2020",
+					"raw": "{{Server}}/api/v2/public-debt-stats/españa/2020",
 					"host": [
-						"{{HOST}}"
+						"{{Server}}"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
 						"public-debt-stats",
-						"espana",
+						"españa",
 						"2020"
 					]
 				}
@@ -240,11 +236,10 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/taiwan/2020",
+					"raw": "{{Server}}/api/v2/public-debt-stats/taiwan/2020",
 					"host": [
-						"{{HOST}}"
+						"{{Server}}"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -284,16 +279,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/espana/2020",
+					"raw": "{{Server}}/api/v2/public-debt-stats/españa/2020",
 					"host": [
-						"{{HOST}}"
+						"{{Server}}"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
 						"public-debt-stats",
-						"espana",
+						"españa",
 						"2020"
 					]
 				}
@@ -328,11 +322,10 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
+					"raw": "{{Server}}/api/v2/public-debt-stats",
 					"host": [
-						"{{HOST}}"
+						"{{Server}}"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -368,11 +361,10 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/taiwan/2020",
+					"raw": "{{Server}}/api/v2/public-debt-stats/taiwan/2020",
 					"host": [
-						"{{HOST}}"
+						"{{Server}}"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -412,11 +404,10 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
+					"raw": "{{Server}}/api/v2/public-debt-stats",
 					"host": [
-						"{{HOST}}"
+						"{{Server}}"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -454,11 +445,10 @@
 					}
 				},
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats/taiwan/2020",
+					"raw": "{{Server}}/api/v2/public-debt-stats/taiwan/2020",
 					"host": [
-						"{{HOST}}"
+						"{{Server}}"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -489,11 +479,10 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
+					"raw": "{{Server}}/api/v2/public-debt-stats",
 					"host": [
-						"{{HOST}}"
+						"{{Server}}"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",
@@ -523,11 +512,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOST}}:{{PORT}}/api/v2/public-debt-stats",
+					"raw": "{{Server}}/api/v2/public-debt-stats",
 					"host": [
-						"{{HOST}}"
+						"{{Server}}"
 					],
-					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v2",

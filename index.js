@@ -1,5 +1,10 @@
 const express = require("express");
 const path = require("path");
+const request = require('request');
+const cors = require('cors');
+
+
+//------------------------------Definicion de backends------------------------------------------
 
 const backend_roque_v1 = require("./src/back/public_expenditure_stats/index_v1");
 const backend_roque_v2 = require("./src/back/public_expenditure_stats/index_v2");
@@ -21,6 +26,8 @@ SMI_DB = new Datastore();
 
 
 const port = process.env.PORT || 8090;
+
+app.use(cors());
 const bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
