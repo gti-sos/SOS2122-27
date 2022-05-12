@@ -115,6 +115,7 @@
 <main>
     <h1>Integración 2</h1>
     <h2>Números aleatorios dividos en pares e impares</h2>
+    <h4>Biblioteca: Highcharts</h4>
     
     <figure class="highcharts-figure">
         <div id="container"></div>
