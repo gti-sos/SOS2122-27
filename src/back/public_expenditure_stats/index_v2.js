@@ -115,7 +115,7 @@
     var sosApiServerHostV4 = 'https://sos2122-11.herokuapp.com/api/v2/inequality-stats';
 
     var sosPathV5='/remoteAPIV5';
-    var sosApiServerHostV5 = 'https://sos2122-11.herokuapp.com/api/v2/inequality-stats';
+    var sosApiServerHostV5 = 'https://sos2122-31.herokuapp.com/api/v2/registration-stats';
 
     var extPathV6='/remoteAPIV6';
     var extApiServerHostV6 = 'https://corona.lmao.ninja/v2/states?sort&yesterday';
