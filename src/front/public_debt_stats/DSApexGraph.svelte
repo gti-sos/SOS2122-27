@@ -95,5 +95,11 @@
   margin: 35px auto;
   border: 1px solid black;
 }
+h2{
+  text-align: center;
+}
+h4{
+  text-align: center;
+}
 
 </style>
