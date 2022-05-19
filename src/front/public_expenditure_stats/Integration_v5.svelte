@@ -170,7 +170,7 @@
 
 <main>
     <h1>Integración 5</h1>
-    <h2>Otra</h2>
+    <h2>Estadísticas de educación en diferentes niveles con información de Gasto Público</h2>
     <h4>Obtenidas de <a href="https://sos2122-31.herokuapp.com/api/v2/registration-stats"> registration-stats</a></h4>
     <h6>Biblioteca: Plotly</h6>
 

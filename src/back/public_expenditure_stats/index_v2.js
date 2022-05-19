@@ -111,6 +111,9 @@
     var extPathV1='/remoteAPIV1';
     var extApiServerHostV1 = 'https://countriesnow.space/api/v0.1/countries/population/cities';
 
+    var extPathV2='/remoteAPIV2';
+    var extApiServerHostV2 = 'https://www.randomnumberapi.com/api/v1.0/random?min=100&max=1000&count=50';
+
     var sosPathV4='/remoteAPIV4';
     var sosApiServerHostV4 = 'https://sos2122-11.herokuapp.com/api/v2/inequality-stats';
 
@@ -128,6 +131,12 @@ module.exports.register = (app,db) => {
 
     app.use(extPathV1, function(req, res) {
         var url = extApiServerHostV1 + req.url;
+        console.log('piped: ' + req.baseUrl + req.url);
+        req.pipe(request(url)).pipe(res);
+    });
+
+    app.use(extPathV2, function(req, res) {
+        var url = extApiServerHostV2 + req.url;
         console.log('piped: ' + req.baseUrl + req.url);
         req.pipe(request(url)).pipe(res);
     });
