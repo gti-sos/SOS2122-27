@@ -139,7 +139,7 @@
         Highcharts.chart('container', {
 
             chart: {
-                type: 'line'
+                type: 'area'
             },
 
             title: {

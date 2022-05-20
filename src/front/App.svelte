@@ -5,7 +5,8 @@
     import JointGraph from './JointGraph.svelte';
     import Integrations from './Integrations.svelte';
     import Charts from './Charts.svelte';
-    import NewHome from './NewHome.svelte'; 
+    import NewHome from './NewHome.svelte';
+    import Videos from './Videos.svelte';
 
     //Elementos de Roque
     import PEStats from './public_expenditure_stats/PEStats.svelte';
@@ -42,6 +43,7 @@
         "/analytics": JointGraph,
         "/integrations": Integrations,
         "/charts": Charts,
+        "/about": Videos,
 
         "/public-expenditure-stats": PEStats,
         "/public-expenditure-stats/:country/:year": EditPEStatsTable,
