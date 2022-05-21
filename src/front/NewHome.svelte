@@ -97,6 +97,9 @@
             <a href="https://documenter.getpostman.com/view/8975262/Uyr8nyWh"
               ><Button color="info">Documentación v2</Button></a>
 
+            <a href="https://youtu.be/RzHEg6d5_Uk"
+              ><Button color="info">Vídeo</Button></a>
+
             </CardBody>
 
           <CardFooter
