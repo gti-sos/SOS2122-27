@@ -1,3 +1,4 @@
 node_modules
 public/build
 src/back/public-expenditure-stats/publicExpenditureDB.db
+public/billboard.js
