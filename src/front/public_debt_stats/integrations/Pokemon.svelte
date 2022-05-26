@@ -66,7 +66,7 @@
                 text: 'Uso API externa Pokémons'
             },
             subtitle: {
-                text: 'Fuente: <a href="https://rapidapi.com/brianiswu/api/pokemon-go1">rapidapi.com/pokemon-go1</a>'
+                text: 'Fuentes: <a href="https://rapidapi.com/brianiswu/api/pokemon-go1">rapidapi.com/pokemon-go1</a> || highcharts.com'
             },
             xAxis: {
                 categories: ejeX,
@@ -130,9 +130,11 @@
         <figure class="highcharts-figure">
             <div id="container"></div>
                 <p class="highcharts-description" style="text-align:center;">
-                    La anterior gráfica muestra información sobre las habilidades de los diferentes pokemons.
+                    La anterior gráfica muestra información sobre las habilidades de 11 pokemons.
                 </p>
-                <p style="text-align:center;">Tabla de datos</p>	
+                <hr>
+                <br>
+                <h3>Tabla con TODOS los datos</h3>
         </figure>
 
         <Table bordered>
@@ -164,3 +166,9 @@
 
 	{/await}
 </main>
+
+<style>
+    h3{
+      text-align: center;
+    }    
+</style>

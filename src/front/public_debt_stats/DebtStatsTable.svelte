@@ -276,7 +276,10 @@ h3, h4{
             <NavLink id="nav-info" href="#" style="text-decoration:none" class="text-succcess" on:click={loadDebtStats}>Cargar Datos</NavLink>
         </NavItem>
 		<NavItem>
-            <NavLink id="nav-info" href="/#/public-debt-stats/graph" style="text-decoration:none">Gráfico de barras</NavLink>
+            <NavLink id="nav-info" href="/#/public-debt-stats/graph" style="text-decoration:none">Gráfico de barras (Highcharts)</NavLink>
+        </NavItem>
+		<NavItem>
+            <NavLink id="nav-info" href="/#/public-debt-stats/apexGraph" style="text-decoration:none">Gráfico (ApexChart.js)</NavLink>
         </NavItem>
     </Nav>
 

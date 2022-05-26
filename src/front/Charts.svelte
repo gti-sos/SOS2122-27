@@ -16,6 +16,8 @@
 </ul>
 </li>
 
+<br>
+
 <li><strong>Smi stats</strong>:
 <ul>
 <li><a href="https://sos2122-27.herokuapp.com/#/smi_stats/graph-v1">Highcharts</a> </li>
