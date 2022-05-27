@@ -142,20 +142,16 @@
 					<th>Spen</th>
 					<th>Pib percent</th>
 					<th>Per capita</th>
-                    
-
 				</tr>
 			</thead>
 			<tbody>
 				{#each defenseStats as defenseStats}
-				{#if defenseStats.form=="Normal"}
                 <tr>
                     <td>{defenseStats.defenseCountryYear}</td>
                     <td>{defenseStats.defenseSpen_mill_eur}</td>
                     <td>{defenseStats.defensePib_percent}</td>
                     <td>{defenseStats.defensePer_capita}</td>
 				</tr>
-                {/if}
 				{/each}
 			</tbody>
 		</Table>
