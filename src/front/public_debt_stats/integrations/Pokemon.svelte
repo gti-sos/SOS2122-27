@@ -18,7 +18,7 @@
             console.log("OK");
             const json = await resData.json();
             pokemons = json;
-            console.log("Received "+ pokemoms.length + " pokemons data")
+            console.log("Received "+ pokemoms.length + " pokemons data");
         }
         else{
             console.log("Error");
