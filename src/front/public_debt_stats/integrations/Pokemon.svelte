@@ -132,6 +132,7 @@
                 <p class="highcharts-description" style="text-align:center;">
                     La anterior gráfica muestra información sobre las habilidades de 11 pokemons.
                 </p>
+                <br>
                 <hr>
                 <br>
                 <h3>Tabla con TODOS los datos</h3>

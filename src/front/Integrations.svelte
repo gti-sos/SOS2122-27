@@ -13,9 +13,10 @@
 </ul>
 </li>
 
-<li><strong>Jose Felipe</strong>:
+<li><strong>Jose Felipe</strong>: estadísticas de gasto público
     <ul>
     <li><a href="/#/public-debt-stats/pokemon">Pokemon (API externa)</a> </li>
+    <li><a href="/#/public-debt-stats/defenseSpent">Integración con estadísticas sobre el gasto en defensa (API SOS2122)</a> </li>
     </ul>
 </li>
 

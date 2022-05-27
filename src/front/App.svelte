@@ -21,14 +21,14 @@
     import IntegrationV6 from './public_expenditure_stats/Integration_v6.svelte';
 
 
-
-
     //Elementos de Felipe
     import DebtStats from './public_debt_stats/DebtStats.svelte';
     import EditDebtStatsTable from './public_debt_stats/EditDebtStatsTable.svelte';
     import DsGraph from './public_debt_stats/DSGraph.svelte';
     import DsApexGraph from './public_debt_stats/DSApexGraph.svelte';
     import PokemonIntegration from './public_debt_stats/integrations/Pokemon.svelte'
+    import DefenseSpentIntegration from './public_debt_stats/integrations/DefenseSpentStats.svelte'
+
 
     //Elementos de Alexis
     import SmiStats from './smi_stats/SmiStats.svelte';
@@ -58,13 +58,13 @@
         "/public-expenditure-stats/int-v6": IntegrationV6,
 
 
-
-
         "/public-debt-stats": DebtStats,
         "/public-debt-stats/:country/:year": EditDebtStatsTable,
         "/public-debt-stats/graph": DsGraph,
         "/public-debt-stats/apexGraph": DsApexGraph,        
         "/public-debt-stats/pokemon": PokemonIntegration,
+        "/public-debt-stats/defenseSpent": DefenseSpentIntegration,
+
 
         "/smi_stats": SmiStats,        
         "/smi_stats/:country/:year": EditSmiStatsTable,

@@ -92,7 +92,18 @@
     
     var DebtStats = initial_DebtStat;
 
+    var externalPath='/remoteDefenseAPI';
+    var externalApiServerHost = 'https://sos2122-26.herokuapp.com/api/v2/defense-spent-stats';
+
 module.exports.register = (app,db) => {
+
+    //Integraciones
+
+    app.use(externalPath, function(req, res) {
+        var url = externalApiServerHost + req.url;
+        console.log('piped: ' + req.baseUrl + req.url);
+        req.pipe(request(url)).pipe(res);
+    });
 
     //DOCUMENTACION DE LA API
     
