@@ -47,7 +47,8 @@
         Highcharts.chart('container', {
 
             chart: {
-                type: 'bar'
+                type: 'bar',
+                zoomType: 'x'
             },
 
             title: {
