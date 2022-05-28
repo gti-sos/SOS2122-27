@@ -5,20 +5,20 @@
     const delay = ms => new Promise(res => setTimeout(res,ms));
 
     let lol = [];
-    let name = [];
-    let pickP = [];
-    let winP = [];
-    let banP = [];
+    let champion_name = [];
+    let play = [];
+    let win = [];
+    let lose = [];
 
     
 
 
     async function getLol(){
         console.log("Fetching LOL data...");
-        const resData = await fetch("https://mobafire-lol-builds.p.rapidapi.com/api/champions", {
+        const resData = await fetch("https://league-of-legends-esports.p.rapidapi.com/statics?period=month", {
             "method" : "GET",
             "headers":{
-                "x-rapidapi-host": "mobafire-lol-builds.p.rapidapi.com",
+                "x-rapidapi-host": "league-of-legends-esports.p.rapidapi.com",
                 "x-rapidapi-key": "32c0b6eb01msh02d19df1210c431p103d4ajsn9d32192863d4",
             }
         });
@@ -29,10 +29,10 @@
             console.log("Received "+ lol.length + " lol data");
 
             lol.forEach(element => {
-                name.push(element.name);
-                pickP.push(parseInt(element.pickP));
-                winP.push(parseInt(element.winP));
-                banP.push(parseInt(element.banP));
+                champion_name.push(element.champion_name);
+                play.push(parseInt(element.play));
+                win.push(parseInt(element.win));
+                lose.push(parseInt(element.lose));
                 
             });
 
@@ -56,7 +56,7 @@
             },
 
             subtitle: {
-                text: 'Source: https://mobafire-lol-builds.p.rapidapi.com'
+                text: 'Source: https://league-of-legends-esports.p.rapidapi.com'
             },
 
             yAxis: {
@@ -70,7 +70,7 @@
                     text: "Campeón",
                 },
             
-            categories: name,
+            categories: champion_name,
             },
             plotOptions: {
                 series: {
@@ -89,14 +89,14 @@
 
                 //SMI STATS
                 {
-                name: '% Elección',
-                data: pickP
+                name: 'Partidas jugadas',
+                data: play
                 }, {
-                name: '% Victoria',
-                data: winP
+                name: 'Partidas ganadas',
+                data: win
                 }, {
-                name: '% Ban',
-                data: banP
+                name: 'Partidas perdidas',
+                data: lose
                 }
             ],
 

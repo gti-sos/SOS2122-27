@@ -24,7 +24,7 @@
     <ul>
     <li><a href="/#/smi_stats/integration1">Consumo de energía (API compañero)</a> </li>
     <li><a href="/#/smi_stats/integration2">Emisiones de Co2 (API compañero)</a> </li>
-    <li><a href="/#/smi_stats/integration3">Win ratio de campeones de LoL (API externa)</a> </li>
+    <li><a href="/#/smi_stats/integration3">Porcentajes de campeones de LoL (API externa)</a> </li>
     <li><a href="/#/smi_stats/integration4">Datos de Covid en África (API externa)</a> </li>
     
 </ul>
