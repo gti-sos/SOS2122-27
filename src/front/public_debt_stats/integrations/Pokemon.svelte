@@ -143,6 +143,11 @@
 </main>
 
 <style>
+    #container {
+        width: 90%;
+        margin: 35px auto;
+        border: 1px solid black;
+    }
     h3{
       text-align: center;
     }    
