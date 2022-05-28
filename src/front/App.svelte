@@ -28,6 +28,8 @@
     import DsApexGraph from './public_debt_stats/DSApexGraph.svelte';
     import PokemonIntegration from './public_debt_stats/integrations/Pokemon.svelte'
     import DefenseSpentIntegration from './public_debt_stats/integrations/DefenseSpentStats.svelte'
+    import Covid from './public_debt_stats/integrations/Covid.svelte'
+    import AirPollution from './public_debt_stats/integrations/AirPollutionStats.svelte'
 
 
     //Elementos de Alexis
@@ -64,6 +66,8 @@
         "/public-debt-stats/apexGraph": DsApexGraph,        
         "/public-debt-stats/pokemon": PokemonIntegration,
         "/public-debt-stats/defenseSpent": DefenseSpentIntegration,
+        "/public-debt-stats/covid": Covid,
+        "/public-debt-stats/airPollution": AirPollution,
 
 
         "/smi_stats": SmiStats,        

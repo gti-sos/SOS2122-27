@@ -17,6 +17,8 @@
     <ul>
     <li><a href="/#/public-debt-stats/pokemon">Pokemon (API externa)</a> </li>
     <li><a href="/#/public-debt-stats/defenseSpent">Integración con estadísticas sobre el gasto en defensa (API SOS2122)</a> </li>
+    <li><a href="/#/public-debt-stats/covid">Casos Covid (API externa)</a> </li>
+    <li><a href="/#/public-debt-stats/airPollution">Contaminación del aire (API de SOS)</a> </li>
     </ul>
 </li>
 
