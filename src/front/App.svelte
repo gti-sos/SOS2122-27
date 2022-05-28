@@ -37,6 +37,10 @@
     import EditSmiStatsTable from './smi_stats/EditSmiStatsTable.svelte';
     import SmiGraphV1 from './smi_stats/SmiGraph_v1.svelte';
     import SmiBillboard from './smi_stats/SmiBillboard.svelte';
+    import SmiInt1 from './smi_stats/Integration1.svelte';
+    import SmiInt2 from './smi_stats/Integration2.svelte';
+    import SmiInt3 from './smi_stats/Integration3.svelte';
+    import SmiInt4 from './smi_stats/Integration4.svelte';
 
 
     const routes = {
@@ -73,7 +77,11 @@
         "/smi_stats": SmiStats,        
         "/smi_stats/:country/:year": EditSmiStatsTable,
         "/smi_stats/graph-v1": SmiGraphV1,
-        "/smi_stats/billboard": SmiBillboard
+        "/smi_stats/billboard": SmiBillboard,
+        "/smi_stats/integration1": SmiInt1,
+        "/smi_stats/integration2": SmiInt2,
+        "/smi_stats/integration3": SmiInt3,
+        "/smi_stats/integration4": SmiInt4,
 
     }
 
