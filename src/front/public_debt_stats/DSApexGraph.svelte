@@ -12,6 +12,7 @@
     async function getDebtStats(){
       console.log("Fetching stats....");
       const res = await fetch("/api/v2/public-debt-stats");
+
       if(res.ok){
           const data = await res.json();
           stats = data;
@@ -83,7 +84,7 @@
 </svelte:head>
 
 <main>
-    <h2>Public debt stats by country and year</h2>
+    <h2>Estadísticas de deuda pública por país y año</h2>
     <h4>Biblioteca: ApexChart.js</h4>
     <div id='chart'></div>
 </main>

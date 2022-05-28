@@ -1,8 +1,11 @@
 <script>
 
     import {onMount} from 'svelte';
-    import {Button,Table,NavLink,NavItem,Nav} from 'sveltestrap';
 
+    const delay = ms => new Promise(res => setTimeout(res,ms));
+
+    let nElements = 6;
+    
     let debtStats = [];
     let ds_country_date = [];
     let ds_total_debt = [];
@@ -12,113 +15,112 @@
     let defenseStats = [];
     let defenseCountryYear = [];
     let defenseSpen_mill_eur = [];
-    //let defenseChartPublic_percent = [];
     let defensePib_percent = [];
     let defensePer_capita = [];
-
-    onMount(getData);
 
     async function getData(){
 
         console.log("Fetching defense data...");
-        const defenseData = await fetch('/remoteDefenseAPI');
-        //const debtData = await fetch('/api/v2/public-debt-stats');
+        const defense_data = await fetch('/remoteDefenseAPI'+'?limit='+nElements+'?offset=3');
+        const ds_data = await fetch('/api/v2/public-debt-stats?limit='+nElements);
         
-        if( defenseData.ok && debtData.ok){
-            defenseStats = await defenseData.json();
-            //debtStats = await debtData.json();
+        if( defense_data.ok && ds_data.ok ){
+            console.log("OK");
+            defenseStats = await defense_data.json();
 
             //Defense stats - Ordenar y parsear
+
+            console.log("Received "+ defenseStats.length + " defense stats");            
+
             defenseStats.sort((a,b) => (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0));
             defenseStats.sort((a,b) => (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0));
             
-            defenseStats.forEach(x => {
-                defenseCountryYear.push(defenseStats.country+"-"+defenseStats.year);
-                defenseSpen_mill_eur.push(parseFloat(defenseStats.spen_mill_eur));
-                defensePib_percent.push(parseFloat(defenseStats.pib_percent));
-                defensePer_capita.push(parseFloat(defenseStats.per_capita));
-            })
+            defenseStats.forEach(stat => {
+                defenseCountryYear.push(stat.country +"-"+ stat.year);
+                defenseSpen_mill_eur.push(stat.spen_mill_eur);
+                defensePib_percent.push(stat.pib_percent);
+                defensePer_capita.push(stat.per_capita);
+            });    
+
+            console.log(JSON.stringify(defenseCountryYear[0], null, 2));
+            console.log(JSON.stringify(defenseSpen_mill_eur[0], null, 2));
+            console.log(JSON.stringify(defensePib_percent[0], null, 2));
+            console.log(JSON.stringify(defensePer_capita[0], null, 2));
+
+            //Debt stats - Ordenar y parsear
+
+            
+            debtStats = await ds_data.json();
+
+            console.log("Received "+ debtStats.length + " debt stats");
+
+            debtStats.sort((a,b) => (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0));
+            debtStats.sort((a,b) => (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0));
+            
+            debtStats.forEach(x => {
+                ds_country_date.push(x.country+"-"+x.year);
+                ds_total_debt.push(x["total_debt"]);
+                ds_debt_gdp.push(x["debt_gdp"]);
+                ds_per_capita_debt.push(x["per_capita_debt"]);            
+            });                 
+            
+            console.log(JSON.stringify(ds_country_date[0], null, 2));
+            console.log(JSON.stringify(ds_total_debt[0], null, 2));
+            console.log(JSON.stringify(ds_debt_gdp[0], null, 2));
+            console.log(JSON.stringify(ds_per_capita_debt[0], null, 2));
+            
+            await delay(500);
+            loadGraph();   
 
         }else{
             console.log("Error al cargar los datos");
         }
+        
     }
 
     async function loadGraph(){
 
-        console.log("Fetching debt stats data...");
+        console.log("Loading graph...");        
+        var options = {
         
-        debtStatsData = await  res.json();
-
-        let ejeX = [D];
-        let valores = [];
-        let valor ={};
-
-                
-        var cont = 0;
-        DataPokemons.forEach((data2)=>{
-            if(cont<=10){//Mostrando solo los pokemons con la forma normal y a un número limitado de 10
-            valor = {
-                name: data2.pokemon_name,
-                data: [data2.base_attack, data2.base_defense, data2.base_stamina]
+            series: [{
+                name: 'Gasto en defensa %PIB',
+                data: defensePib_percent
+            },{
+                name: 'Deuda pública %PIB',
+                data: ds_debt_gdp
+            },{
+                name: 'Gasto en defensa per capita',
+                data: defensePer_capita
+            },{
+                name: 'Deuda pública per capita',
+                data: ds_per_capita_debt
             }
-            valores.push(valor);
-            cont++;
-            }
-            
-        });
-        
-        console.log("Loading Chart...");
-        
-    
-        Highcharts.chart('container', {
+        ],
+
             chart: {
-                type: 'column'
+                height: 350,
+                type: 'line'
             },
-            title: {
-                text: 'Uso API externa Pokémons'
+            dataLabels: {
+                enabled: false
             },
-            subtitle: {
-                text: 'Fuentes: <a href="https://rapidapi.com/brianiswu/api/pokemon-go1">rapidapi.com/pokemon-go1</a> || highcharts.com'
+            stroke: {
+                curve: 'smooth'
             },
-            xAxis: {
-                categories: ejeX,
-                crosshair: true,
-                tickmarkPlacement: 'on',
-                type: 'category',
-                
+            xaxis: {
+                type: 'País-Año',
+                categories: defenseCountryYear
             },
             yAxis: {
-                min: 0,
                 title: {
                     text: 'Valor'
-                },
-                labels: {
-                    formatter: function(){
-                        return this.value;
-                    }
                 }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column:{
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
-            legend: {
-                enabled: true
-            },
-            
-            series: valores
-        });
+            }        
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
 
     }
 
@@ -127,38 +129,32 @@
 </script>
 
 <svelte:head>
-    
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </svelte:head>
 
 <main>
-    {#await getData}
-        Loading data ...
-    {:then getData}
 
-        <Table bordered>
-			<thead>
-				<tr>
-					<th>Country-year</th>
-					<th>Spen</th>
-					<th>Pib percent</th>
-					<th>Per capita</th>
-				</tr>
-			</thead>
-			<tbody>
-				{#each defenseStats as defenseStats}
-                <tr>
-                    <td>{defenseStats.defenseCountryYear}</td>
-                    <td>{defenseStats.defenseSpen_mill_eur}</td>
-                    <td>{defenseStats.defensePib_percent}</td>
-                    <td>{defenseStats.defensePer_capita}</td>
-				</tr>
-				{/each}
-			</tbody>
-		</Table>
+    <br>
+    <h2>Integración de estadísticas de deuda pública y gasto en defensa</h2>
+    <h4>Biblioteca: ApexChart.js</h4>
+    <div id='chart'></div>
 
-	{/await}
 </main>
 
 <style>
-       
+
+    #chart {
+      width: 90%;
+      margin: 35px auto;
+      border: 1px solid black;
+    }
+    h2{
+      text-align: center;
+    }
+    h4{
+      text-align: center;
+    }
+    
 </style>
