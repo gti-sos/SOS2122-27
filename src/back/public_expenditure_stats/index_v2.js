@@ -516,12 +516,15 @@ module.exports.register = (app,db) => {
     //FUNCION PARA COMPROBAR LOS CAMPOS DE PETICION
 
     function checkBody(req) {
-        return (req.body.country == null ||
+        if (req.body.country == null ||
             req.body.year == null ||
             req.body.public_expenditure == null ||
             req.body.pe_to_gdp == null ||
             req.body.pe_on_defence == null
         )
+            return false;
+        else 
+            return true;
     }
 
     //FUNCION PARA COMPROBAR LOS CAMPOS DEL OBJETO
