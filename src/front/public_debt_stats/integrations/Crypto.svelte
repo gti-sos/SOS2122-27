@@ -3,15 +3,44 @@
     import {onMount} from 'svelte';
     import {Button,Table,NavLink,NavItem,Nav} from 'sveltestrap';
 
-    let DataPokemons = [];
+    let isOpen = false;
+    var marketCap = [];
+
+    async function getData(){
+
+        const allData = await fetch("https://coinranking1.p.rapidapi.com/coins?limit=10",
+            {
+                method: "GET",
+                headers: {
+                    "x-rapidapi-key":
+                        "b8725c41c3msh1a6b8216d9f4f17p1fa8dcjsn85cd61011197",
+                    "x-rapidapi-host": "coinranking1.p.rapidapi.com",
+                    useQueryString: true,
+                },
+            }
+        );
+
+        let criptos = [];
+        criptos = await allData.json();
+
+        for (let coin of criptos.data.coins) {
+            console.log(coin)
+            let obj = {};
+            obj["name"] = coin.name;
+            obj["value"] = coin.marketCap;
+            marketCap.push(obj);
+        }
+        console.log(marketCap)
+    }
+    
 
     async function loadGraph(){
 
-        let ejeX = ["Ataque", "Defensa", "Estamina"];
+        let ejeX = ["", "", ""];
         let valores = [];
         let valor ={};
        
-        //fetch a la API externa, en este caso de RapidAPI
+        //Hago el fetch a la API externa, en este caso de RapidAPI
         const resData = await fetch("https://pokemon-go1.p.rapidapi.com/pokemon_stats.json", {
             "method" : "GET",
             "headers":{
@@ -20,7 +49,7 @@
             }
         });
 
-        DataPokemons = await resData.json();
+        let DataPokemons = await resData.json();
                 
         var cont = 0;
         DataPokemons.forEach((data2)=>{
@@ -88,6 +117,8 @@
         });
 
     }
+
+    onMount(getPokemons);
     
 </script>
 
@@ -101,45 +132,18 @@
 </svelte:head>
 
 <main>
+    <h3> de las 10 cryptomonedas más importantes</h3>
+    {#await getData}
+        Loading pokemons data ...
+    {:then getData}
+        <figure class="highcharts-figure">
+            <div id="container"></div>
+                <p class="highcharts-description" style="text-align:center;">
+                    La anterior gráfica muestra .
+                </p>
+        </figure>
 
-    <figure class="highcharts-figure">
-        <div id="container"></div>
-            <p class="highcharts-description" style="text-align:center;">
-                La anterior gráfica muestra información sobre las habilidades de 11 pokemons.
-            </p>
-            <br>
-            <hr>
-            <br>
-            <h3>Tabla con TODOS los datos</h3>
-    </figure>
-
-    <Table bordered>
-        <thead>
-            <tr>
-                <th>Pokemon</th>
-                <th>Ataque</th>
-                <th>Defensa</th>
-                <th>Estamina</th>
-                
-
-            </tr>
-        </thead>
-        <tbody>
-            {#each DataPokemons as DataPokemons}
-            {#if DataPokemons.form=="Normal"}
-            <tr>
-                <td>{DataPokemons.pokemon_name}</td>
-                <td>{DataPokemons.base_attack}</td>
-                <td>{DataPokemons.base_defense}</td>
-                <td>{DataPokemons.base_stamina}</td>
-                
-            
-            </tr>
-            {/if}
-            {/each}
-        </tbody>
-    </Table>
-
+	{/await}
 </main>
 
 <style>
