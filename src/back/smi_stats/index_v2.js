@@ -1,6 +1,8 @@
 
 
-    var FAMV_API = "/api/v2/smi_stats";
+   const request = require('request');
+   
+   var FAMV_API = "/api/v2/smi_stats";
     var API_DOC_PORTAL = "https://documenter.getpostman.com/view/19481651/UyrAGHTC";
     
     var initial_smi_stats = [
@@ -247,7 +249,37 @@
         }
     ];
 
+//INTEGRACIONES VARIABLES
+var extPath1 = '/remoteAPI1';
+var extApiServerHost1 = 'https://sos2122-10.herokuapp.com/api/v2/energy-consumptions';
+
+var extPath2 = '/remoteAPI2';
+var extApiServerHost2 = 'https://sos2122-22.herokuapp.com/api/v2/co2-stats';
+
+
+var extPath3 = '/remoteAPI3';
+var extApiServerHost3 = 'https://weatherbit-v1-mashape.p.rapidapi.com';
+
 module.exports.register = (app,db) => {
+
+//INTEGRACIONES
+    app.use(extPath1, function(req, res) {
+        var url = extApiServerHost1 + req.url;
+        console.log('piped: ' + req.baseUrl + req.url);
+        req.pipe(request(url)).pipe(res);
+    });
+
+    app.use(extPath2, function(req, res) {
+        var url = extApiServerHost2 + req.url;
+        console.log('piped: ' + req.baseUrl + req.url);
+        req.pipe(request(url)).pipe(res);
+    });
+
+    app.use(extPath3, function(req, res) {
+        var url = extApiServerHost3 + req.url;
+        console.log('piped: ' + req.baseUrl + req.url);
+        req.pipe(request(url)).pipe(res);
+    });
 // GET Documentacion
     app.get(FAMV_API + "/docs", (req,res)=>{
         res.redirect(API_DOC_PORTAL);
