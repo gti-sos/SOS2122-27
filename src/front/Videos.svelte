@@ -14,6 +14,6 @@
 
 <li><strong>Roque</strong>:
 <ul>
-<li><a href="">Public debt stats</a> </li>
+<li><a href="https://youtu.be/s-KCZVIOVqg">Vídeo public debt stats</a> </li>
 </ul>
 </li>
