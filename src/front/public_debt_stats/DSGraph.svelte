@@ -25,6 +25,7 @@
                 stats_debt_gdp.push(stat["debt_gdp"]);
                 stats_per_capita_debt.push(stat["per_capita_debt"]);            
             });
+            loadGraph();
         }else{
             console.log("Error cargando los datos");
 		}
