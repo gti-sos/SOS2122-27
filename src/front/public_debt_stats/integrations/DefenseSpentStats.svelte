@@ -96,8 +96,10 @@
                 name: 'Deuda pública per capita',
                 data: ds_per_capita_debt
             }
-        ],
-
+            ],
+            title: {
+                text: 'ApexChart.js'
+            },
             chart: {
                 height: 350,
                 type: 'line'
@@ -138,23 +140,27 @@
 
     <br>
     <h2>Integración de estadísticas de deuda pública y gasto en defensa</h2>
-    <h4>Biblioteca: ApexChart.js</h4>
     <div id='chart'></div>
+    <p>En este gráfico aparecen integrados los datos del gasto en Defensa 
+        junto a los ratios de Deuda Pública, clasificados estos por país y año.</p>
+    <p>Fuente: <a href="https://sos2122-26.herokuapp.com/api/v2/defense-spent-stats"> SOS2122-26/api/v2/defense-spent-stats </a></p>
 
 </main>
 
 <style>
 
     #chart {
-      width: 90%;
-      margin: 35px auto;
-      border: 1px solid black;
+        width: 90%;
+        margin: 45px auto;
+        border: 1px solid black;
     }
     h2{
-      text-align: center;
+        text-align: center;
     }
-    h4{
-      text-align: center;
+    p{
+        text-align: center;
+        margin-right: 100px;
+        margin-left: 100px;
     }
     
 </style>

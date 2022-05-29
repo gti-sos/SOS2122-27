@@ -8,17 +8,15 @@
 <li><a href="/#/public-expenditure-stats/int-v4">Integración con estadísticas de desigualdad (API de SOS)</a> </li>
 <li><a href="/#/public-expenditure-stats/int-v5">Integración con estadísticas de niveles escolares (API de SOS)</a> </li>
 <li><a href="/#/public-expenditure-stats/int-v6">Estadísticas de Covid-19 en EEUU (API externa)</a> </li>
-
-
 </ul>
 </li>
 
-<li><strong>Jose Felipe</strong>: estadísticas de gasto público
+<li><strong>Jose Felipe</strong>: Estadísticas de gasto público
     <ul>
+    <li><a href="/#/public-debt-stats/defenseSpent">Integración con estadísticas sobre el gasto en defensa (API de SOS)</a> </li>
+    <li><a href="/#/public-debt-stats/airPollution">Integración con estadísticas sobre contaminación del aire (API de SOS)</a> </li>
     <li><a href="/#/public-debt-stats/pokemon">Pokemon (API externa)</a> </li>
-    <li><a href="/#/public-debt-stats/defenseSpent">Integración con estadísticas sobre el gasto en defensa (API SOS2122)</a> </li>
     <li><a href="/#/public-debt-stats/covid">Casos Covid (API externa)</a> </li>
-    <li><a href="/#/public-debt-stats/airPollution">Contaminación del aire (API de SOS)</a> </li>
     </ul>
 </li>
 

@@ -57,8 +57,10 @@
                 name: 'Casos críticos',
                 data: statcriticalcases
             }
-        ],
-
+            ],
+            title: {
+                text: 'ApexChart.js'
+            },
             chart: {
                 height: 400,
                 type: 'area'
@@ -98,6 +100,8 @@
 <main>
     <h3>Estadísticas de COVID-19</h3>   
     <figure id="chart"></figure>
+    <p>En este gráfico están representados los datos covid por países</p>
+    <p>Fuente: <a href="https://github.com/javieraviles/covidAPI">github.com/javieraviles/covidAPI </a></p>
    
 </main>
 
@@ -110,4 +114,7 @@
     h3{
       text-align: center;
     }    
+    p{
+        text-align: center;
+    }
 </style>

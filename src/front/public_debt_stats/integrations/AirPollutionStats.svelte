@@ -5,35 +5,57 @@
     const delay = ms => new Promise(res => setTimeout(res,ms));
 
     let pollutionStats = [];
+    let pollutionCountryYear = [];
     let pollutionAgesZeroFifty = [];
-    let pollutionAgesZeroSeventy = [];
-    let defensePib_percent = [];
-    let defensePer_capita = [];
+    let pollutionAgesFiftySeventy = [];
+    let pollutionAgesSeventy = [];
+
+    let debtStats = [];
+    let ds_country_date = [];
+    let ds_total_debt = [];
+    let ds_debt_gdp = [];
+    let ds_per_capita_debt = []; 
+
+    var colors = new Array("00","33","66","99","CC","FF");
 
     async function getData(){
 
         console.log("Fetching air pollution data...");
         const res = await fetch('https://sos2122-24.herokuapp.com/api/v1/air-pollution-stats');
+        const ds_data = await fetch('/api/v2/public-debt-stats');
 
-        if( res.ok ){
+        if( res.ok && ds_data.ok ){
             console.log("OK");
-            const data = await res.json();
-            defenseStats = data;
-            console.log("Received "+ defenseStats.length + " defense stats")
+            pollutionStats = await res.json();
+            console.log("Received "+ pollutionStats.length + " air pollution stats")
 
-            //debtStats = await debtData.json();
-
-            //Defense stats - Ordenar y parsear
-
-            defenseStats.sort((a,b) => (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0));
-            defenseStats.sort((a,b) => (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0));
+            pollutionStats.sort((a,b) => (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0));
+            pollutionStats.sort((a,b) => (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0));
             
-            defenseStats.forEach(stat => {
-                defenseCountryYear.push(stat.country +"-"+ stat.year);
-                defenseSpen_mill_eur.push(stat.spen_mill_eur);
-                defensePib_percent.push(stat.pib_percent);
-                defensePer_capita.push(stat.per_capita);
+            pollutionStats.forEach(stat => {
+                pollutionCountryYear.push(stat.country +"-"+ stat.year);
+                pollutionAgesZeroFifty.push(stat.ages_zero_fifty);
+                pollutionAgesFiftySeventy.push(stat.ages_fifty_seventy);
+                pollutionAgesSeventy.push(stat.ages_seventy);
             });    
+
+            console.log(JSON.stringify(pollutionStats[0], null, 2));
+
+            debtStats = await ds_data.json();
+
+            console.log("Received "+ debtStats.length + " debt stats");
+
+            debtStats.sort((a,b) => (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0));
+            debtStats.sort((a,b) => (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0));
+
+            debtStats.forEach(x => {
+                ds_country_date.push(x.country+"-"+x.year);
+                ds_total_debt.push(x["total_debt"]);
+                ds_debt_gdp.push(x["debt_gdp"]);
+                ds_per_capita_debt.push(x["per_capita_debt"]);            
+            });                 
+
+            console.log(JSON.stringify(debtStats[0], null, 2));
 
             await delay(500);         
             loadGraph();   
@@ -48,49 +70,89 @@
 
         console.log("Loading graph...");        
         var options = {
+
+            series: [
+                {
+                    name: "pollution 0-50",
+                    data: pollutionAgesZeroFifty
+                },{
+                    name: "pollution 50-70",
+                    data: pollutionAgesFiftySeventy
+                },{
+                    name: "pollution 0-50",
+                    data: pollutionAgesSeventy
+                },{
+                    name: "total debt",
+                    data: ds_total_debt
+                },{
+                    name: "debt to gdp",
+                    data: ds_debt_gdp
+                },{
+                    name: "debt per capita",
+                    data: ds_per_capita_debt
+                },
+            ],
+            title: {
+                text: 'ApexChart.js'
+            },
+            chart: {
+                height: 350,
+                type: 'scatter',
+                zoom: {
+                    enabled: true,
+                    type: 'xy'
+                }
+            },
+            xaxis: {
+                type: 'País-Año',
+                categories: pollutionCountryYear
+            },
+            yaxis: {
+                tickAmount: 10
+            }
+            
         
-            series: [{
-                name: 'Gasto en defensa',
-                data: defenseSpen_mill_eur
-            }, 
-            {
-                name: 'Deuda pública',
-                data: defensePib_percent
-            }, 
-            {
-                name: 'Per capita',
-                data: defensePer_capita
+            /*series: [{
+                name: 'pollution 0-50',
+                data: pollutionAgesZeroFifty
+            },{
+                name: 'pollution 50-70',
+                data: pollutionAgesFiftySeventy
+            },{
+                name: 'pollution +70',
+                data: pollutionAgesSeventy
+            },{
+                name: 'debt per capita',
+                data: ds_per_capita_debt
+            },{
+                name: 'debt %PIB',
+                data: ds_debt_gdp
+            },{
+                name: 'total debt',
+                data: ds_total_debt
             }],
 
             chart: {
                 height: 350,
-                type: 'bar'
+                type: 'treemap'
             },
             dataLabels: {
                 enabled: false
             },
-            stroke: {
-                curve: 'smooth'
-            },
+            colors: ["#008FFB"],
             xaxis: {
                 type: 'País-Año',
-                categories: defenseCountryYear
+                categories: pollutionCountryYear
             },
             yAxis: {
                 title: {
                     text: 'Valor'
                 }
-            }        
+            }*/        
         };
 
         var chart = new ApexCharts(document.querySelector("#chart"), options);
         chart.render();
-
-        console.log(JSON.stringify(defenseCountryYear[0], null, 2));
-        console.log(JSON.stringify(defenseSpen_mill_eur[0], null, 2));
-        console.log(JSON.stringify(defensePib_percent[0], null, 2));
-        console.log(JSON.stringify(defensePer_capita[0], null, 2));
-
     }
 
     onMount(getData);
@@ -104,10 +166,12 @@
 </svelte:head>
 
 <main>
-
-    <h2>Uso de las estadística de contaminación del aire</h2>
-    <h4>Biblioteca: ApexChart.js</h4>
+    <br>
+    <h2>Integración de las estadística de contaminación del aire</h2>
     <div id='chart'></div>
+    <p>En este gráfico aparecen integrados los datos de afectación de contaminación en el aire 
+        junto a los ratios de Deuda Pública, clasificados estos por país y año.</p>
+    <p>Fuente: <a href="https://sos2122-24.herokuapp.com/api/v1/air-pollution-stats"> SOS2122-24/api/v1/air-pollution-stats </a></p>
 
 </main>
 
@@ -121,8 +185,10 @@
     h2{
       text-align: center;
     }
-    h4{
-      text-align: center;
+    p{
+        text-align: center;
+        margin-right: 100px;
+        margin-left: 100px;
     }
     
 </style>
