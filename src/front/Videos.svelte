@@ -12,7 +12,7 @@
     </ul>
     </li>
 
-<li><strong>Roque</strong>:
+<li><strong>Jose Felipe</strong>:
 <ul>
 <li><a href="https://youtu.be/s-KCZVIOVqg">Vídeo public debt stats</a> </li>
 </ul>
